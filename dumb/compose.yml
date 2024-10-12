@@ -1,0 +1,12 @@
+services:
+  dumb:
+    image: ghcr.io/rramiachraf/dumb:latest
+    container_name: dumb
+    restart: unless-stopped
+    expose: 
+      - "5555"
+
+networks:
+  default:
+    name: xgm-network
+    external: true
