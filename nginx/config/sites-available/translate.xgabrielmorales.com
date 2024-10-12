@@ -1,0 +1,1 @@
+../sites-enabled/translate.xgabrielmorales.com

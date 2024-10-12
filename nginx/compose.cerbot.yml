@@ -1,0 +1,8 @@
+services:
+  certbot:
+    image: certbot/dns-cloudflare 
+    container_name: certbot
+    volumes:
+      - "./certbot/conf:/etc/letsencrypt"
+      - "./certbot/cloudflare:/cloudflare"
+    command: certonly --dns-cloudflare --dns-cloudflare-credentials /cloudflare/credentials.ini --agree-tos --dry-run --email gabrielmorales1@protonmail.com -d *.xgabrielmorales.com

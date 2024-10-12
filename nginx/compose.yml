@@ -1,0 +1,18 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./config/nginx.conf:/etc/nginx/nginx.conf"
+      - "./config/sites-enabled:/etc/nginx/sites-enabled"
+      - "./config/sites-available:/etc/nginx/sites-available"
+      - "./certbot/conf/:/etc/letsencrypt"
+      - "./cache/invidious:/tmp/invidious"
+
+networks:
+  default:
+    name: xgm-network
