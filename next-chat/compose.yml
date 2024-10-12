@@ -1,0 +1,14 @@
+services:
+  next-chat:
+    image: yidadaa/chatgpt-next-web
+    container_name: chat-gpt-next-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    expose:
+      - "3000"
+
+networks:
+  default:
+    name: xgm-network
+    external: true
