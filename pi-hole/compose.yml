@@ -1,0 +1,35 @@
+services:
+  unbound:
+    image: "klutchell/unbound:latest"
+    container_name: unbound
+    restart: unless-stopped
+    hostname: "unbound"
+
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    restart: unless-stopped
+    depends_on: [unbound]
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    expose:
+      - "80"
+    volumes:
+      - "./config/pihole/etc-pihole:/etc/pihole"
+      - "./config/pihole/etc-dnsmasq.d:/etc/dnsmasq.d"
+    environment:
+      TZ: "America/Bogota"
+      ServerIP: pihole  # PiHole IP
+      DNS1: unbound  # Unbound IP
+      DNS2: unbound  # Unbound IP
+      PIHOLE_DNS_: unbound  # Unbound IP
+    env_file:
+      - .env
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  default:
+    name: xgm-network
+    external: true
