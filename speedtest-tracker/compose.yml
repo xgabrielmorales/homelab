@@ -1,0 +1,17 @@
+services:
+  speedtest-tracker:
+    image: lscr.io/linuxserver/speedtest-tracker:latest
+    container_name: speedtest-tracker
+    restart: unless-stopped
+    expose:
+      - "80"
+    env_file:
+      - .env
+    volumes:
+      - /path/to/data:/config
+      - /path/to-custom-ssl-keys:/config/keys
+
+networks:
+  default:
+    name: xgm-network
+    external: true
