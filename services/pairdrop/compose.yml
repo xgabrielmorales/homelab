@@ -16,5 +16,5 @@ services:
 
 networks:
   default:
-    name: xgm-network
+    name: nginx
     external: true
