@@ -1,0 +1,14 @@
+services:
+  redlib:
+    image: quay.io/redlib/redlib:latest
+    container_name: redlib
+    restart: unless-stopped
+    env_file:
+      - .env
+    expose:
+      - "8080"
+
+networks:
+  default:
+    name: xgm-network
+    external: true
