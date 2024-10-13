@@ -3,7 +3,7 @@ services:
     image: ghcr.io/rramiachraf/dumb:latest
     container_name: dumb
     restart: unless-stopped
-    expose: 
+    expose:
       - "5555"
 
 networks:

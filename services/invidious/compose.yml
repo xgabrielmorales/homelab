@@ -6,7 +6,7 @@ services:
     expose:
       - "3000"
     environment:
-      INVIDIOUS_CONFIG_FILE: "/config/config.yml" 
+      INVIDIOUS_CONFIG_FILE: "/config/config.yml"
     volumes:
       - "./config/config.yml:/config/config.yml"
     healthcheck:

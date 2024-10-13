@@ -1,6 +1,6 @@
 services:
   certbot:
-    image: certbot/dns-cloudflare 
+    image: certbot/dns-cloudflare
     container_name: certbot
     volumes:
       - "./certbot/conf:/etc/letsencrypt"
