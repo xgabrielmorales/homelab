@@ -7,6 +7,13 @@ services:
       - .env
     expose:
       - "8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.redlib.rule=Host(`reddit.xgabrielmorales.com`)"
+      - "traefik.http.routers.redlib.entrypoints=https"
+      - "traefik.http.routers.redlib.tls=true"
+      - "traefik.http.routers.redlib.tls.certresolver=cloudflare"
+      - "traefik.http.services.redlib.loadbalancer.server.port=8080"
 
 networks:
   default:

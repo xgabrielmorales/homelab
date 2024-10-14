@@ -5,6 +5,12 @@ services:
     restart: unless-stopped
     expose:
       - "5555"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dumb.rule=Host(`dumb.xgabrielmorales.com`)"
+      - "traefik.http.routers.dumb.entrypoints=https"
+      - "traefik.http.routers.dumb.tls=true"
+      - "traefik.http.routers.dumb.tls.certresolver=cloudflare"
 
 networks:
   default:

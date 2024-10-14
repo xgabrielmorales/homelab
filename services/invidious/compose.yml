@@ -17,6 +17,14 @@ services:
     depends_on:
       invidious-db:
         condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.invidious.rule=Host(`invidious.xgabrielmorales.com`)"
+      - "traefik.http.routers.invidious.entrypoints=https"
+      - "traefik.http.routers.invidious.tls=true"
+      - "traefik.http.routers.invidious.tls.certresolver=cloudflare"
+      - "traefik.http.services.invidious.loadbalancer.server.port=3000"
+
 
   invidious-db:
     image: docker.io/library/postgres:14

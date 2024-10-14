@@ -13,6 +13,13 @@ services:
       - TZ="America/Bogota"
     expose:
       - "3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pairdrop.rule=Host(`pairdrop.xgabrielmorales.com`)"
+      - "traefik.http.routers.pairdrop.entrypoints=https"
+      - "traefik.http.routers.pairdrop.tls=true"
+      - "traefik.http.routers.pairdrop.tls.certresolver=cloudflare"
+      - "traefik.http.services.pairdrop.loadbalancer.server.port=3000"
 
 networks:
   default:

@@ -1,12 +1,19 @@
 services:
   next-chat:
     image: yidadaa/chatgpt-next-web
-    container_name: chat-gpt-next-web
+    container_name: next-chat
     restart: unless-stopped
     env_file:
       - .env
     expose:
       - "3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.next-chat.rule=Host(`gpt.xgabrielmorales.com`)"
+      - "traefik.http.routers.next-chat.entrypoints=https"
+      - "traefik.http.routers.next-chat.tls=true"
+      - "traefik.http.routers.next-chat.tls.certresolver=cloudflare"
+      - "traefik.http.services.next-chat.loadbalancer.server.port=3000"
 
 networks:
   default:

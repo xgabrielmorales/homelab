@@ -1,0 +1,42 @@
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - TZ=America/Bogota
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./config/traefik.yml:/traefik.yml"
+      - traefik-certs:/certs
+    labels:
+      - "traefik.enable=true"
+      # Dashboard with HTTPS
+      - "traefik.http.routers.traefik.rule=Host(`traefik.xgabrielmorales.com`)"
+      - "traefik.http.routers.traefik.entrypoints=https"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.traefik.tls.certresolver=cloudflare"
+      - "traefik.http.routers.traefik.service=api@internal"
+      # Redirect all HTTP requests to HTTPS
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.httpsonly.redirectscheme.permanent=true"
+      - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
+      #  SSL Certificates
+      - "traefik.http.routers.traefik.tls.domains[0].main=xgabrielmorales.com"
+      - "traefik.http.routers.traefik.tls.domains[0].sans=*.xgabrielmorales.com"
+
+volumes:
+  traefik-certs:
+    name: traefik-certs
+
+networks:
+  default:
+    name: reverse-proxy
+    external: true

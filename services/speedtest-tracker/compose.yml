@@ -10,6 +10,13 @@ services:
     volumes:
       - /path/to/data:/config
       - /path/to-custom-ssl-keys:/config/keys
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.speedtest-tracker.rule=Host(`speedtest.xgabrielmorales.com`)"
+      - "traefik.http.routers.speedtest-tracker.entrypoints=https"
+      - "traefik.http.routers.speedtest-tracker.tls=true"
+      - "traefik.http.routers.speedtest-tracker.tls.certresolver=cloudflare"
+      - "traefik.http.services.speedtest-tracker.loadbalancer.server.port=80"
 
 networks:
   default:

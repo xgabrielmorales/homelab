@@ -5,6 +5,13 @@ services:
     restart: unless-stopped
     expose:
       - "3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mozhi.rule=Host(`translate.xgabrielmorales.com`)"
+      - "traefik.http.routers.mozhi.entrypoints=https"
+      - "traefik.http.routers.mozhi.tls=true"
+      - "traefik.http.routers.mozhi.tls.certresolver=cloudflare"
+      - "traefik.http.services.mozhi.loadbalancer.server.port=3000"
     healthcheck:
       test: wget -nv --tries=1 --spider http://127.0.0.1:3000/api/version || exit 1
       interval: 30s
