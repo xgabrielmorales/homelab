@@ -38,5 +38,5 @@ services:
 
 networks:
   default:
-    name: nginx
+    name: reverse-proxy
     external: true

@@ -21,7 +21,7 @@ providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
-    network: nginx
+    network: reverse-proxy
 
 certificatesResolvers:
   cloudflare:
