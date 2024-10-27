@@ -1,6 +1,6 @@
 services:
   invidious:
-    image: quay.io/invidious/invidious:master-arm64
+    image: quay.io/invidious/invidious:latest-arm64
     container_name: invidious
     restart: unless-stopped
     expose:
@@ -25,13 +25,26 @@ services:
       - "traefik.http.routers.invidious.tls.certresolver=cloudflare"
       - "traefik.http.services.invidious.loadbalancer.server.port=3000"
 
+  invidious-signature-helper:
+    image: quay.io/invidious/inv-sig-helper:latest
+    container_name: invidious-signature-helper
+    init: true
+    command: ["--tcp", "0.0.0.0:12999"]
+    environment:
+      - RUST_LOG=info
+    restart: unless-stopped
+    cap_drop:
+      - ALL
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
 
   invidious-db:
     image: docker.io/library/postgres:14
     container_name: invidious-db
     restart: unless-stopped
     volumes:
-      - postgresdata:/var/lib/postgresql/data
+      - invidious-db-data:/var/lib/postgresql/data
       - ./config/sql:/config/sql
       - ./docker/init-invidious-db.sh:/docker-entrypoint-initdb.d/init-invidious-db.sh
     environment:
@@ -42,7 +55,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
 
 volumes:
-  postgresdata:
+  invidious-db-data:
 
 networks:
   default:
