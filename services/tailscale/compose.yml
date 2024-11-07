@@ -14,3 +14,10 @@ services:
       TS_EXTRA_ARGS: "--advertise-exit-node"
     env_file:
       - .env
+    dns:
+      - "172.21.0.2"
+
+networks:
+  default:
+    name: pihole
+    external: true
