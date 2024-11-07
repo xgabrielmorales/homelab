@@ -28,6 +28,10 @@ services:
       - .env
     cap_add:
       - NET_ADMIN
+    networks:
+      default:
+      pihole:
+        ipv4_address: 172.21.0.2
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pihole.rule=Host(`pihole.xgabrielmorales.com`)"
@@ -40,3 +44,9 @@ networks:
   default:
     name: reverse-proxy
     external: true
+
+  pihole:
+    name: pihole
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
