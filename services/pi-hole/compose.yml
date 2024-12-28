@@ -2,13 +2,13 @@ services:
   unbound:
     image: "klutchell/unbound:latest"
     container_name: unbound
-    restart: unless-stopped
+    restart: on-failure:10
     hostname: "unbound"
 
   pihole:
     image: pihole/pihole:latest
     container_name: pihole
-    restart: unless-stopped
+    restart: on-failure:10
     depends_on: [unbound]
     ports:
       - "53:53/tcp"

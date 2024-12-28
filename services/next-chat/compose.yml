@@ -2,7 +2,7 @@ services:
   next-chat:
     image: yidadaa/chatgpt-next-web
     container_name: next-chat
-    restart: unless-stopped
+    restart: on-failure:10
     env_file:
       - .env
     expose:

@@ -2,7 +2,7 @@ services:
   tailscale:
     image: tailscale/tailscale
     container_name: tailscale
-    restart: unless-stopped
+    restart: on-failure:10
     cap_add:
       - NET_ADMIN
       - SYS_MODULE

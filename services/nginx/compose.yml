@@ -2,7 +2,7 @@ services:
   nginx:
     image: nginx:latest
     container_name: reverse-proxy
-    restart: unless-stopped
+    restart: on-failure:10
     ports:
       - "80:80"
       - "443:443"

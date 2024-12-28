@@ -2,6 +2,6 @@ services:
   duckdns:
     image: linuxserver/duckdns:latest
     container_name: duckdns
-    restart: unless-stopped
+    restart: on-failure:10
     env_file:
       - .env

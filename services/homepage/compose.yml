@@ -2,7 +2,7 @@ services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
-    restart: unless-stopped
+    restart: on-failure:10
     expose:
       - "3000"
     volumes:

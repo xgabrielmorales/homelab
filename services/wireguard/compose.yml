@@ -2,7 +2,7 @@ services:
   wireguard:
     image: linuxserver/wireguard:latest
     container_name: wireguard
-    restart: unless-stopped
+    restart: on-failure:10
     cap_add:
       - NET_ADMIN
       - SYS_MODULE

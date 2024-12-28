@@ -2,7 +2,7 @@ services:
   redlib:
     image: quay.io/redlib/redlib:latest
     container_name: redlib
-    restart: unless-stopped
+    restart: on-failure:10
     env_file:
       - .env
     expose:

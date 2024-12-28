@@ -2,7 +2,7 @@ services:
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
-    restart: unless-stopped
+    restart: on-failure:10
     expose:
       - "9000"
     volumes:

@@ -2,7 +2,7 @@ services:
   dumb:
     image: ghcr.io/rramiachraf/dumb:latest
     container_name: dumb
-    restart: unless-stopped
+    restart: on-failure:10
     expose:
       - "5555"
     labels:

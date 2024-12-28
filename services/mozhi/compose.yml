@@ -2,7 +2,7 @@ services:
   mozhi:
     image: codeberg.org/aryak/mozhi:latest
     container_name: mozhi
-    restart: unless-stopped
+    restart: on-failure:10
     expose:
       - "3000"
     labels:

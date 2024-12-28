@@ -2,7 +2,7 @@ services:
   watchtower:
     image: containrrr/watchtower:latest
     container_name: watchtower
-    restart: unless-stopped
+    restart: on-failure:10
     env_file:
       - .env
     expose:
