@@ -1,0 +1,22 @@
+services:
+  myspeed:
+    image: germannewsmaker/myspeed
+    container_name: myspeed
+    restart: on-failure:10
+    volumes:
+      - "./config:/myspeed/data"
+    expose:
+      - "5216:5216"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.myspeed.rule=Host(`speed.xgabrielmorales.com`)"
+      - "traefik.http.routers.myspeed.entrypoints=https"
+      - "traefik.http.routers.myspeed.tls=true"
+      - "traefik.http.routers.myspeed.tls.certresolver=cloudflare"
+      - "traefik.http.services.myspeed.loadbalancer.server.port=5216"
+      - "traefik.http.routers.myspeed.middlewares=tinyauth"
+
+networks:
+  default:
+    name: reverse-proxy
+    external: true
