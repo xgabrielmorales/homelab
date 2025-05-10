@@ -1,0 +1,61 @@
+- Servers:
+    - Portainer:
+        icon: sh-portainer.svg
+        href: 'https://portainer.xgabrielmorales.com/'
+        container: portainer
+        widget:
+          type: portainer
+          url: '{{HOMEPAGE_VAR_PORTAINER_URL}}'
+          env: 2
+          key: '{{HOMEPAGE_VAR_PORTAINTER_KEY}}'
+    - Beszel:
+        icon: sh-beszel.svg
+        href: 'https://beszel.xgabrielmorales.com'
+        container: beszel
+        widget:
+          type: beszel
+          url: '{{HOMEPAGE_VAR_BESZEL_URL}}'
+          username: '{{HOMEPAGE_VAR_BESZEL_USERNAME}}'
+          password: '{{HOMEPAGE_VAR_BESZEL_PASSWORD}}'
+          systemId: Raspberry PI
+          version: 2
+    - Traefik:
+        icon: sh-traefik.svg
+        href: 'https://traefik.xgabrielmorales.com/'
+        container: traefik
+        widget:
+          type: traefik
+          url: '{{HOMEPAGE_VAR_TRAEFIK_URL}}'
+    - Watchtower:
+        icon: 'si-watchtower-#416271'
+        container: watchtower
+        widget:
+          type: watchtower
+          url: '{{HOMEPAGE_VAR_WATCHTOWER_URL}}'
+          key: '{{HOMEPAGE_VAR_WATCHTOWER_KEY}}'
+- Networking:
+    - Pi-hole:
+        icon: sh-pi-hole.svg
+        href: 'https://pihole.xgabrielmorales.com/admin'
+        container: pihole
+        widget:
+          type: pihole
+          version: 6
+          url: '{{HOMEPAGE_VAR_PIHOLE_URL}}'
+          key: '{{HOMEPAGE_VAR_PIHOLE_KEY}}'
+    - Wireguard:
+        icon: sh-wireguard.svg
+        href: 'https://wireguard.xgabrielmorales.com'
+        container: wg-easy
+        widget:
+          type: wgeasy
+          url: '{{HOMEPAGE_VAR_WIREGUARD_URL}}'
+          password: '{{HOMEPAGE_VAR_WIREGUARD_KEY}}'
+          threshold: 2
+    - MySpeed:
+        icon: sh-myspeed.webp
+        href: 'https://speed.xgabrielmorales.com'
+        container: myspeed
+        widget:
+          type: myspeed
+          url: '{{HOMEPAGE_VAR_MYSPEED_URL}}'

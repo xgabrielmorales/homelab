@@ -1,0 +1,7 @@
+title: New tab
+theme: light
+color: gray
+
+headerStyle: boxedWidgets
+hideVersion: true
+showStats: true

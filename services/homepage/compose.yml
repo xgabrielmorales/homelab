@@ -3,11 +3,15 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     restart: on-failure:10
+    env_file:
+      - .env
     expose:
       - "3000"
     volumes:
       - "./config:/app/config"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: pi.xgabrielmorales.com
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homepage.rule=Host(`pi.xgabrielmorales.com`)"
