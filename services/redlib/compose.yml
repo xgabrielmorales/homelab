@@ -14,6 +14,7 @@ services:
       - "traefik.http.routers.redlib.tls=true"
       - "traefik.http.routers.redlib.tls.certresolver=cloudflare"
       - "traefik.http.services.redlib.loadbalancer.server.port=8080"
+      - "traefik.http.routers.redlib.middlewares=tinyauth"
 
 networks:
   default:

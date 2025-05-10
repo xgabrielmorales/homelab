@@ -28,6 +28,7 @@ services:
       - "traefik.http.routers.wireguard.tls=true"
       - "traefik.http.routers.wireguard.tls.certresolver=cloudflare"
       - "traefik.http.services.wireguard.loadbalancer.server.port=51821"
+      - "traefik.http.routers.wireguard.middlewares=tinyauth"
 
 volumes:
   etc_wireguard:
