@@ -1,0 +1,24 @@
+services:
+  ddns_updater:
+    image: qmcgaw/ddns-updater
+    container_name: ddns_updater
+    restart: on-failure:10
+    expose:
+      - "8000"
+    volumes:
+      - "./config:/updater/data"
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ddns_updater.rule=Host(`dns.xgabrielmorales.com`)"
+      - "traefik.http.routers.ddns_updater.entrypoints=https"
+      - "traefik.http.routers.ddns_updater.tls=true"
+      - "traefik.http.routers.ddns_updater.tls.certresolver=cloudflare"
+      - "traefik.http.services.ddns_updater.loadbalancer.server.port=8000"
+      - "traefik.http.routers.ddns_updater.middlewares=tinyauth"
+
+networks:
+  default:
+    name: reverse-proxy
+    external: true
