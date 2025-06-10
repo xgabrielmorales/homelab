@@ -28,6 +28,7 @@ services:
       - .env
     cap_add:
       - NET_ADMIN
+      - CAP_SYS_TIME
     networks:
       default:
       pihole:
