@@ -29,6 +29,8 @@ services:
       #  SSL Certificates
       - "traefik.http.routers.traefik.tls.domains[0].main=xgabrielmorales.com"
       - "traefik.http.routers.traefik.tls.domains[0].sans=*.xgabrielmorales.com"
+      # TinyAuth
+      - "traefik.http.routers.traefik.middlewares=tinyauth"
 
 volumes:
   traefik-certs:

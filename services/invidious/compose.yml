@@ -31,7 +31,6 @@ services:
       - "traefik.http.routers.invidious.tls=true"
       - "traefik.http.routers.invidious.tls.certresolver=cloudflare"
       - "traefik.http.services.invidious.loadbalancer.server.port=3000"
-      - "traefik.http.routers.invidious.middlewares=tinyauth"
 
   invidious-signature-helper:
     image: quay.io/invidious/inv-sig-helper:latest
