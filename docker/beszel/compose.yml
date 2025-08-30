@@ -2,26 +2,34 @@ services:
   beszel:
     image: henrygd/beszel:latest
     container_name: beszel
-    restart: on-failure:10
+    restart: always
     expose:
       - "8090"
     volumes:
       - ./data:/beszel_data
+    healthcheck:
+      test: ["CMD", "/beszel", "health", "--url", "http://localhost:8090"]
+      start_period: 5s
+      interval: 120s
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.beszel.rule=Host(`beszel.xgabrielmorales.com`)"
-      - "traefik.http.routers.beszel.entrypoints=https"
-      - "traefik.http.routers.beszel.tls=true"
+      - "traefik.http.routers.beszel.entrypoints=websecure"
       - "traefik.http.routers.beszel.tls.certresolver=cloudflare"
+      - "traefik.http.services.beszel.loadbalancer.server.port=8090"
 
   beszel-agent:
     image: henrygd/beszel-agent:latest
     container_name: beszel-agent
-    restart: unless-stopped
+    restart: always
+    environment:
+      - KEY=${KEY}
+      - PORT=${PORT}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    env_file:
-      - .env
+    healthcheck:
+      test: ["CMD", "/agent", "health"]
+      interval: 120s
 
 networks:
   default:

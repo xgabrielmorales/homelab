@@ -1,19 +1,25 @@
 services:
-  ddns_updater:
+  ddns-updater:
     image: qmcgaw/ddns-updater
-    container_name: ddns_updater
-    restart: on-failure:10
+    container_name: ddns-updater
+    restart: always
     expose:
       - "8000"
-    volumes:
-      - "./config:/updater/data"
-    env_file:
-      - .env
+    environment:
+      - CONFIG=${CONFIG}
+      - PERIOD=${PERIOD}
+      - UPDATE_COOLDOWN_PERIOD=${UPDATE_COOLDOWN_PERIOD}
+      - PUBLICIP_FETCHERS=${PUBLICIP_FETCHERS}
+      - PUBLICIP_HTTP_PROVIDERS=${PUBLICIP_HTTP_PROVIDERS}
+      - PUBLICIPV4_HTTP_PROVIDERS=${PUBLICIPV4_HTTP_PROVIDERS}
+      - PUBLICIPV6_HTTP_PROVIDERS=${PUBLICIPV6_HTTP_PROVIDERS}
+      - PUBLICIP_DNS_PROVIDERS=${PUBLICIP_DNS_PROVIDERS}
+      - PUBLICIP_DNS_TIMEOUT=${PUBLICIP_DNS_TIMEOUT}
+      - HTTP_TIMEOUT=${HTTP_TIMEOUT}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ddns_updater.rule=Host(`dns.xgabrielmorales.com`)"
-      - "traefik.http.routers.ddns_updater.entrypoints=https"
-      - "traefik.http.routers.ddns_updater.tls=true"
+      - "traefik.http.routers.ddns_updater.entrypoints=websecure"
       - "traefik.http.routers.ddns_updater.tls.certresolver=cloudflare"
       - "traefik.http.services.ddns_updater.loadbalancer.server.port=8000"
       - "traefik.http.routers.ddns_updater.middlewares=tinyauth"

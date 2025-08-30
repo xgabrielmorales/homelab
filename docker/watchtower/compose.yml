@@ -3,8 +3,11 @@ services:
     image: containrrr/watchtower:latest
     container_name: watchtower
     restart: on-failure:10
-    env_file:
-      - .env
+    environment:
+      - WATCHTOWER_CLEANUP=${WATCHTOWER_CLEANUP}
+      - WATCHTOWER_HTTP_API_METRICS=${WATCHTOWER_HTTP_API_METRICS}
+      - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN}
+      - WATCHTOWER_REMOVE_VOLUMES=${WATCHTOWER_REMOVE_VOLUMES}
     expose:
       - "8080"
     volumes:
@@ -12,8 +15,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.watchtower.rule=Host(`watchtower.xgabrielmorales.com`)"
-      - "traefik.http.routers.watchtower.entrypoints=https"
-      - "traefik.http.routers.watchtower.tls=true"
+      - "traefik.http.routers.watchtower.entrypoints=websecure"
       - "traefik.http.routers.watchtower.tls.certresolver=cloudflare"
       - "traefik.http.services.watchtower.loadbalancer.server.port=8080"
 

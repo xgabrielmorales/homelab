@@ -3,20 +3,30 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     restart: on-failure:10
-    env_file:
-      - .env
     expose:
       - "3000"
     volumes:
       - "./config:/app/config"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: pi.xgabrielmorales.com
+      - HOMEPAGE_ALLOWED_HOSTS=pi.xgabrielmorales.com
+      - HOMEPAGE_VAR_PORTAINER_URL=${HOMEPAGE_VAR_PORTAINER_URL}
+      - HOMEPAGE_VAR_PORTAINTER_KEY=${HOMEPAGE_VAR_PORTAINTER_KEY}
+      - HOMEPAGE_VAR_BESZEL_URL=${HOMEPAGE_VAR_BESZEL_URL}
+      - HOMEPAGE_VAR_BESZEL_USERNAME=${HOMEPAGE_VAR_BESZEL_USERNAME}
+      - HOMEPAGE_VAR_BESZEL_PASSWORD=${HOMEPAGE_VAR_BESZEL_PASSWORD}
+      - HOMEPAGE_VAR_TRAEFIK_URL=${HOMEPAGE_VAR_TRAEFIK_URL}
+      - HOMEPAGE_VAR_WATCHTOWER_URL=${HOMEPAGE_VAR_WATCHTOWER_URL}
+      - HOMEPAGE_VAR_WATCHTOWER_KEY=${HOMEPAGE_VAR_WATCHTOWER_KEY}
+      - HOMEPAGE_VAR_PIHOLE_URL=${HOMEPAGE_VAR_PIHOLE_URL}
+      - HOMEPAGE_VAR_PIHOLE_KEY=${HOMEPAGE_VAR_PIHOLE_KEY}
+      - HOMEPAGE_VAR_WIREGUARD_URL=${HOMEPAGE_VAR_WIREGUARD_URL}
+      - HOMEPAGE_VAR_WIREGUARD_KEY=${HOMEPAGE_VAR_WIREGUARD_KEY}
+      - HOMEPAGE_VAR_MYSPEED_URL=${HOMEPAGE_VAR_MYSPEED_URL}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homepage.rule=Host(`pi.xgabrielmorales.com`)"
-      - "traefik.http.routers.homepage.entrypoints=https"
-      - "traefik.http.routers.homepage.tls=true"
+      - "traefik.http.routers.homepage.entrypoints=websecure"
       - "traefik.http.routers.homepage.tls.certresolver=cloudflare"
       - "traefik.http.services.homepage.loadbalancer.server.port=3000"
 

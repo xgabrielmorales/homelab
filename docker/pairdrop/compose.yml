@@ -1,17 +1,27 @@
 services:
   pairdrop:
-    image: "lscr.io/linuxserver/pairdrop:latest"
+    image: lscr.io/linuxserver/pairdrop:latest
     container_name: pairdrop
     restart: on-failure:10
-    env_file:
-      - .env
+    environment:
+      - DEBUG_MODE=${DEBUG_MODE}
+      - PGID=${PGID}
+      - PUID=${PUID}
+      - RATE_LIMIT=${RATE_LIMIT}
+      - RTC_CONFIG=${RTC_CONFIG}
+      - TZ=${TZ}
+      - WS_FALLBACK=${WS_FALLBACK}
     expose:
       - "3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3000"]
+      interval: 2s
+      timeout: 10s
+      retries: 15
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pairdrop.rule=Host(`pairdrop.xgabrielmorales.com`)"
-      - "traefik.http.routers.pairdrop.entrypoints=https"
-      - "traefik.http.routers.pairdrop.tls=true"
+      - "traefik.http.routers.pairdrop.entrypoints=websecure"
       - "traefik.http.routers.pairdrop.tls.certresolver=cloudflare"
       - "traefik.http.services.pairdrop.loadbalancer.server.port=3000"
 
