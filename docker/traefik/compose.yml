@@ -5,32 +5,46 @@ services:
     restart: on-failure:10
     security_opt:
       - no-new-privileges:true
-    env_file:
-      - .env
+    environment:
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
+      - TZ=${TZ:-America/Bogota}
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./config/traefik.yml:/traefik.yml"
       - traefik-certs:/certs
+    command:
+      # API and Dashboard
+      - "--api.dashboard=true"
+      - "--api.insecure=false"
+      - "--api.debug=false"
+      # Entrypoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entrypoints.websecure.address=:443"
+      # Providers
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=reverse-proxy"
+      # Certificates ACME with Cloudflare
+      - "--certificatesresolvers.cloudflare.acme.email=${ACME_EMAIL}"
+      - "--certificatesresolvers.cloudflare.acme.storage=/certs/acme.json"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge=true"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53"
+      # Logging (opcional)
+      - "--log.level=INFO"
+      - "--accesslog=true"
+      - "--global.sendAnonymousUsage=false"
     labels:
       - "traefik.enable=true"
-      # Dashboard with HTTPS
       - "traefik.http.routers.traefik.rule=Host(`traefik.xgabrielmorales.com`)"
-      - "traefik.http.routers.traefik.entrypoints=https"
-      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.routers.traefik.tls.certresolver=cloudflare"
       - "traefik.http.routers.traefik.service=api@internal"
-      # Redirect all HTTP requests to HTTPS
-      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.httpsonly.redirectscheme.permanent=true"
-      - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
-      #  SSL Certificates
-      - "traefik.http.routers.traefik.tls.domains[0].main=xgabrielmorales.com"
-      - "traefik.http.routers.traefik.tls.domains[0].sans=*.xgabrielmorales.com"
-      # TinyAuth
-      - "traefik.http.routers.traefik.middlewares=tinyauth"
 
 volumes:
   traefik-certs:
