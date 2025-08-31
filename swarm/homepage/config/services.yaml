@@ -33,12 +33,6 @@
         widget:
           type: traefik
           url: '{{HOMEPAGE_VAR_TRAEFIK_URL}}'
-    - Watchtower:
-        icon: 'si-watchtower-#416271'
-        widget:
-          type: watchtower
-          url: '{{HOMEPAGE_VAR_WATCHTOWER_URL}}'
-          key: '{{HOMEPAGE_VAR_WATCHTOWER_KEY}}'
 - Networking:
     - Pi-hole:
         icon: sh-pi-hole.svg
