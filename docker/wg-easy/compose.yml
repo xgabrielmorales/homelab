@@ -1,3 +1,5 @@
+# vim: ft=yaml.docker-compose
+
 services:
   wg-easy:
     image: ghcr.io/wg-easy/wg-easy
@@ -23,7 +25,7 @@ services:
     ports:
       - "51820:51820/udp"
     volumes:
-      - etc_wireguard:/etc/wireguard
+      - etc-wireguard:/etc/wireguard
       - /lib/modules:/lib/modules:ro
     cap_add:
       - NET_ADMIN
@@ -53,8 +55,7 @@ services:
       - "53:53/tcp"
       - "53:53/udp"
     volumes:
-      - "./pihole/etc-pihole:/etc/pihole"
-      - "./pihole/etc-dnsmasq.d:/etc/dnsmasq.d"
+      - etc-pihole:/etc/pihole
     environment:
       - TZ="America/Bogota"
       - ServerIP=pihole # PiHole IP
@@ -97,7 +98,8 @@ services:
       retries: 5
 
 volumes:
-  etc_wireguard:
+  etc-wireguard:
+  etc-pihole:
 
 networks:
   default:
