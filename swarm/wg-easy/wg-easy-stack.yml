@@ -1,0 +1,128 @@
+services:
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy
+    hostname: wg-easy
+    environment:
+      - LANG=${WG_LANG:-en}
+      - PORT=${WG_PORT_2:-51821}
+      - WG_ALLOWED_IPS=${WG_ALLOWED_IPS}
+      - WG_CONFIG_PORT=${WG_CONFIG_PORT}
+      - WG_DEFAULT_ADDRESS=${WG_DEFAULT_ADDRESS}
+      - WG_DEFAULT_DNS=10.8.1.3
+      - WG_HOST=${WG_HOST}
+      - WG_MTU=${WG_MTU}
+      - WG_PORT=${WG_PORT_1:-51820}
+      - WG_POST_DOWN=${WG_POST_DOWN}
+      - WG_POST_UP=${WG_POST_UP}
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821"
+    volumes:
+      - etc-wireguard:/etc/wireguard
+      - /lib/modules:/lib/modules:ro
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    networks:
+      - reverse-proxy-swarm
+      - wg-easy
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.wireguard.rule=Host(`wireguard.xgabrielmorales.com`)"
+        - "traefik.http.routers.wireguard.entrypoints=websecure"
+        - "traefik.http.routers.wireguard.tls.certresolver=cloudflare"
+        - "traefik.http.services.wireguard.loadbalancer.server.port=51821"
+        - "traefik.http.routers.wireguard.middlewares=tinyauth"
+
+  pihole:
+    image: pihole/pihole:latest
+    hostname: pihole
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    volumes:
+      - etc-pihole:/etc/pihole
+    environment:
+      - TZ=America/Bogota
+      - ServerIP=pihole
+      - DNS1=unbound
+      - DNS2=unbound
+      - PIHOLE_DNS=unbound
+      - WEBPASSWORD=${PIH_WEBPASSWORD}
+    cap_add:
+      - NET_ADMIN
+      - CAP_SYS_TIME
+    networks:
+      - reverse-proxy-swarm
+      - wg-easy
+    healthcheck:
+      test: ["CMD-SHELL", "dig +short +norecurse +retry=0 @127.0.0.1 pi.hole"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.pihole.rule=Host(`pihole.xgabrielmorales.com`)"
+        - "traefik.http.routers.pihole.entrypoints=websecure"
+        - "traefik.http.routers.pihole.tls.certresolver=cloudflare"
+        - "traefik.http.services.pihole.loadbalancer.server.port=80"
+
+  unbound:
+    image: klutchell/unbound:latest
+    hostname: unbound
+    networks:
+      - wg-easy
+    healthcheck:
+      test: ["CMD", "drill", "@127.0.0.1", "dnssec.works"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+
+volumes:
+  etc-wireguard:
+    driver: local
+  etc-pihole:
+    driver: local
+
+networks:
+  reverse-proxy-swarm:
+    external: true
+  wg-easy:
+    driver: overlay
+    attachable: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.8.1.0/24

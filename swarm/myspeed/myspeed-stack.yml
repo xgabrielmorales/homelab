@@ -1,0 +1,32 @@
+services:
+  myspeed:
+    image: germannewsmaker/myspeed
+    hostname: myspeed
+    networks:
+      - reverse-proxy-swarm
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:5216 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.node.type == xgm-mini
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.myspeed.rule=Host(`speed.xgabrielmorales.com`)"
+        - "traefik.http.routers.myspeed.entrypoints=websecure"
+        - "traefik.http.routers.myspeed.tls.certresolver=cloudflare"
+        - "traefik.http.services.myspeed.loadbalancer.server.port=5216"
+        - "traefik.http.routers.myspeed.middlewares=tinyauth"
+
+networks:
+  reverse-proxy-swarm:
+    external: true

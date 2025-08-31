@@ -1,0 +1,25 @@
+services:
+  dumb:
+    image: ghcr.io/rramiachraf/dumb:latest
+    hostname: dumb
+    networks:
+      - reverse-proxy-swarm
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == xgm-pi
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.dumb.rule=Host(`dumb.xgabrielmorales.com`)"
+        - "traefik.http.routers.dumb.entrypoints=websecure"
+        - "traefik.http.routers.dumb.tls.certresolver=cloudflare"
+        - "traefik.http.services.dumb.loadbalancer.server.port=5555"
+
+networks:
+  reverse-proxy-swarm:
+    external: true

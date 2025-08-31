@@ -1,0 +1,153 @@
+services:
+  invidious:
+    image: quay.io/invidious/invidious:master
+    hostname: invidious
+    environment:
+      - INVIDIOUS_CONFIG_FILE=${INV_INVIDIOUS_CONFIG_FILE:-/config/config.yml}
+    configs:
+      - source: invidious-config
+        target: /config/config.yml
+    networks:
+      - reverse-proxy-swarm
+      - invidious-internal
+    depends_on:
+      - invidious-companion
+      - invidious-db
+    healthcheck:
+      test: wget -nv --tries=1 --spider http://127.0.0.1:3000/api/v1/comments/jNQXAC9IVRw || exit 1
+      start_period: 10s
+      interval: 30s
+      timeout: 5s
+      retries: 2
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.node.type == xgm-mini
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          memory: 1G
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.invidious.rule=Host(`invidious.xgabrielmorales.com`)"
+        - "traefik.http.routers.invidious.entrypoints=websecure"
+        - "traefik.http.routers.invidious.tls.certresolver=cloudflare"
+        - "traefik.http.services.invidious.loadbalancer.server.port=3000"
+
+  invidious-companion:
+    image: quay.io/invidious/invidious-companion:latest
+    hostname: invidious-companion
+    environment:
+      - SERVER_SECRET_KEY=${INVC_SERVER_SECRET_KEY}
+    volumes:
+      - companioncache:/var/tmp/youtubei.js:rw
+    cap_drop:
+      - ALL
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - reverse-proxy-swarm
+      - invidious-internal
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.type == xgm-mini
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.compnaion.rule=Host(`companion.xgabrielmorales.com`)"
+        - "traefik.http.routers.compnaion.entrypoints=websecure"
+        - "traefik.http.routers.compnaion.tls.certresolver=cloudflare"
+        - "traefik.http.services.compnaion.loadbalancer.server.port=8282"
+
+  invidious-db:
+    image: docker.io/library/postgres:14
+    hostname: invidious-db
+    volumes:
+      - invidious-db-data:/var/lib/postgresql/data
+    configs:
+      - source: invidious-init-db
+        target: /docker-entrypoint-initdb.d/init-invidious-db.sh
+      - source: sql-channels
+        target: /config/sql/channels.sql
+      - source: sql-videos
+        target: /config/sql/videos.sql
+      - source: sql-channel-videos
+        target: /config/sql/channel_videos.sql
+      - source: sql-users
+        target: /config/sql/users.sql
+      - source: sql-session-ids
+        target: /config/sql/session_ids.sql
+      - source: sql-nonces
+        target: /config/sql/nonces.sql
+      - source: sql-annotations
+        target: /config/sql/annotations.sql
+      - source: sql-playlists
+        target: /config/sql/playlists.sql
+      - source: sql-playlist-videos
+        target: /config/sql/playlist_videos.sql
+    environment:
+      - POSTGRES_USER=${INVPG_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${INVPG_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${INVPG_POSTGRES_DB}
+    networks:
+      - invidious-internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      start_period: 10s
+      retries: 5
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.type == xgm-mini
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+
+volumes:
+  invidious-db-data:
+    driver: local
+  companioncache:
+    driver: local
+
+configs:
+  invidious-config:
+    file: ./config/config.yml
+  invidious-init-db:
+    file: ./config/init-invidious-db.sh
+  sql-channels:
+    file: ./config/sql/channels.sql
+  sql-videos:
+    file: ./config/sql/videos.sql
+  sql-channel-videos:
+    file: ./config/sql/channel_videos.sql
+  sql-users:
+    file: ./config/sql/users.sql
+  sql-session-ids:
+    file: ./config/sql/session_ids.sql
+  sql-nonces:
+    file: ./config/sql/nonces.sql
+  sql-annotations:
+    file: ./config/sql/annotations.sql
+  sql-playlists:
+    file: ./config/sql/playlists.sql
+  sql-playlist-videos:
+    file: ./config/sql/playlist_videos.sql
+
+networks:
+  reverse-proxy-swarm:
+    external: true
+  invidious-internal:
+    driver: overlay
+    internal: true

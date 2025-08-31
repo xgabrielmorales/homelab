@@ -1,0 +1,108 @@
+services:
+  traefik:
+    image: traefik:latest
+    hostname: traefik
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - traefik-certs:/certs
+    environment:
+      - CF_DNS_API_TOKEN=${TFK_CF_DNS_API_TOKEN}
+      - TZ=${TFK_TZ}
+    command:
+      # API and Dashboard
+      - "--api.dashboard=true"
+      - "--api.insecure=false"
+      - "--api.debug=false"
+      # Entrypoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entrypoints.websecure.address=:443"
+      # Providers
+      - "--providers.swarm=true"
+      - "--providers.swarm.exposedbydefault=false"
+      - "--providers.swarm.network=reverse-proxy-swarm"
+      # Certificates ACME with Cloudflare
+      - "--certificatesresolvers.cloudflare.acme.email=${TFK_ACME_EMAIL}"
+      - "--certificatesresolvers.cloudflare.acme.storage=/certs/acme.json"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge=true"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53"
+      # Logging
+      - "--accesslog=true"
+      - "--global.sendAnonymousUsage=false"
+      - "--log.level=INFO"
+      - "--ping"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      start_period: 5s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - reverse-proxy-swarm
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefik.rule=Host(`traefik.xgabrielmorales.com`)"
+        - "traefik.http.routers.traefik.entrypoints=websecure"
+        - "traefik.http.routers.traefik.tls.certresolver=cloudflare"
+        - "traefik.http.routers.traefik.service=api@internal"
+        - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+        - "traefik.http.routers.traefik.middlewares=tinyauth"
+
+  tinyauth:
+    image: ghcr.io/steveiliop56/tinyauth:v3
+    hostname: tinyauth
+    environment:
+      - APP_TITLE=${TA_APP_TITLE}
+      - APP_URL=https://auth.xgabrielmorales.com
+      - COOKIE_SECURE=${TA_COOKIE_SECURE:-true}
+      - DISABLE_CONTINUE=${TA_DISABLE_CONTINUE:-true}
+      - LOG_LEVEL=${TA_LOG_LEVEL:-0}
+      - SECRET=${TA_SECRET}
+      - USERS=${TA_USERS}
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--head", "http://localhost:3000/"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - reverse-proxy-swarm
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.tinyauth.rule=Host(`auth.xgabrielmorales.com`)"
+        - "traefik.http.routers.tinyauth.entrypoints=websecure"
+        - "traefik.http.routers.tinyauth.tls.certresolver=cloudflare"
+        - "traefik.http.services.tinyauth.loadbalancer.server.port=3000"
+        - "traefik.http.middlewares.tinyauth.forwardauth.address=http://tinyauth:3000/api/auth/traefik"
+
+volumes:
+  traefik-certs:
+    driver: local
+
+networks:
+  reverse-proxy-swarm:
+    external: true

@@ -1,10 +1,10 @@
 services:
   beszel-agent:
     image: henrygd/beszel-agent:latest
-    container_name: beszel-agent
+    container_name: beszel-agent-${NODE_NAME}
     restart: always
-    ports:
-      - "45876:45876"
+    expose:
+      - "45876"
     environment:
       - KEY=${KEY}
       - PORT=${PORT:-45876}
@@ -13,3 +13,8 @@ services:
     healthcheck:
       test: ["CMD", "/agent", "health"]
       interval: 120s
+
+networks:
+  default:
+    name: reverse-proxy-swarm
+    external: true

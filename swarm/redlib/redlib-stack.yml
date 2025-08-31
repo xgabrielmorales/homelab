@@ -1,0 +1,59 @@
+services:
+  redlib:
+    image: quay.io/redlib/redlib:latest
+    hostname: redlib
+    environment:
+      - REDLIB_BANNER=${REDLIB_BANNER}
+      - REDLIB_DEFAULT_AUTOPLAY_VIDEOS=${REDLIB_DEFAULT_AUTOPLAY_VIDEOS}
+      - REDLIB_DEFAULT_BLUR_NSFW=${REDLIB_DEFAULT_BLUR_NSFW}
+      - REDLIB_DEFAULT_BLUR_SPOILER=${REDLIB_DEFAULT_BLUR_SPOILER}
+      - REDLIB_DEFAULT_COMMENT_SORT=${REDLIB_DEFAULT_COMMENT_SORT}
+      - REDLIB_DEFAULT_DISABLE_VISIT_REDDIT_CONFIRMATION=${REDLIB_DEFAULT_DISABLE_VISIT_REDDIT_CONFIRMATION}
+      - REDLIB_DEFAULT_FILTERS=${REDLIB_DEFAULT_FILTERS}
+      - REDLIB_DEFAULT_FIXED_NAVBAR=${REDLIB_DEFAULT_FIXED_NAVBAR}
+      - REDLIB_DEFAULT_FRONT_PAGE=${REDLIB_DEFAULT_FRONT_PAGE}
+      - REDLIB_DEFAULT_HIDE_AWARDS=${REDLIB_DEFAULT_HIDE_AWARDS}
+      - REDLIB_DEFAULT_HIDE_HLS_NOTIFICATION=${REDLIB_DEFAULT_HIDE_HLS_NOTIFICATION}
+      - REDLIB_DEFAULT_HIDE_SCORE=${REDLIB_DEFAULT_HIDE_SCORE}
+      - REDLIB_DEFAULT_HIDE_SIDEBAR_AND_SUMMARY=${REDLIB_DEFAULT_HIDE_SIDEBAR_AND_SUMMARY}
+      - REDLIB_DEFAULT_LAYOUT=${REDLIB_DEFAULT_LAYOUT}
+      - REDLIB_DEFAULT_POST_SORT=${REDLIB_DEFAULT_POST_SORT}
+      - REDLIB_DEFAULT_SHOW_NSFW=${REDLIB_DEFAULT_SHOW_NSFW}
+      - REDLIB_DEFAULT_SUBSCRIPTIONS=${REDLIB_DEFAULT_SUBSCRIPTIONS}
+      - REDLIB_DEFAULT_THEME=${REDLIB_DEFAULT_THEME}
+      - REDLIB_DEFAULT_USE_HLS=${REDLIB_DEFAULT_USE_HLS}
+      - REDLIB_DEFAULT_WIDE=${REDLIB_DEFAULT_WIDE}
+      - REDLIB_PUSHSHIFT_FRONTEND=${REDLIB_PUSHSHIFT_FRONTEND}
+      - REDLIB_ROBOTS_DISABLE_INDEXING=${REDLIB_ROBOTS_DISABLE_INDEXING}
+      - REDLIB_SFW_ONLY=${REDLIB_SFW_ONLY}
+    user: nobody
+    read_only: true
+    cap_drop:
+      - ALL
+    networks:
+      - reverse-proxy-swarm
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/settings"]
+      start_period: 0s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.node.type == xgm-mini
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.redlib.rule=Host(`reddit.xgabrielmorales.com`)"
+        - "traefik.http.routers.redlib.entrypoints=websecure"
+        - "traefik.http.routers.redlib.tls.certresolver=cloudflare"
+        - "traefik.http.services.redlib.loadbalancer.server.port=8080"
+
+networks:
+  reverse-proxy-swarm:
+    external: true
