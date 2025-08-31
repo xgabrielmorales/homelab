@@ -17,7 +17,18 @@
           url: '{{HOMEPAGE_VAR_BESZEL_URL}}'
           username: '{{HOMEPAGE_VAR_BESZEL_USERNAME}}'
           password: '{{HOMEPAGE_VAR_BESZEL_PASSWORD}}'
-          systemId: Raspberry PI
+          systemId: Raspberry PI 4
+          version: 2
+    - Beszel:
+        icon: sh-beszel.svg
+        href: 'https://beszel.xgabrielmorales.com'
+        container: beszel
+        widget:
+          type: beszel
+          url: '{{HOMEPAGE_VAR_BESZEL_URL}}'
+          username: '{{HOMEPAGE_VAR_BESZEL_USERNAME}}'
+          password: '{{HOMEPAGE_VAR_BESZEL_PASSWORD}}'
+          systemId: Mini PC
           version: 2
     - Traefik:
         icon: sh-traefik.svg
