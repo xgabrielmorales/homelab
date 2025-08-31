@@ -3,7 +3,7 @@ services:
     image: quay.io/invidious/invidious:master
     hostname: invidious
     environment:
-      - INVIDIOUS_CONFIG_FILE=${INV_INVIDIOUS_CONFIG_FILE:-/config/config.yml}
+      INVIDIOUS_CONFIG_FILE: "/config/config.yml"
     configs:
       - source: invidious-config
         target: /config/config.yml
@@ -26,8 +26,8 @@ services:
           - node.labels.node.type == xgm-mini
       restart_policy:
         condition: on-failure
-        delay: 10s
-        max_attempts: 5
+        delay: 5s
+        max_attempts: 10
       resources:
         limits:
           memory: 1G
@@ -57,11 +57,11 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.type == xgm-mini
+          - node.labels.node.type == xgm-mini
       restart_policy:
         condition: on-failure
-        delay: 10s
-        max_attempts: 5
+        delay: 5s
+        max_attempts: 10
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.compnaion.rule=Host(`companion.xgabrielmorales.com`)"
@@ -96,24 +96,24 @@ services:
       - source: sql-playlist-videos
         target: /config/sql/playlist_videos.sql
     environment:
-      - POSTGRES_USER=${INVPG_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${INVPG_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${INVPG_POSTGRES_DB}
+      POSTGRES_DB: invidious
+      POSTGRES_USER: kemal
+      POSTGRES_PASSWORD: kemal
     networks:
       - invidious-internal
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
-      start_period: 10s
-      retries: 5
     deploy:
       replicas: 1
       placement:
         constraints:
-          - node.labels.type == xgm-mini
+          - node.labels.node.type == xgm-mini
       restart_policy:
         condition: on-failure
-        delay: 10s
-        max_attempts: 5
+        delay: 5s
+        max_attempts: 10
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      start_period: 10s
+      retries: 5
 
 volumes:
   invidious-db-data:
