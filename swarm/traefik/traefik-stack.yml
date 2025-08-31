@@ -14,7 +14,7 @@ services:
     command:
       # API and Dashboard
       - "--api.dashboard=true"
-      - "--api.insecure=false"
+      - "--api.insecure=true"
       - "--api.debug=false"
       # Entrypoints
       - "--entrypoints.web.address=:80"
