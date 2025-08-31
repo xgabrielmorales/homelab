@@ -13,6 +13,7 @@ services:
       - TZ=${TFK_TZ}
     command:
       # API and Dashboard
+      - "--api=true"
       - "--api.dashboard=true"
       - "--api.insecure=true"
       - "--api.debug=false"
