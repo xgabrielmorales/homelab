@@ -20,4 +20,3 @@ CREATE UNIQUE INDEX IF NOT EXISTS id_idx
   ON public.videos
   USING btree
   (id COLLATE pg_catalog."default");
-

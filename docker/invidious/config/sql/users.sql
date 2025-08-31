@@ -26,4 +26,3 @@ CREATE UNIQUE INDEX IF NOT EXISTS email_unique_idx
   ON public.users
   USING btree
   (lower(email) COLLATE pg_catalog."default");
-

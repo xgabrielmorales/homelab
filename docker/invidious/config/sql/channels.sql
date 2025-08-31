@@ -22,4 +22,3 @@ CREATE INDEX IF NOT EXISTS channels_id_idx
   ON public.channels
   USING btree
   (id COLLATE pg_catalog."default");
-

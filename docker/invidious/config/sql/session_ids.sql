@@ -20,4 +20,3 @@ CREATE INDEX IF NOT EXISTS session_ids_id_idx
   ON public.session_ids
   USING btree
   (id COLLATE pg_catalog."default");
-

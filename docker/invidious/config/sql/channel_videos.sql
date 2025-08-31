@@ -27,4 +27,3 @@ CREATE INDEX IF NOT EXISTS channel_videos_ucid_idx
   ON public.channel_videos
   USING btree
   (ucid COLLATE pg_catalog."default");
-
