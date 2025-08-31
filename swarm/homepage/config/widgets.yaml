@@ -1,11 +1,3 @@
 ---
 # For configuration options and examples, please see:
 # https://gethomepage.dev/configs/service-widgets/
-
-- logo:
-    icon: sh-raspberry-pi.svg
-
-- search:
-    provider: custom
-    url: https://www.google.com/search?q=%s&udm=14&hl=en
-    target: _self
