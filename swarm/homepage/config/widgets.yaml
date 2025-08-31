@@ -9,11 +9,3 @@
     provider: custom
     url: https://www.google.com/search?q=%s&udm=14&hl=en
     target: _self
-
-- resources:
-    cpu: true
-    cputemp: true
-
-- resources:
-    memory: true
-    disk: /
