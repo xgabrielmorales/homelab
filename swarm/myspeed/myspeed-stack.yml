@@ -1,3 +1,5 @@
+# vim: ft=yaml.docker-compose
+
 services:
   myspeed:
     image: germannewsmaker/myspeed

@@ -1,3 +1,5 @@
+# vim: ft=yaml.docker-compose
+
 services:
   invidious:
     image: quay.io/invidious/invidious:master

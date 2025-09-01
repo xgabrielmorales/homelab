@@ -1,3 +1,5 @@
+# vim: ft=yaml.docker-compose
+
 services:
   beszel-agent:
     image: henrygd/beszel-agent:latest

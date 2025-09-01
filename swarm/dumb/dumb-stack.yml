@@ -1,3 +1,5 @@
+# vim: ft=yaml.docker-compose
+
 services:
   dumb:
     image: ghcr.io/rramiachraf/dumb:latest

@@ -1,3 +1,5 @@
+# vim: ft=yaml.docker-compose
+
 services:
   ddns-updater:
     image: qmcgaw/ddns-updater
