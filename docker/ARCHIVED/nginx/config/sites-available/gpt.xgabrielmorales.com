@@ -1,1 +1,0 @@
-../sites-enabled/gpt.xgabrielmorales.com
