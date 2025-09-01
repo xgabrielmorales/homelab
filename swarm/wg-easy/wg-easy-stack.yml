@@ -5,15 +5,8 @@ services:
     image: ghcr.io/wg-easy/wg-easy
     hostname: wg-easy
     environment:
-      - LANG=${WG_LANG:-en}
-      - PORT=${WG_PORT_2:-51821}
       - WG_ALLOWED_IPS=${WG_ALLOWED_IPS}
-      - WG_CONFIG_PORT=${WG_CONFIG_PORT}
-      - WG_DEFAULT_ADDRESS=${WG_DEFAULT_ADDRESS}
-      - WG_DEFAULT_DNS=pihole
       - WG_HOST=${WG_HOST}
-      - WG_MTU=${WG_MTU}
-      - WG_PORT=${WG_PORT_1:-51820}
       - WG_POST_DOWN=${WG_POST_DOWN}
       - WG_POST_UP=${WG_POST_UP}
     ports:
@@ -62,14 +55,11 @@ services:
       - DNS2=unbound
       - PIHOLE_DNS=unbound
       - WEBPASSWORD=${PIH_WEBPASSWORD}
-    cap_add:
-      - NET_ADMIN
-      - CAP_SYS_TIME
     networks:
       - reverse-proxy-swarm
       - wg-easy
     healthcheck:
-      test: ["CMD-SHELL", "dig +short +norecurse +retry=0 @127.0.0.1 pi.hole"]
+      test: [ "CMD-SHELL", "dig +short +norecurse +retry=0 @127.0.0.1 pi.hole" ]
       start_period: 10s
       interval: 10s
       timeout: 5s
@@ -96,7 +86,7 @@ services:
     networks:
       - wg-easy
     healthcheck:
-      test: ["CMD", "drill", "@127.0.0.1", "dnssec.works"]
+      test: [ "CMD", "drill", "@127.0.0.1", "dnssec.works" ]
       start_period: 10s
       interval: 10s
       timeout: 5s
