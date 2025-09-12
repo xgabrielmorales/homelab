@@ -1,45 +1,6 @@
 # vim: ft=yaml.docker-compose
 
 services:
-  wg-easy:
-    image: ghcr.io/wg-easy/wg-easy
-    hostname: wg-easy
-    environment:
-      - WG_ALLOWED_IPS=${WG_ALLOWED_IPS}
-      - WG_HOST=${WG_HOST}
-      - WG_POST_DOWN=${WG_POST_DOWN}
-      - WG_POST_UP=${WG_POST_UP}
-    ports:
-      - "51820:51820/udp"
-    volumes:
-      - etc-wireguard:/etc/wireguard
-      - /lib/modules:/lib/modules:ro
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    sysctls:
-      - net.ipv4.ip_forward=1
-      - net.ipv4.conf.all.src_valid_mark=1
-    networks:
-      - reverse-proxy-swarm
-      - wg-easy
-    deploy:
-      replicas: 1
-      placement:
-        constraints:
-          - node.role == manager
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.wireguard.rule=Host(`wireguard.xgabrielmorales.com`)"
-        - "traefik.http.routers.wireguard.entrypoints=websecure"
-        - "traefik.http.routers.wireguard.tls.certresolver=cloudflare"
-        - "traefik.http.services.wireguard.loadbalancer.server.port=51821"
-        - "traefik.http.routers.wireguard.middlewares=tinyauth"
-
   pihole:
     image: pihole/pihole:latest
     hostname: pihole
@@ -57,7 +18,6 @@ services:
       - WEBPASSWORD=${PIH_WEBPASSWORD}
     networks:
       - reverse-proxy-swarm
-      - wg-easy
     healthcheck:
       test: [ "CMD-SHELL", "dig +short +norecurse +retry=0 @127.0.0.1 pi.hole" ]
       start_period: 10s
@@ -83,8 +43,6 @@ services:
   unbound:
     image: klutchell/unbound:latest
     hostname: unbound
-    networks:
-      - wg-easy
     healthcheck:
       test: [ "CMD", "drill", "@127.0.0.1", "dnssec.works" ]
       start_period: 10s
@@ -110,10 +68,3 @@ volumes:
 networks:
   reverse-proxy-swarm:
     external: true
-  wg-easy:
-    driver: overlay
-    attachable: true
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.8.1.0/24
