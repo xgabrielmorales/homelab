@@ -2,7 +2,7 @@
 
 services:
   invidious:
-    image: quay.io/invidious/invidious:master
+    image: quay.io/invidious/invidious:latest
     hostname: invidious
     environment:
       INVIDIOUS_CONFIG_FILE: "/config/config.yml"
