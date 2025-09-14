@@ -19,12 +19,8 @@ services:
       - HOMEPAGE_VAR_WIREGUARD_KEY=${HOMEPAGE_VAR_WIREGUARD_KEY}
       - HOMEPAGE_VAR_MYSPEED_URL=${HOMEPAGE_VAR_MYSPEED_URL}
     configs:
-      - source: homepage-docker
-        target: /app/config/docker.yaml
       - source: homepage-services
         target: /app/config/services.yaml
-      - source: homepage-widgets
-        target: /app/config/widgets.yaml
       - source: homepage-settings
         target: /app/config/settings.yaml
       - source: homepage-bookmarks
@@ -48,12 +44,8 @@ services:
         - "traefik.http.services.homepage.loadbalancer.server.port=3000"
 
 configs:
-  homepage-docker:
-    file: ./config/docker.yaml
   homepage-services:
     file: ./config/services.yaml
-  homepage-widgets:
-    file: ./config/widgets.yaml
   homepage-settings:
     file: ./config/settings.yaml
   homepage-bookmarks:
