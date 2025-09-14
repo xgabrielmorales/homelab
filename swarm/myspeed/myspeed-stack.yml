@@ -4,6 +4,8 @@ services:
   myspeed:
     image: germannewsmaker/myspeed
     hostname: myspeed
+    volumes:
+      - myspeed-data:/myspeed/data
     networks:
       - reverse-proxy-swarm
     healthcheck:
@@ -32,3 +34,6 @@ services:
 networks:
   reverse-proxy-swarm:
     external: true
+
+volumes:
+  myspeed-data:
