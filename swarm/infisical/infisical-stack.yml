@@ -28,6 +28,7 @@ services:
         - "traefik.http.routers.infisical.rule=Host(`infisical.xgabrielmorales.com`)"
         - "traefik.http.routers.infisical.entrypoints=websecure"
         - "traefik.http.routers.infisical.tls.certresolver=cloudflare"
+        - "traefik.http.routers.infisical.middlewares=crowdsec-bouncer"
         - "traefik.http.services.infisical.loadbalancer.server.port=8080"
 
   infisical-redis:
