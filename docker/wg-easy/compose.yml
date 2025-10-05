@@ -1,18 +1,14 @@
 services:
-  wg-easy:
-    image: ghcr.io/wg-easy/wg-easy
-    hostname: wg-easy
-    environment:
-      - WG_ALLOWED_IPS=${WG_ALLOWED_IPS}
-      - WG_HOST=${WG_HOST}
-      - WG_POST_DOWN=${WG_POST_DOWN}
-      - WG_POST_UP=${WG_POST_UP}
+  wireguard:
+    image: ghcr.io/wg-easy/wg-easy:15.1.0
+    container_name: wireguard
+    restart: unless-stopped
     ports:
       - "51821:51821/tcp"
       - "51820:51820/udp"
     volumes:
-      - etc-wireguard:/etc/wireguard
-      - /lib/modules:/lib/modules:ro
+      - "/lib/modules:/lib/modules:ro"
+      - wireguard-etc:/etc/wireguard
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -21,4 +17,4 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
 
 volumes:
-  etc-wireguard:
+  wireguard-etc:
