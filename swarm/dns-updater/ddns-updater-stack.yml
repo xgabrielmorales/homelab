@@ -25,7 +25,6 @@ services:
       restart_policy:
         condition: on-failure
         delay: 10s
-        max_attempts: 5
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.ddns_updater.rule=Host(`dns.xgabrielmorales.com`)"
