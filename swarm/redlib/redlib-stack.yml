@@ -54,7 +54,6 @@ services:
         - "traefik.http.routers.redlib.rule=Host(`reddit.xgabrielmorales.com`)"
         - "traefik.http.routers.redlib.entrypoints=websecure"
         - "traefik.http.routers.redlib.tls.certresolver=cloudflare"
-        - "traefik.http.routers.redlib.middlewares=crowdsec-bouncer"
         - "traefik.http.services.redlib.loadbalancer.server.port=8080"
 
 networks:

@@ -4,6 +4,8 @@ services:
   infisical:
     image: infisical/infisical:latest-postgres
     hostname: infisical
+    ports:
+      - "8080:8080"
     environment:
       - AUTH_SECRET=${AUTH_SECRET}
       - DB_CONNECTION_URI=${DB_CONNECTION_URI}
@@ -27,7 +29,6 @@ services:
         - "traefik.http.routers.infisical.rule=Host(`infisical.xgabrielmorales.com`)"
         - "traefik.http.routers.infisical.entrypoints=websecure"
         - "traefik.http.routers.infisical.tls.certresolver=cloudflare"
-        - "traefik.http.routers.infisical.middlewares=crowdsec-bouncer"
         - "traefik.http.services.infisical.loadbalancer.server.port=8080"
 
   infisical-redis:

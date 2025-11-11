@@ -38,7 +38,6 @@ services:
         - "traefik.http.routers.invidious.rule=Host(`invidious.xgabrielmorales.com`)"
         - "traefik.http.routers.invidious.entrypoints=websecure"
         - "traefik.http.routers.invidious.tls.certresolver=cloudflare"
-        - "traefik.http.routers.invidious.middlewares=crowdsec-bouncer"
         - "traefik.http.services.invidious.loadbalancer.server.port=3000"
 
   invidious-companion:

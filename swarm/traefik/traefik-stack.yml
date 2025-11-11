@@ -10,7 +10,6 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - traefik-certs:/certs
-      - traefik-logs:/var/log/traefik
     environment:
       - CF_DNS_API_TOKEN=${TFK_CF_DNS_API_TOKEN}
       - TZ=${TFK_TZ}
@@ -30,9 +29,6 @@ services:
       - "--providers.swarm=true"
       - "--providers.swarm.exposedbydefault=false"
       - "--providers.swarm.network=reverse-proxy-swarm"
-      # Plugin configuration
-      - "--experimental.plugins.crowdsec-bouncer.modulename=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
-      - "--experimental.plugins.crowdsec-bouncer.version=v1.3.4"
       # Certificates ACME with Cloudflare
       - "--certificatesresolvers.cloudflare.acme.email=${TFK_ACME_EMAIL}"
       - "--certificatesresolvers.cloudflare.acme.storage=/certs/acme.json"
@@ -41,14 +37,11 @@ services:
       - "--certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53"
       # Logging
       - "--accesslog=true"
-      - "--accessLog.filePath=/var/log/traefik/access.log"
-      - "--accessLog.bufferingSize=100"
-      - "--accessLog.filters.statusCodes=204-299,400-499,500-599"
       - "--global.sendAnonymousUsage=false"
       - "--log.level=INFO"
       - "--ping"
     healthcheck:
-      test: [ "CMD", "traefik", "healthcheck", "--ping" ]
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
       start_period: 5s
       interval: 10s
       timeout: 5s
@@ -72,40 +65,6 @@ services:
         - "traefik.http.routers.traefik.service=api@internal"
         - "traefik.http.services.traefik.loadbalancer.server.port=8080"
         - "traefik.http.routers.traefik.middlewares=tinyauth"
-        - "traefik.http.middlewares.crowdsec-bouncer.plugin.crowdsec-bouncer.enabled=true"
-        - "traefik.http.middlewares.crowdsec-bouncer.plugin.crowdsec-bouncer.crowdseclapikey=${CROWDSEC_LAPI_KEY}"
-        - "traefik.http.middlewares.crowdsec-bouncer.plugin.crowdsec-bouncer.crowdseclapiurl=http://crowdsec:8080/"
-
-  crowdsec:
-    image: crowdsecurity/crowdsec:latest
-    container_name: crowdsec
-    environment:
-      COLLECTIONS: "crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/http-dos"
-      CUSTOM_HOSTNAME: crowdsec
-      BOUNCER_KEY_traefik: ${CROWDSEC_LAPI_KEY}
-    configs:
-      - source: crowdsec-acquis
-        target: /etc/crowdsec/acquis.yaml
-    volumes:
-      - traefik-logs:/var/log/traefik:ro
-      - crowdsec-config:/etc/crowdsec/
-      - type: tmpfs
-        target: /var/lib/crowdsec/data/
-        tmpfs:
-          size: 524288000 # 500 MB
-    networks:
-      - reverse-proxy-swarm
-    deploy:
-      replicas: 1
-      placement:
-        constraints:
-          - node.role == manager
-      restart_policy:
-        condition: on-failure
-        delay: 30s
-        max_attempts: 10
-      labels:
-        - "traefik.enable=false"
 
   tinyauth:
     image: ghcr.io/steveiliop56/tinyauth:v3
@@ -119,7 +78,7 @@ services:
       - SECRET=${TA_SECRET}
       - USERS=${TA_USERS}
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "--head", "http://localhost:3000/" ]
+      test: ["CMD", "curl", "--fail", "--head", "http://localhost:3000/"]
       start_period: 10s
       interval: 10s
       timeout: 5s
@@ -140,19 +99,12 @@ services:
         - "traefik.http.routers.tinyauth.rule=Host(`auth.xgabrielmorales.com`)"
         - "traefik.http.routers.tinyauth.entrypoints=websecure"
         - "traefik.http.routers.tinyauth.tls.certresolver=cloudflare"
-        - "traefik.http.routers.tinyauth.middlewares=crowdsec-bouncer"
         - "traefik.http.services.tinyauth.loadbalancer.server.port=3000"
         - "traefik.http.middlewares.tinyauth.forwardauth.address=http://tinyauth:3000/api/auth/traefik"
 
 volumes:
   traefik-certs:
-  traefik-logs:
-  crowdsec-config:
-
-
-configs:
-  crowdsec-acquis:
-    file: ./config/crowdsec/acquis.yaml
+    driver: local
 
 networks:
   reverse-proxy-swarm:
