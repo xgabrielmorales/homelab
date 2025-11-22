@@ -25,7 +25,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.node.type == xgm-mini
+          - node.role == worker
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -59,7 +59,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.node.type == xgm-mini
+          - node.role == worker
       restart_policy:
         condition: on-failure
         delay: 5s
@@ -107,7 +107,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.node.type == xgm-mini
+          - node.role == worker
       restart_policy:
         condition: on-failure
         delay: 10s
