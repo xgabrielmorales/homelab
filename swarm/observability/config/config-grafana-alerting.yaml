@@ -1,0 +1,11 @@
+# vim: ft=yaml
+apiVersion: 1
+
+# Basic Grafana Alerting configuration
+# Contact points and notification policies can be configured via the Grafana UI
+
+alerting:
+  contactPoints: []
+  policies: []
+  muteTimings: []
+  templates: []
