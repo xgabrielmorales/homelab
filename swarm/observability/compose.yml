@@ -22,7 +22,7 @@ services:
         - "traefik.enable=false"
 
   node-exporter:
-    image: prom/node-exporter:v1.9.1@sha256:d00a542e409ee618a4edc67da14dd48c5da66726bbd5537ab2af9c1dfc442c8a
+    image: prom/node-exporter
     hostname: "{{.Node.Hostname}}"
     volumes:
       - /proc:/host/proc:ro
@@ -45,7 +45,7 @@ services:
         - "prometheus.port=9100"
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.52.0@sha256:505e2c61e74e5d5eae522d01e2e971e91b793bc405270315a64da806ba033640
+    image: gcr.io/cadvisor/cadvisor
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
@@ -64,7 +64,7 @@ services:
         - "prometheus.port=8080"
 
   prometheus:
-    image: prom/prometheus:v3.7.3@sha256:49214755b6153f90a597adcbff0252cc61069f8ab69ce8411285cd4a560e8038
+    image: prom/prometheus
     configs:
       - source: config-prometheus
         target: /etc/prometheus/prometheus.yml
