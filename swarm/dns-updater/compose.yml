@@ -31,7 +31,6 @@ services:
         - "traefik.http.routers.ddns_updater.entrypoints=websecure"
         - "traefik.http.routers.ddns_updater.tls.certresolver=cloudflare"
         - "traefik.http.services.ddns_updater.loadbalancer.server.port=8000"
-        - "traefik.http.routers.ddns_updater.middlewares=tinyauth"
 
 networks:
   reverse-proxy-swarm:

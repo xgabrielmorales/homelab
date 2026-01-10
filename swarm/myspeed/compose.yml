@@ -29,7 +29,6 @@ services:
         - "traefik.http.routers.myspeed.entrypoints=websecure"
         - "traefik.http.routers.myspeed.tls.certresolver=cloudflare"
         - "traefik.http.services.myspeed.loadbalancer.server.port=5216"
-        - "traefik.http.routers.myspeed.middlewares=tinyauth"
 
 networks:
   reverse-proxy-swarm:
