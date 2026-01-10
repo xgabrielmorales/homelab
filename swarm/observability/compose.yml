@@ -65,8 +65,10 @@ services:
 
   prometheus:
     image: prom/prometheus:v3.7.3@sha256:49214755b6153f90a597adcbff0252cc61069f8ab69ce8411285cd4a560e8038
+    configs:
+      - source: config-prometheus
+        target: /etc/prometheus/prometheus.yml
     volumes:
-      - ./config/config-prometheus.yaml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
     command: ["--config.file=/etc/prometheus/prometheus.yml"]
     networks:
@@ -136,9 +138,12 @@ services:
       - GF_LOG_MODE=console
       - GF_LOG_LEVEL=info
       - GF_LOG_CONSOLE_FORMAT=json
+    configs:
+      - source: config-grafana
+        target: /etc/grafana/provisioning/datasources/datasources.yaml
+      - source: config-grafana-alerting
+        target: /etc/grafana/provisioning/alerting/alerting.yaml
     volumes:
-      - ./config/config-grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro
-      - ./config/config-grafana-alerting.yaml:/etc/grafana/provisioning/alerting/alerting.yaml:ro
       - grafana-data:/var/lib/grafana
     networks:
       - reverse-proxy-swarm
@@ -156,10 +161,18 @@ services:
         - "traefik.http.routers.grafana.tls.certresolver=cloudflare"
         - "traefik.http.services.grafana.loadbalancer.server.port=3000"
 
-networks:
-  reverse-proxy-swarm:
-    external: true
+configs:
+  config-prometheus:
+    file: ./config/config-prometheus.yaml
+  config-grafana:
+    file: ./config/config-grafana.yaml
+  config-grafana-alerting:
+    file: ./config/config-grafana-alerting.yaml
 
 volumes:
   prometheus-data:
   grafana-data:
+
+networks:
+  reverse-proxy-swarm:
+    external: true
