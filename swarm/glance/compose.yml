@@ -1,0 +1,48 @@
+# vim: ft=yaml.docker-compose
+
+services:
+  glance:
+    image: glanceapp/glance
+    environment:
+      - MY_SECRET_TOKEN=${MY_SECRET_TOKEN}
+      - PIHOLE_PASSWORD=${PIHOLE_PASSWORD}
+      - PIHOLE_URL=${PIHOLE_URL}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    configs:
+      - source: glance_config
+        target: /app/config/glance.yml
+      - source: home_config
+        target: /app/config/home.yml
+      - source: user_css
+        target: /app/assets/user.css
+    networks:
+      - reverse-proxy-swarm
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.glance.rule=Host(`dashboard.xgabrielmorales.com`)"
+        - "traefik.http.routers.glance.entrypoints=websecure"
+        - "traefik.http.routers.glance.tls.certresolver=cloudflare"
+        - "traefik.http.services.glance.loadbalancer.server.port=8080"
+
+configs:
+  glance_config:
+    file: ./config/glance.yml
+  home_config:
+    file: ./config/home.yml
+  user_css:
+    file: ./assets/user.css
+
+networks:
+  reverse-proxy-swarm:
+    external: true

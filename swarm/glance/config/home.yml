@@ -1,0 +1,80 @@
+- name: Home
+  columns:
+    - size: small
+      widgets:
+        - type: dns-stats
+          service: pihole-v6
+          url: ${PIHOLE_URL}
+          password: ${PIHOLE_PASSWORD}
+
+        - type: monitor
+          cache: 1m
+          title: Selfhosted Services
+          style: compact
+          sites:
+            - title: DDNS Updater
+              url: https://dns.xgabrielmorales.com
+            - title: Portainer
+              url: https://portainer.xgabrielmorales.com
+            - title: Myspeed
+              url: https://speed.xgabrielmorales.com
+            - title: Grafana
+              url: https://grafana.xgabrielmorales.com
+            - title: Syncthing
+              url: https://syncthing.xgabrielmorales.com
+            - title: Invidious
+              url: https://invidious.xgabrielmorales.com/preferences
+            - title: Dumb
+              url: https://dumb.xgabrielmorales.com
+            - title: Redlib
+              url: https://reddit.xgabrielmorales.com/settings
+            - title: Traefik
+              url: https://traefik.xgabrielmorales.com
+
+    - size: full
+      widgets:
+        - type: search
+          search-engine: duckduckgo
+
+        - type: hacker-news
+          comments-url-template: https://www.hckrnws.com/stories/{POST-ID}
+          limit: 5
+
+        - type: group
+          widgets:
+            - type: reddit
+              subreddit: selfhosted
+              show-thumbnails: false
+
+    - size: small
+      widgets:
+        - type: clock
+          hour-format: 24h
+
+        - type: calendar
+          first-day-of-week: monday
+
+        - type: bookmarks
+          groups:
+            - title: Development
+              links:
+                - title: Github
+                  url: https://github.com/xgabrielmorales
+            - title: Social
+              links:
+                - title: Whatsapp
+                  url: https://web.whatsapp.com/
+                - title: ProtonMail
+                  url: https://mail.proton.me/u/0/inbox
+                - title: ProtonDrive
+                  url: https://drive.proton.me/u/0
+                - title: Discord
+                  url: https://discord.com/app
+            - title: Entertainment
+              links:
+                - title: Invidious
+                  url: https://invidious.xgabrielmorales.com/
+                - title: Spotify
+                  url: https://open.spotify.com/
+                - title: Dumb
+                  url: https://dumb.xgabrielmorales.com/
