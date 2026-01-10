@@ -1,50 +1,31 @@
 - Servers:
     - Portainer:
         icon: sh-portainer.svg
-        href: 'https://portainer.xgabrielmorales.com/'
+        href: "https://portainer.xgabrielmorales.com/"
         widget:
           type: portainer
-          url: '{{HOMEPAGE_VAR_PORTAINER_URL}}'
-          env: '{{HOMEPAGE_VAR_PORTAINER_ENV}}'
-          key: '{{HOMEPAGE_VAR_PORTAINTER_KEY}}'
-    - Beszel:
-        icon: sh-beszel.svg
-        href: 'https://beszel.xgabrielmorales.com'
-        widget:
-          type: beszel
-          url: '{{HOMEPAGE_VAR_BESZEL_URL}}'
-          username: '{{HOMEPAGE_VAR_BESZEL_USERNAME}}'
-          password: '{{HOMEPAGE_VAR_BESZEL_PASSWORD}}'
-          systemId: Raspberry PI 4
-          version: 2
-    - Beszel:
-        icon: sh-beszel.svg
-        href: 'https://beszel.xgabrielmorales.com'
-        widget:
-          type: beszel
-          url: '{{HOMEPAGE_VAR_BESZEL_URL}}'
-          username: '{{HOMEPAGE_VAR_BESZEL_USERNAME}}'
-          password: '{{HOMEPAGE_VAR_BESZEL_PASSWORD}}'
-          systemId: Mini PC
-          version: 2
+          url: "{{HOMEPAGE_VAR_PORTAINER_URL}}"
+          env: "{{HOMEPAGE_VAR_PORTAINER_ENV}}"
+          key: "{{HOMEPAGE_VAR_PORTAINTER_KEY}}"
     - Traefik:
         icon: sh-traefik.svg
-        href: 'https://traefik.xgabrielmorales.com/'
+        href: "https://traefik.xgabrielmorales.com/"
         widget:
           type: traefik
-          url: '{{HOMEPAGE_VAR_TRAEFIK_URL}}'
+          url: "{{HOMEPAGE_VAR_TRAEFIK_URL}}"
+
 - Networking:
     - Pi-hole:
         icon: sh-pi-hole.svg
-        href: 'https://pihole.xgabrielmorales.com/admin'
+        href: "https://pihole.xgabrielmorales.com/admin"
         widget:
           type: pihole
           version: 6
-          url: '{{HOMEPAGE_VAR_PIHOLE_URL}}'
-          key: '{{HOMEPAGE_VAR_PIHOLE_KEY}}'
+          url: "{{HOMEPAGE_VAR_PIHOLE_URL}}"
+          key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}"
     - MySpeed:
         icon: sh-myspeed.webp
-        href: 'https://speed.xgabrielmorales.com'
+        href: "https://speed.xgabrielmorales.com"
         widget:
           type: myspeed
-          url: '{{HOMEPAGE_VAR_MYSPEED_URL}}'
+          url: "{{HOMEPAGE_VAR_MYSPEED_URL}}"
