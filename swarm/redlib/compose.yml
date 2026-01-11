@@ -51,7 +51,7 @@ services:
         max_attempts: 10
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.redlib.rule=Host(`reddit.xgabrielmorales.com`)"
+        - "traefik.http.routers.redlib.rule=Host(`redlib.xgabrielmorales.com`)"
         - "traefik.http.routers.redlib.entrypoints=websecure"
         - "traefik.http.routers.redlib.tls.certresolver=cloudflare"
         - "traefik.http.services.redlib.loadbalancer.server.port=8080"
