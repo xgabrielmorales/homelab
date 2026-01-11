@@ -5,10 +5,26 @@ services:
     image: quay.io/invidious/invidious:latest
     hostname: invidious
     environment:
-      INVIDIOUS_CONFIG_FILE: "/config/config.yml"
-    configs:
-      - source: invidious-config
-        target: /config/config.yml
+      INVIDIOUS_CONFIG: |
+        db:
+          dbname: ${INVIDIOUS_DB_DBNAME}
+          user: ${INVIDIOUS_DB_USER}
+          password: ${INVIDIOUS_DB_PASSWORD}
+          host: invidious-db
+          port: 5432
+        check_tables: true
+        enable_user_notifications: false
+        popular_enabled: false
+        default_home: <none>
+        feed_menu: ["Subscriptions", "Subscriptions", "Subscriptions", "Subscriptions"]
+        vr_mode: false
+        continue_autoplay: false
+        show_nick: false
+        invidious_companion:
+          - private_url: http://invidious-companion:8282/companion
+            public_url: https://companion.xgabrielmorales.com/companion
+        invidious_companion_key: ${INVIDIOUS_INVIDIOUS_COMPANION_KEY}
+        hmac_key: ${INVIDIOUS_HMAC_KEY}
     networks:
       - reverse-proxy-swarm
       - invidious-internal
@@ -44,7 +60,7 @@ services:
     image: quay.io/invidious/invidious-companion:latest
     hostname: invidious-companion
     environment:
-      - SERVER_SECRET_KEY=${INVC_SERVER_SECRET_KEY}
+      - SERVER_SECRET_KEY=${INVIDIOUS_INVIDIOUS_COMPANION_KEY}
     volumes:
       - companioncache:/var/tmp/youtubei.js:rw
     cap_drop:
@@ -98,9 +114,9 @@ services:
       - source: sql-playlist-videos
         target: /config/sql/playlist_videos.sql
     environment:
-      POSTGRES_DB: invidious
-      POSTGRES_USER: kemal
-      POSTGRES_PASSWORD: kemal
+      POSTGRES_DB: ${INVIDIOUS_DB_DBNAME}
+      POSTGRES_USER: ${INVIDIOUS_DB_USER}
+      POSTGRES_PASSWORD: ${INVIDIOUS_DB_PASSWORD}
     networks:
       - invidious-internal
     deploy:
@@ -123,8 +139,6 @@ volumes:
     driver: local
 
 configs:
-  invidious-config:
-    file: ./config/config.yml
   invidious-init-db:
     file: ./config/init-invidious-db.sh
   sql-channels:
