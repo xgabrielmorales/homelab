@@ -56,10 +56,6 @@
 
         - type: bookmarks
           groups:
-            - title: Development
-              links:
-                - title: Github
-                  url: https://github.com/xgabrielmorales
             - title: Social
               links:
                 - title: Whatsapp
@@ -70,6 +66,8 @@
                   url: https://drive.proton.me/u/0
                 - title: Discord
                   url: https://discord.com/app
+                - title: Redlib
+                  url: https://redlib.xgabrielmorales.com
             - title: Entertainment
               links:
                 - title: Invidious
@@ -78,3 +76,7 @@
                   url: https://open.spotify.com/
                 - title: Dumb
                   url: https://dumb.xgabrielmorales.com/
+            - title: Development
+              links:
+                - title: Github
+                  url: https://github.com/xgabrielmorales
