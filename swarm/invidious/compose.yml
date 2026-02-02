@@ -45,7 +45,6 @@ services:
       restart_policy:
         condition: on-failure
         delay: 5s
-        max_attempts: 10
       resources:
         limits:
           memory: 1G
@@ -79,7 +78,6 @@ services:
       restart_policy:
         condition: on-failure
         delay: 5s
-        max_attempts: 10
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.compnaion.rule=Host(`companion.xgabrielmorales.com`)"
