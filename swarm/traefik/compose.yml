@@ -54,9 +54,9 @@ services:
         constraints:
           - node.role == manager
       restart_policy:
-        condition: on-failure
+        condition: any
         delay: 30s
-        max_attempts: 10
+        window: 120s
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.traefik.rule=Host(`traefik.xgabrielmorales.com`)"

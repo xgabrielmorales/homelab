@@ -30,9 +30,9 @@ services:
         constraints:
           - node.role == manager
       restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 10
+        condition: any
+        delay: 30s
+        window: 120s
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.pihole.rule=Host(`pihole.xgabrielmorales.com`)"
@@ -55,9 +55,9 @@ services:
         constraints:
           - node.role == manager
       restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 10
+        condition: any
+        delay: 30s
+        window: 120s
 
 volumes:
   etc-wireguard:

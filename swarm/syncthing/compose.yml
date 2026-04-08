@@ -28,9 +28,9 @@ services:
         constraints:
           - node.role == worker
       restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
+        condition: any
+        delay: 30s
+        window: 120s
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.syncthing.rule=Host(`syncthing.xgabrielmorales.com`)"

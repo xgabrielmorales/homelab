@@ -25,9 +25,9 @@ services:
         constraints:
           - node.role == worker
       restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 10
+        condition: any
+        delay: 30s
+        window: 120s
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.glance.rule=Host(`dashboard.xgabrielmorales.com`)"

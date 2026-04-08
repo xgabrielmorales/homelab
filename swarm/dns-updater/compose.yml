@@ -23,8 +23,9 @@ services:
         constraints:
           - node.role == manager
       restart_policy:
-        condition: on-failure
-        delay: 10s
+        condition: any
+        delay: 30s
+        window: 120s
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.ddns_updater.rule=Host(`dns.xgabrielmorales.com`)"
