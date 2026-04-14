@@ -2,7 +2,7 @@
 
 services:
   redlib:
-    image: quay.io/redlib/redlib:latest
+    image: ghcr.io/silvenga/redlib:latest
     hostname: redlib
     environment:
       - REDLIB_BANNER=${REDLIB_BANNER}
@@ -28,18 +28,17 @@ services:
       - REDLIB_PUSHSHIFT_FRONTEND=${REDLIB_PUSHSHIFT_FRONTEND}
       - REDLIB_ROBOTS_DISABLE_INDEXING=${REDLIB_ROBOTS_DISABLE_INDEXING}
       - REDLIB_SFW_ONLY=${REDLIB_SFW_ONLY}
+    healthcheck:
+      test: ["CMD-SHELL", "true"]
+      interval: 30s
+      timeout: 5s
+      retries: 1
     user: nobody
     read_only: true
     cap_drop:
       - ALL
     networks:
       - reverse-proxy-swarm
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/settings"]
-      start_period: 0s
-      interval: 10s
-      timeout: 5s
-      retries: 5
     deploy:
       replicas: 1
       placement:
