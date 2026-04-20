@@ -14,8 +14,6 @@
           sites:
             - title: DDNS Updater
               url: https://dns.xgabrielmorales.com
-            - title: Portainer
-              url: https://portainer.xgabrielmorales.com
             - title: Myspeed
               url: https://speed.xgabrielmorales.com
             - title: Grafana
