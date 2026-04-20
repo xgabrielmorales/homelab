@@ -32,10 +32,11 @@ The AGE key file (`keys.txt`) must be in the repository root. From a service dir
 
 ```bash
 $ SOPS_AGE_KEY_FILE="$(git rev-parse --show-toplevel)/keys.txt"
+$ SOPS_CONFIG="$(git rev-parse --show-toplevel)/.sops.yaml"
 ```
 
 ```bash
-$ sops --config="$(git rev-parse --show-toplevel)/.sops.yaml" exec-env .encrypted.env 'docker stack deploy --compose-file compose.yml <stack-name>'
+$ sops exec-env .encrypted.env 'docker stack deploy --compose-file compose.yml <stack-name>'
 ```
 
 ## FAQ
