@@ -2,7 +2,7 @@
 
 services:
   redlib:
-    image: ghcr.io/silvenga/redlib:latest
+    image: ghcr.io/silvenga/redlib:0.36@sha256:5b7b92744ca153c75bef1f5b6b5ffb6985a230c91019d722a88ec758b15f502d
     hostname: redlib
     environment:
       - REDLIB_BANNER=${REDLIB_BANNER}

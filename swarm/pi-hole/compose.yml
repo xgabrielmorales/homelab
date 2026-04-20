@@ -2,7 +2,7 @@
 
 services:
   pihole:
-    image: pihole/pihole:latest
+    image: pihole/pihole:2026.04.0@sha256:300cc8f9e966b00440358aafef21f91b32dfe8887e8bd9a6193ed1c4328655d4
     hostname: pihole
     ports:
       - "53:53/tcp"
@@ -41,7 +41,7 @@ services:
         - "traefik.http.services.pihole.loadbalancer.server.port=80"
 
   unbound:
-    image: klutchell/unbound:latest
+    image: klutchell/unbound:build-390029eaf9bc70dc165d8349ea863e69d55df544@sha256:99bc2372be41e5271b870050ee626f9555111395cc16668b0203525416a8ea02
     hostname: unbound
     healthcheck:
       test: [ "CMD", "drill", "@127.0.0.1", "dnssec.works" ]

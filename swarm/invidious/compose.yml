@@ -2,7 +2,7 @@
 
 services:
   invidious:
-    image: quay.io/invidious/invidious:master
+    image: quay.io/invidious/invidious:2026.04.13-54365c0@sha256:d1e57c4029548e00a5d4d61dac50db9bd012708e4dd73d5e0de4a9ec3efbf9be
     hostname: invidious
     environment:
       INVIDIOUS_CONFIG: |
@@ -57,7 +57,7 @@ services:
         - "traefik.http.services.invidious.loadbalancer.server.port=3000"
 
   invidious-companion:
-    image: quay.io/invidious/invidious-companion:latest
+    image: quay.io/invidious/invidious-companion:master-11cc6ac@sha256:3cae3279c8f54c3baab94af83186eed19c13e2c3a04f823ac8913a1257160e26
     hostname: invidious-companion
     environment:
       - SERVER_SECRET_KEY=${INVIDIOUS_INVIDIOUS_COMPANION_KEY}
@@ -88,7 +88,7 @@ services:
         - "traefik.http.services.compnaion.loadbalancer.server.port=8282"
 
   invidious-db:
-    image: docker.io/library/postgres:14
+    image: postgres:14.22@sha256:ae46a8452f2c137766c9d4a62f4fe60166355ff8b00512e6c48692dbf1eed3d5
     hostname: invidious-db
     volumes:
       - invidious-db-data:/var/lib/postgresql/data
