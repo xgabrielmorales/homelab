@@ -1,0 +1,42 @@
+# vim: ft=yaml.docker-compose
+
+services:
+  dns-server:
+    container_name: dns-server
+    hostname: dns-server
+    image: technitium/dns-server:14.3.0@sha256:322b236403ca25028032f28736e2270a860527b030b162c9f82451c6494c4698
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    environment:
+      - DNS_SERVER_ADMIN_PASSWORD=${DNS_SERVER_ADMIN_PASSWORD}
+      - DNS_SERVER_DOMAIN=${DNS_SERVER_DOMAIN}
+      - DNS_SERVER_FORWARDERS=${DNS_SERVER_FORWARDERS}
+    volumes:
+      - config:/etc/dns
+    sysctls:
+      - net.ipv4.ip_local_port_range=1024 65535
+    networks:
+      - reverse-proxy-swarm
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.technitium.rule=Host(`technitium.xgabrielmorales.com`)"
+        - "traefik.http.routers.technitium.entrypoints=websecure"
+        - "traefik.http.routers.technitium.tls.certresolver=cloudflare"
+        - "traefik.http.services.technitium.loadbalancer.server.port=5380"
+
+volumes:
+  config:
+
+networks:
+  reverse-proxy-swarm:
+    external: true
