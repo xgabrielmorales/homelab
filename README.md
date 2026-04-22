@@ -15,7 +15,7 @@
 
 Some of the services I am currently self-hosting:
 
-- [Pi-hole](https://pi-hole.net/): Network-wide ad blocker.
+- [Technitium](https://technitium.com/dns/): Network-wide ad blocker.
 - [WireGuard](https://www.wireguard.com/): VPN to access my home network from anywhere.
 - [Invidious](https://invidious.io/): YouTube alternative front-end with no ads, no tracking.
 - [Redlib](https://github.com/redlib-org/redlib): Reddit alternative front-end with no ads, no tracking.
