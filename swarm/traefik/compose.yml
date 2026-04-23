@@ -12,7 +12,6 @@ services:
       - traefik-certs:/certs
     environment:
       - CF_DNS_API_TOKEN=${TFK_CF_DNS_API_TOKEN}
-      - TZ=${TFK_TZ}
     command:
       # API and Dashboard
       - "--api=true"
@@ -30,7 +29,6 @@ services:
       - "--providers.swarm.exposedbydefault=false"
       - "--providers.swarm.network=reverse-proxy-swarm"
       # Certificates ACME with Cloudflare
-      - "--certificatesresolvers.cloudflare.acme.email=${TFK_ACME_EMAIL}"
       - "--certificatesresolvers.cloudflare.acme.storage=/certs/acme.json"
       - "--certificatesresolvers.cloudflare.acme.dnschallenge=true"
       - "--certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare"
