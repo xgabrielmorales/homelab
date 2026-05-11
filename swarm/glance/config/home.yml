@@ -2,16 +2,13 @@
   columns:
     - size: small
       widgets:
-        - type: dns-stats
-          service: pihole-v6
-          url: ${PIHOLE_URL}
-          password: ${PIHOLE_PASSWORD}
-
         - type: monitor
           cache: 1m
           title: Selfhosted Services
           style: compact
           sites:
+            - title: Technitium
+              url: https://technitium.xgabrielmorales.com
             - title: DDNS Updater
               url: https://dns.xgabrielmorales.com
             - title: Myspeed
@@ -36,7 +33,6 @@
 
         - type: hacker-news
           comments-url-template: https://www.hckrnws.com/stories/{POST-ID}
-          limit: 5
 
         - type: group
           widgets:
