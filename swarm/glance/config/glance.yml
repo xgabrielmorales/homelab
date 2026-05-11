@@ -2,9 +2,10 @@ server:
   assets-path: /app/assets
 
 theme:
-  background-color: 240 13 14
-  primary-color: 51 33 68
-  negative-color: 358 100 68
+  background-color: 222 14 14
+  primary-color: 39 67 69
+  positive-color: 95 38 62
+  negative-color: 355 65 65
   contrast-multiplier: 1.2
 
 pages:
