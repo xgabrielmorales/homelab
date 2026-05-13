@@ -2,7 +2,7 @@
 
 services:
   docker-socket-proxy:
-    image: tecnativa/docker-socket-proxy:v0.4.1@sha256:3400c429c5f9e1b21d62130fb93b16e2e772d4fb7695bd52fc2b743800b9fe9e
+    image: tecnativa/docker-socket-proxy:v0.4.2@sha256:1f3a6f303320723d199d2316a3e82b2e2685d86c275d5e3deeaf182573b47476
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     environment:
@@ -22,7 +22,7 @@ services:
         - "traefik.enable=false"
 
   node-exporter:
-    image: prom/node-exporter
+    image: prom/node-exporter:v1.11.1@sha256:e9cff4fc67b1818f8c97adb115b9f12c9a54b533de86765d4a0effc01b357205
     hostname: "{{.Node.Hostname}}"
     volumes:
       - /proc:/host/proc:ro
@@ -45,7 +45,7 @@ services:
         - "prometheus.port=9100"
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor
+    image: gcr.io/cadvisor/cadvisor:v0.55.1@sha256:3de2bd5203120b866d74a9b283b2ffb8ec382fbf9dc321814700c6ea6f44ec57
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
@@ -64,7 +64,7 @@ services:
         - "prometheus.port=8080"
 
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v3.11.3@sha256:e4254400b85610324913f0dc4acf92603d9984e7519414c5a12811aa6146acc3
     configs:
       - source: config-prometheus
         target: /etc/prometheus/prometheus.yml
@@ -85,7 +85,7 @@ services:
         window: 120s
 
   grafana:
-    image: grafana/grafana:12.3@sha256:70d9599b186ce287be0d2c5ba9a78acb2e86c1a68c9c41449454d0fc3eeb84e8
+    image: grafana/grafana:13.0@sha256:0f86bada30d65ef9d0183b90c1e2682ac92d53d95da8bed322b984ea78a4a73a
     environment:
       # Security configurations - Production hardening
       - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
