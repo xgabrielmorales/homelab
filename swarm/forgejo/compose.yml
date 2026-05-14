@@ -1,6 +1,20 @@
 # vim: ft=yaml.docker-compose
 
 services:
+  cloudflared:
+    image: cloudflare/cloudflared:2026.5.0@sha256:59bab8d3aceec09bf6bdb07d6beca0225ca5cd7ab79436a87ea97978fe1dc4f9
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    networks:
+      - forgejo-external
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+
   forgejo:
     image: codeberg.org/forgejo/forgejo:15-rootless@sha256:cc2d74fb4c30385a8ee34de8c8f83344f7316cec70bd2cc7eb82b2802fa28e0b
     hostname: forgejo
@@ -38,8 +52,8 @@ services:
       - forgejo-data:/var/lib/gitea
       - /etc/localtime:/etc/localtime:ro
     networks:
-      - reverse-proxy-swarm
       - forgejo-internal
+      - forgejo-external
     deploy:
       replicas: 1
       placement:
@@ -52,12 +66,6 @@ services:
       resources:
         limits:
           memory: 1G
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.forgejo.rule=Host(`git.xgabrielmorales.com`)"
-        - "traefik.http.routers.forgejo.entrypoints=websecure"
-        - "traefik.http.routers.forgejo.tls.certresolver=cloudflare"
-        - "traefik.http.services.forgejo.loadbalancer.server.port=3000"
 
   forgejo-db:
     image: postgres:17@sha256:7ad98329d513dd497293b951c195ca354274a77f12ddbbbbf85e68a811823d72
@@ -97,7 +105,6 @@ volumes:
     driver: local
 
 networks:
-  reverse-proxy-swarm:
-    external: true
+  forgejo-external:
   forgejo-internal:
     internal: true
