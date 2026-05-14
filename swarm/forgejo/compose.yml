@@ -41,6 +41,7 @@ services:
       - FORGEJO__security__JWT_SECRET=${FORGEJO__security__JWT_SECRET}
       - FORGEJO__security__SECRET_KEY=${FORGEJO__security__SECRET_KEY}
       - FORGEJO__server__LANDING_PAGE=${FORGEJO__server__LANDING_PAGE}
+      - FORGEJO__server__SSH_DOMAIN=${FORGEJO__server__SSH_DOMAIN}
       - FORGEJO__server__SSH_PORT=${FORGEJO__server__SSH_PORT}
       - FORGEJO__service__ALLOW_ONLY_INTERNAL_REGISTRATION=${FORGEJO__service__ALLOW_ONLY_INTERNAL_REGISTRATION}
       - FORGEJO__service__DISABLE_REGISTRATION=${FORGEJO__service__DISABLE_REGISTRATION}
