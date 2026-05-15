@@ -108,8 +108,8 @@ services:
       - GF_AUTH_DISABLE_SIGNOUT_MENU=false
       # Server settings
       - GF_SERVER_PROTOCOL=http
-      - GF_SERVER_DOMAIN=grafana.empresas.tusdatos.co
-      - GF_SERVER_ROOT_URL=https://grafana.empresas.tusdatos.co/
+      - GF_SERVER_DOMAIN=grafana.xgabrielmorales.com
+      - GF_SERVER_ROOT_URL=https://grafana.xgabrielmorales.com/
       - GF_SERVER_SERVE_FROM_SUB_PATH=false
       - GF_SERVER_ENFORCE_DOMAIN=false
       # Database settings (use SQLite for simplicity)
