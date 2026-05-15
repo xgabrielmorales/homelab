@@ -101,9 +101,7 @@ services:
 
 volumes:
   forgejo-data:
-    driver: local
   forgejo-db-data:
-    driver: local
 
 networks:
   forgejo-external:

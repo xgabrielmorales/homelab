@@ -40,7 +40,6 @@ services:
 
 volumes:
   syncthing-config:
-    driver: local
 
 networks:
   reverse-proxy-swarm:

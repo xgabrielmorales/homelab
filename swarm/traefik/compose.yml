@@ -65,7 +65,6 @@ services:
 
 volumes:
   traefik-certs:
-    driver: local
 
 networks:
   reverse-proxy-swarm:

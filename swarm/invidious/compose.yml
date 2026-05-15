@@ -133,9 +133,7 @@ services:
 
 volumes:
   invidious-db-data:
-    driver: local
   companioncache:
-    driver: local
 
 configs:
   invidious-init-db:
@@ -163,5 +161,4 @@ networks:
   reverse-proxy-swarm:
     external: true
   invidious-internal:
-    driver: overlay
     internal: true
