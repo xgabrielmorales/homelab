@@ -8,7 +8,6 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - traefik-certs:/certs
     environment:
       - CF_DNS_API_TOKEN=${TFK_CF_DNS_API_TOKEN}
@@ -26,6 +25,7 @@ services:
       - "--entrypoints.websecure.address=:443"
       # Providers
       - "--providers.swarm=true"
+      - "--providers.swarm.endpoint=tcp://docker-socket-proxy:2375"
       - "--providers.swarm.exposedbydefault=false"
       - "--providers.swarm.network=reverse-proxy-swarm"
       # Certificates ACME with Cloudflare
@@ -39,13 +39,14 @@ services:
       - "--log.level=INFO"
       - "--ping"
     healthcheck:
-      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      test: [ "CMD", "traefik", "healthcheck", "--ping" ]
       start_period: 5s
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
       - reverse-proxy-swarm
+      - traefik-internal
     deploy:
       replicas: 1
       placement:
@@ -63,9 +64,36 @@ services:
         - "traefik.http.routers.traefik.service=api@internal"
         - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 
+  docker-socket-proxy:
+    image: tecnativa/docker-socket-proxy:v0.4.2@sha256:1f3a6f303320723d199d2316a3e82b2e2685d86c275d5e3deeaf182573b47476
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    environment:
+      NETWORKS: 1
+      NODES: 1
+      SERVICES: 1
+      TASKS: 1
+    networks:
+      - traefik-internal
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 64M
+
 volumes:
   traefik-certs:
 
 networks:
   reverse-proxy-swarm:
     external: true
+  traefik-internal:
+    internal: true
