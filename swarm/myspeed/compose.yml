@@ -23,6 +23,9 @@ services:
         condition: any
         delay: 30s
         window: 120s
+      resources:
+        limits:
+          memory: 256M
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.myspeed.rule=Host(`speed.xgabrielmorales.com`)"

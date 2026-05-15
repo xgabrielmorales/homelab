@@ -26,6 +26,9 @@ services:
         condition: any
         delay: 30s
         window: 120s
+      resources:
+        limits:
+          memory: 64M
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.ddns_updater.rule=Host(`dns.xgabrielmorales.com`)"

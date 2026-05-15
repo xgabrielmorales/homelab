@@ -23,6 +23,9 @@ services:
         condition: any
         delay: 30s
         window: 120s
+      resources:
+        limits:
+          memory: 64M
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.glance.rule=Host(`dashboard.xgabrielmorales.com`)"
