@@ -12,11 +12,8 @@ services:
     environment:
       - CF_DNS_API_TOKEN=${TFK_CF_DNS_API_TOKEN}
     command:
-      # API and Dashboard
-      - "--api=true"
-      - "--api.dashboard=true"
-      - "--api.insecure=true"
-      - "--api.debug=false"
+      # API and Dashboard disabled
+      - "--api=false"
       # Entrypoints
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
@@ -56,13 +53,6 @@ services:
         condition: any
         delay: 30s
         window: 120s
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.traefik.rule=Host(`traefik.xgabrielmorales.com`)"
-        - "traefik.http.routers.traefik.entrypoints=websecure"
-        - "traefik.http.routers.traefik.tls.certresolver=cloudflare"
-        - "traefik.http.routers.traefik.service=api@internal"
-        - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 
   docker-socket-proxy:
     image: tecnativa/docker-socket-proxy:v0.4.2@sha256:1f3a6f303320723d199d2316a3e82b2e2685d86c275d5e3deeaf182573b47476
