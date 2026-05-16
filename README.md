@@ -50,12 +50,3 @@ $ sops exec-env .encrypted.env 'docker stack deploy --compose-file compose.yml <
 *Last verified: January 11, 2026*
 
 </details>
-
-<details>
-<summary>Why isn't WireGuard included in the Swarm cluster?</summary>
-
-Docker Swarm creates an overlay network that adds a layer of network abstraction. WireGuard requires direct access to host network interfaces, which becomes complicated with Swarm's encapsulation. It's simpler to run WireGuard with docker-compose on a specific node.
-
-*Last verified: January 11, 2026*
-
-</details>
