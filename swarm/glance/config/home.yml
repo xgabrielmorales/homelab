@@ -2,29 +2,11 @@
   columns:
     - size: small
       widgets:
-        - type: monitor
-          cache: 1m
-          title: Selfhosted Services
-          style: compact
-          sites:
-            - title: Technitium
-              url: https://technitium.xgabrielmorales.com
-            - title: DDNS Updater
-              url: https://dns.xgabrielmorales.com
-            - title: Myspeed
-              url: https://speed.xgabrielmorales.com
-            - title: Grafana
-              url: https://grafana.xgabrielmorales.com
-            - title: Syncthing
-              url: https://syncthing.xgabrielmorales.com
-            - title: Invidious
-              url: https://invidious.xgabrielmorales.com/preferences
-            - title: Dumb
-              url: https://dumb.xgabrielmorales.com
-            - title: Redlib
-              url: https://redlib.xgabrielmorales.com/settings
-            - title: Traefik
-              url: https://traefik.xgabrielmorales.com
+        - type: clock
+          hour-format: 24h
+
+        - type: calendar
+          first-day-of-week: monday
 
     - size: full
       widgets:
@@ -42,35 +24,57 @@
 
     - size: small
       widgets:
-        - type: clock
-          hour-format: 24h
-
-        - type: calendar
-          first-day-of-week: monday
+        - type: monitor
+          cache: 1m
+          title: Selfhosted Services
+          style: compact
+          sites:
+            - title: DDNS Updater
+              url: https://dns.xgabrielmorales.com
+            - title: Dumb
+              url: https://dumb.xgabrielmorales.com
+            - title: Forgejo
+              url: https://git.xgabrielmorales.com
+            - title: Grafana
+              url: https://grafana.xgabrielmorales.com
+            - title: Invidious
+              url: https://invidious.xgabrielmorales.com/preferences
+            - title: Myspeed
+              url: https://speed.xgabrielmorales.com
+            - title: Redlib
+              url: https://redlib.xgabrielmorales.com/settings
+            - title: Syncthing
+              url: https://syncthing.xgabrielmorales.com
+            - title: Technitium
+              url: https://technitium.xgabrielmorales.com
+            - title: Wireguard
+              url: https://wg.xgabrielmorales.com
 
         - type: bookmarks
           groups:
-            - title: Social
+            - title: Development
               links:
-                - title: Whatsapp
-                  url: https://web.whatsapp.com/
-                - title: ProtonMail
-                  url: https://mail.proton.me/u/0/inbox
-                - title: ProtonDrive
-                  url: https://drive.proton.me/u/0
-                - title: Discord
-                  url: https://discord.com/app
-                - title: Redlib
-                  url: https://redlib.xgabrielmorales.com
+                - title: Forgejo
+                  url: https://git.xgabrielmorales.com
+                - title: Github
+                  url: https://github.com/xgabrielmorales
             - title: Entertainment
               links:
+                - title: Dumb
+                  url: https://dumb.xgabrielmorales.com/
                 - title: Invidious
                   url: https://invidious.xgabrielmorales.com/
                 - title: Spotify
                   url: https://open.spotify.com/
-                - title: Dumb
-                  url: https://dumb.xgabrielmorales.com/
-            - title: Development
+            - title: Social
               links:
-                - title: Github
-                  url: https://github.com/xgabrielmorales
+                - title: Discord
+                  url: https://discord.com/app
+                - title: ProtonDrive
+                  url: https://drive.proton.me/u/0
+                - title: ProtonMail
+                  url: https://mail.proton.me/u/0/inbox
+                - title: Redlib
+                  url: https://redlib.xgabrielmorales.com
+                - title: Whatsapp
+                  url: https://web.whatsapp.com/
