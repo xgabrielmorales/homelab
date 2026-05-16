@@ -15,7 +15,7 @@ scrape_configs:
         regex: running
         action: keep
       - source_labels: [__meta_dockerswarm_network_name]
-        regex: reverse-proxy-swarm
+        regex: observability-internal
         action: keep
       - source_labels: [__meta_dockerswarm_service_name]
         target_label: job
@@ -23,11 +23,10 @@ scrape_configs:
         target_label: stack
       - source_labels: [__meta_dockerswarm_node_hostname]
         target_label: instance
-      # Default port 80
+      # Require explicit prometheus.port label
       - source_labels: [__meta_dockerswarm_service_label_prometheus_port]
-        target_label: __meta_dockerswarm_service_label_prometheus_port
-        regex: "()"
-        replacement: "80"
+        regex: \d+
+        action: keep
       - source_labels: [__address__]
         regex: "([^:]+):\\d+"
         target_label: __container_ip
@@ -55,7 +54,7 @@ scrape_configs:
         regex: running
         action: keep
       - source_labels: [__meta_dockerswarm_network_name]
-        regex: reverse-proxy-swarm
+        regex: observability-internal
         action: keep
       - source_labels: [__meta_dockerswarm_service_name]
         target_label: job
@@ -63,11 +62,10 @@ scrape_configs:
         target_label: stack
       - source_labels: [__meta_dockerswarm_task_id]
         target_label: instance
-      # Default port 80
+      # Require explicit prometheus.port label
       - source_labels: [__meta_dockerswarm_service_label_prometheus_port]
-        target_label: __meta_dockerswarm_service_label_prometheus_port
-        regex: "()"
-        replacement: "80"
+        regex: \d+
+        action: keep
       - source_labels: [__address__]
         regex: "([^:]+):\\d+"
         target_label: __container_ip
