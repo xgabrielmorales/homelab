@@ -9,6 +9,8 @@ services:
     volumes:
       - "/lib/modules:/lib/modules:ro"
       - wireguard-etc:/etc/wireguard
+    cap_drop:
+      - ALL
     cap_add:
       - NET_ADMIN
       - SYS_MODULE

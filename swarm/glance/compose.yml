@@ -12,6 +12,8 @@ services:
         target: /app/config/home.yml
       - source: user_css
         target: /app/assets/user.css
+    cap_drop:
+      - ALL
     networks:
       - reverse-proxy-swarm
     deploy:

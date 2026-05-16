@@ -10,6 +10,8 @@ services:
       NODES: 1
       SERVICES: 1
       TASKS: 1
+    cap_drop:
+      - ALL
     networks:
       - reverse-proxy-swarm
     deploy:
@@ -36,6 +38,8 @@ services:
       - --path.rootfs=/rootfs
       - --path.sysfs=/host/sys
       - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+    cap_drop:
+      - ALL
     networks:
       - reverse-proxy-swarm
     deploy:
@@ -80,6 +84,8 @@ services:
     volumes:
       - prometheus-data:/prometheus
     command: ["--config.file=/etc/prometheus/prometheus.yml"]
+    cap_drop:
+      - ALL
     networks:
       - reverse-proxy-swarm
     deploy:
@@ -157,6 +163,8 @@ services:
         target: /etc/grafana/provisioning/alerting/alerting.yaml
     volumes:
       - grafana-data:/var/lib/grafana
+    cap_drop:
+      - ALL
     networks:
       - reverse-proxy-swarm
     deploy:

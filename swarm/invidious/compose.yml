@@ -25,6 +25,8 @@ services:
             public_url: https://companion.xgabrielmorales.com/companion
         invidious_companion_key: ${INVIDIOUS_INVIDIOUS_COMPANION_KEY}
         hmac_key: ${INVIDIOUS_HMAC_KEY}
+    cap_drop:
+      - ALL
     networks:
       - reverse-proxy-swarm
       - invidious-internal
@@ -118,6 +120,14 @@ services:
       POSTGRES_DB: ${INVIDIOUS_DB_DBNAME}
       POSTGRES_USER: ${INVIDIOUS_DB_USER}
       POSTGRES_PASSWORD: ${INVIDIOUS_DB_PASSWORD}
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETUID
+      - SETGID
     networks:
       - invidious-internal
     deploy:

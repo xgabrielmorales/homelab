@@ -6,6 +6,8 @@ services:
     hostname: myspeed
     volumes:
       - myspeed-data:/myspeed/data
+    cap_drop:
+      - ALL
     networks:
       - reverse-proxy-swarm
     healthcheck:

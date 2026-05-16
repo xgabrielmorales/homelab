@@ -15,6 +15,8 @@ services:
       - PUBLICIP_DNS_PROVIDERS=${PUBLICIP_DNS_PROVIDERS}
       - PUBLICIP_DNS_TIMEOUT=${PUBLICIP_DNS_TIMEOUT}
       - HTTP_TIMEOUT=${HTTP_TIMEOUT}
+    cap_drop:
+      - ALL
     networks:
       - reverse-proxy-swarm
     deploy:

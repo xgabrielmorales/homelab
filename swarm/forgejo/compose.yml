@@ -6,6 +6,8 @@ services:
     command: tunnel --no-autoupdate run
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    cap_drop:
+      - ALL
     networks:
       - forgejo-external
     deploy:
@@ -14,6 +16,9 @@ services:
         condition: any
         delay: 30s
         window: 120s
+      resources:
+        limits:
+          memory: 128M
 
   forgejo:
     image: codeberg.org/forgejo/forgejo:15-rootless@sha256:cc2d74fb4c30385a8ee34de8c8f83344f7316cec70bd2cc7eb82b2802fa28e0b
@@ -52,6 +57,8 @@ services:
     volumes:
       - forgejo-data:/var/lib/gitea
       - /etc/localtime:/etc/localtime:ro
+    cap_drop:
+      - ALL
     networks:
       - forgejo-internal
       - forgejo-external
@@ -77,6 +84,14 @@ services:
       - POSTGRES_DB=${POSTGRES_DATABASE}
     volumes:
       - forgejo-db-data:/var/lib/postgresql/data
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETUID
+      - SETGID
     networks:
       - forgejo-internal
     healthcheck:
