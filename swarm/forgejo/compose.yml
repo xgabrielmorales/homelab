@@ -73,7 +73,7 @@ services:
         window: 120s
       resources:
         limits:
-          memory: 1G
+          memory: 256M
 
   forgejo-db:
     image: postgres:17@sha256:7ad98329d513dd497293b951c195ca354274a77f12ddbbbbf85e68a811823d72
@@ -112,7 +112,7 @@ services:
         window: 120s
       resources:
         limits:
-          memory: 1G
+          memory: 128M
 
 volumes:
   forgejo-data:
