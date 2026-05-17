@@ -1,0 +1,44 @@
+# vim: ft=yaml.docker-compose
+
+services:
+  degoog:
+    image: ghcr.io/degoog-org/degoog:0.17.0@sha256:3cabee5c06ac9774fa5d993cc3a146c59777ec6f5e12e91dd2288ea9160a8265
+    hostname: degoog
+    volumes:
+      - degoog-data:/app/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    networks:
+      - reverse-proxy-swarm
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 256M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.degoog.rule=Host(`search.xgabrielmorales.com`)"
+        - "traefik.http.routers.degoog.entrypoints=websecure"
+        - "traefik.http.routers.degoog.tls.certresolver=cloudflare"
+        - "traefik.http.services.degoog.loadbalancer.server.port=4444"
+
+volumes:
+  degoog-data:
+
+networks:
+  reverse-proxy-swarm:
+    external: true
