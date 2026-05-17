@@ -1,0 +1,11 @@
+build-manager:
+  sudo nixos-rebuild switch --impure --flake .#xgm-homelab-manager
+
+build-worker:
+  sudo nixos-rebuild switch --impure --flake .#xgm-homelab-worker
+
+delete-generations:
+  sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system 1d
+
+clean:
+  sudo nix-store --gc
