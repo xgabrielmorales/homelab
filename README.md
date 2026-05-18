@@ -2,11 +2,14 @@
 
 ## Stack
 
+Servers run [NixOS](https://nixos.org/). NixOS secrets managed with [sops-nix](https://github.com/Mic92/sops-nix).
+
 | Component     | Technology                                                                                                                                                           |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OS            | [NixOS](https://nixos.org/)                                                                                                                                          |
 | Orchestration | [Docker Swarm](https://docs.docker.com/engine/swarm/)                                                                                                                |
 | Reverse Proxy | [Traefik](https://traefik.io/) ([auto-discovery](https://doc.traefik.io/traefik-hub/api-gateway/reference/install/providers/ref-provider-overview) via Swarm labels) |
-| Secrets       | [SOPS](https://github.com/getsops/sops) + [AGE](https://github.com/FiloSottile/age)                                                                                  |
+| Secrets       | [Sops](https://github.com/getsops/sops) + [sops-nix](https://github.com/Mic92/sops-nix) + [age](https://github.com/FiloSottile/age)                                  |
 | Certificates  | [Let's Encrypt](https://letsencrypt.org/) (ACME)                                                                                                                     |
 | DNS Challenge | [Cloudflare](https://www.cloudflare.com/)                                                                                                                            |
 | Monitoring    | [Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/)                                                                                               |
@@ -49,6 +52,6 @@ $ sops exec-env .encrypted.env 'docker stack deploy --compose-file compose.yml <
 - Raspberry Pi 4 (4GB RAM)
 - Mini PC (Intel N150, 16GB RAM)
 
-*Last verified: January 11, 2026*
+_Last verified: January 11, 2026_
 
 </details>
