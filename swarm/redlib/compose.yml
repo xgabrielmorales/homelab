@@ -50,7 +50,7 @@ services:
         window: 120s
       resources:
         limits:
-          memory: 128M
+          memory: 512M
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.redlib.rule=Host(`redlib.xgabrielmorales.com`)"

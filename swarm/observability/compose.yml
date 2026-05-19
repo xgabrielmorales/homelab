@@ -125,7 +125,7 @@ services:
         window: 120s
       resources:
         limits:
-          memory: 256M
+          memory: 512M
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.grafana.rule=Host(`grafana.xgabrielmorales.com`)"
