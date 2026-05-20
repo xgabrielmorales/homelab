@@ -1,0 +1,6 @@
+name: invidious
+working_dir: swarm/invidious/
+compose_files:
+  - compose.yml
+env_files:
+  - .encrypted.env

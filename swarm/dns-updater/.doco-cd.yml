@@ -1,0 +1,6 @@
+name: dns-updater
+working_dir: swarm/dns-updater/
+compose_files:
+  - compose.yml
+env_files:
+  - .encrypted.env

@@ -1,0 +1,4 @@
+name: myspeed
+working_dir: swarm/myspeed/
+compose_files:
+  - compose.yml

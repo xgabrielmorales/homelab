@@ -1,0 +1,6 @@
+name: technitium
+working_dir: swarm/technitium/
+compose_files:
+  - compose.yml
+env_files:
+  - .encrypted.env

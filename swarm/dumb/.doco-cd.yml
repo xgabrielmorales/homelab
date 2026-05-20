@@ -1,0 +1,4 @@
+name: dumb
+working_dir: swarm/dumb/
+compose_files:
+  - compose.yml

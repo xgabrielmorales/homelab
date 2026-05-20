@@ -13,6 +13,7 @@ Servers run [NixOS](https://nixos.org/). NixOS secrets managed with [sops-nix](h
 | Certificates  | [Let's Encrypt](https://letsencrypt.org/) (ACME)                                                                                                                     |
 | DNS Challenge | [Cloudflare](https://www.cloudflare.com/)                                                                                                                            |
 | Monitoring    | [Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/)                                                                                               |
+| GitOps        | [doco-cd](https://doco.cd/)                                                                                                                                          |
 
 ## Services
 
@@ -40,9 +41,23 @@ $ SOPS_AGE_KEY_FILE="$(git rev-parse --show-toplevel)/keys.txt"
 $ SOPS_CONFIG="$(git rev-parse --show-toplevel)/.sops.yaml"
 ```
 
+### doco-cd
+
+[doco-cd](https://doco.cd/) manages all subsequent deployments automatically. It requires the AGE secret key as a Swarm secret.
+
+Create the secret once on the manager node:
+
 ```bash
-$ sops exec-env .encrypted.env 'docker stack deploy --compose-file compose.yml <stack-name>'
+$ cat keys.txt | docker secret create sops_age_key -
 ```
+
+Then deploy doco-cd:
+
+```bash
+$ docker stack deploy --compose-file gitops/compose.yml doco-cd
+```
+
+From this point, pushing to `trunk` triggers automatic deployment of all stacks within 60 seconds.
 
 ## FAQ
 

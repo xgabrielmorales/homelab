@@ -1,0 +1,6 @@
+name: observability
+working_dir: swarm/observability/
+compose_files:
+  - compose.yml
+env_files:
+  - .encrypted.env
