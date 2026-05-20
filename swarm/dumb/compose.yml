@@ -20,7 +20,7 @@ services:
         window: 120s
       resources:
         limits:
-          memory: 64M
+          memory: 256M
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.dumb.rule=Host(`dumb.xgabrielmorales.com`)"
