@@ -123,6 +123,9 @@ services:
         condition: any
         delay: 30s
         window: 120s
+      placement:
+        constraints:
+          - node.role == worker
       resources:
         limits:
           memory: 512M
