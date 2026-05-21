@@ -2,3 +2,5 @@ name: redlib
 working_dir: swarm/redlib/
 compose_files:
   - compose.yml
+env_files:
+  - .encrypted.env
