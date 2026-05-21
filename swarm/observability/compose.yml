@@ -90,8 +90,65 @@ services:
       labels:
         - "prometheus.port=9090"
 
+  loki:
+    image: grafana/loki:3.7.2@sha256:800ec439ed2692b79c5a1fe17a6d2955f8999ad5d05f0276c6e4a10ac11cc491
+    configs:
+      - source: config-loki
+        target: /etc/loki/config.yaml
+    command: -config.file=/etc/loki/config.yaml
+    volumes:
+      - loki-data:/loki
+    cap_drop:
+      - ALL
+    networks:
+      - observability-internal
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 512M
+      labels:
+        - "prometheus.port=3100"
+        - "prometheus.path=/metrics"
+
+  alloy:
+    image: grafana/alloy:v1.16.1@sha256:51aeb9d829239345070619dad3edd6873186f913c84f45b365b74574fcb38ec0
+    hostname: "{{.Node.Hostname}}"
+    configs:
+      - source: config-alloy
+        target: /etc/alloy/config.alloy
+    command: run --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    # Root access is required to read the Docker socket across all Swarm nodes,
+    # where the docker group GID is not consistent.
+    user: "0:0"
+    cap_drop:
+      - ALL
+    networks:
+      - observability-internal
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 256M
+      labels:
+        - "prometheus.port=12345"
+
   grafana:
-    image: grafana/grafana:13.0@sha256:0f86bada30d65ef9d0183b90c1e2682ac92d53d95da8bed322b984ea78a4a73a
+    image: grafana/grafana:13.0.1-security-01@sha256:2d1f9ae67c1778d33e291d4c3c759cd8b650e67491f02533499eb950e075eeb5
     environment:
       - GRAFANA_ADMIN_USER=${GRAFANA_ADMIN_USER}
       - GRAFANA_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
@@ -145,10 +202,15 @@ configs:
     file: ./config/config-grafana-datasources.yaml
   config-grafana-alerting:
     file: ./config/config-grafana-alerting.yaml
+  config-loki:
+    file: ./config/config-loki.yaml
+  config-alloy:
+    file: ./config/config-alloy.alloy
 
 volumes:
   prometheus-data:
   grafana-data:
+  loki-data:
 
 networks:
   observability-internal:

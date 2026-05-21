@@ -12,7 +12,7 @@ Servers run [NixOS](https://nixos.org/). NixOS secrets managed with [sops-nix](h
 | Secrets       | [Sops](https://github.com/getsops/sops) + [sops-nix](https://github.com/Mic92/sops-nix) + [age](https://github.com/FiloSottile/age)                                  |
 | Certificates  | [Let's Encrypt](https://letsencrypt.org/) (ACME)                                                                                                                     |
 | DNS Challenge | [Cloudflare](https://www.cloudflare.com/)                                                                                                                            |
-| Monitoring    | [Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/)                                                                                               |
+| Observability | [Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/) + [Loki](https://grafana.com/oss/loki/) + [Alloy](https://grafana.com/oss/alloy/)             |
 | GitOps        | [doco-cd](https://doco.cd/)                                                                                                                                          |
 
 ## Services
