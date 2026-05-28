@@ -2,7 +2,7 @@
 
 services:
   invidious:
-    image: quay.io/invidious/invidious:2026.05.21-99390d0@sha256:0646420dcfe396d056d6a76d5d9d06a372b567d9f44959a8155dc733347e29b5
+    image: quay.io/invidious/invidious:2026.05.28-86c425b@sha256:7c53f6c534f01a53dfff3498fbff2e3a08d526c3c7bd7959e191c21b8c416acd
     hostname: invidious
     environment:
       INVIDIOUS_CONFIG: |
@@ -59,7 +59,7 @@ services:
         - "traefik.http.services.invidious.loadbalancer.server.port=3000"
 
   invidious-companion:
-    image: quay.io/invidious/invidious-companion:master-d5504eb@sha256:1095131d47b0a7f4218450128088f818066abef69020cafdb1d2015b14906ccb
+    image: quay.io/invidious/invidious-companion:master-e1ab452@sha256:314ebe3e2ff8569557b5a619123e2c69e66275a05e368a096dac4f5d5240eadc
     hostname: invidious-companion
     environment:
       - SERVER_SECRET_KEY=${INVIDIOUS_INVIDIOUS_COMPANION_KEY}
