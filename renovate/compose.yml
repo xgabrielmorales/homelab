@@ -1,0 +1,8 @@
+services:
+  renovate:
+    image: renovate/renovate:43.214.2@sha256:94ea97399b0dfba2e42b9571fc5bca6e1fbf5e72ecf6062cfe6aba5bec76b19e
+    volumes:
+      - ./config.js:/usr/src/app/config.js
+    environment:
+      RENOVATE_CONFIG_FILE: /usr/src/app/config.js
+      RENOVATE_TOKEN: ${RENOVATE_TOKEN}

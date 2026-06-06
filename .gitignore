@@ -2,3 +2,4 @@
 !.encrypted.env
 docker/invidious/config/config.yml
 keys.txt
+cache/

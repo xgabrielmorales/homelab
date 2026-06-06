@@ -4,16 +4,17 @@
 
 Servers run [NixOS](https://nixos.org/). NixOS secrets managed with [sops-nix](https://github.com/Mic92/sops-nix).
 
-| Component     | Technology                                                                                                                                                           |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| OS            | [NixOS](https://nixos.org/)                                                                                                                                          |
-| Orchestration | [Docker Swarm](https://docs.docker.com/engine/swarm/)                                                                                                                |
-| Reverse Proxy | [Traefik](https://traefik.io/) ([auto-discovery](https://doc.traefik.io/traefik-hub/api-gateway/reference/install/providers/ref-provider-overview) via Swarm labels) |
-| Secrets       | [Sops](https://github.com/getsops/sops) + [sops-nix](https://github.com/Mic92/sops-nix) + [age](https://github.com/FiloSottile/age)                                  |
-| Certificates  | [Let's Encrypt](https://letsencrypt.org/) (ACME)                                                                                                                     |
-| DNS Challenge | [Cloudflare](https://www.cloudflare.com/)                                                                                                                            |
-| Observability | [Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/) + [Loki](https://grafana.com/oss/loki/) + [Alloy](https://grafana.com/oss/alloy/)             |
-| GitOps        | [doco-cd](https://doco.cd/)                                                                                                                                          |
+| Component          | Technology                                                                                                                                                           |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OS                 | [NixOS](https://nixos.org/)                                                                                                                                          |
+| Orchestration      | [Docker Swarm](https://docs.docker.com/engine/swarm/)                                                                                                                |
+| Reverse Proxy      | [Traefik](https://traefik.io/) ([auto-discovery](https://doc.traefik.io/traefik-hub/api-gateway/reference/install/providers/ref-provider-overview) via Swarm labels) |
+| Secrets            | [Sops](https://github.com/getsops/sops) + [sops-nix](https://github.com/Mic92/sops-nix) + [age](https://github.com/FiloSottile/age)                                  |
+| Certificates       | [Let's Encrypt](https://letsencrypt.org/) (ACME)                                                                                                                     |
+| DNS Challenge      | [Cloudflare](https://www.cloudflare.com/)                                                                                                                            |
+| Observability      | [Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/) + [Loki](https://grafana.com/oss/loki/) + [Alloy](https://grafana.com/oss/alloy/)             |
+| GitOps             | [doco-cd](https://doco.cd/)                                                                                                                                          |
+| Dependency Updates | [Renovate](https://docs.renovatebot.com/)                                                                                                                            |
 
 ## Services
 
@@ -58,6 +59,15 @@ $ docker stack deploy --compose-file gitops/compose.yml doco-cd
 ```
 
 From this point, pushing to `trunk` triggers automatic deployment of all stacks within 60 seconds.
+
+### Renovate
+
+[Renovate](https://docs.renovatebot.com/) scans Docker Compose files under `swarm/` for outdated images and opens pull requests in Forgejo automatically. It runs on demand.
+
+```bash
+$ cd renovate
+$ sops exec-env .encrypted.env 'docker compose run --rm renovate'
+```
 
 ## FAQ
 
