@@ -15,6 +15,10 @@ module.exports = {
       hostType: 'docker',
       username: process.env.DOCKERHUB_USERNAME,
       password: process.env.DOCKERHUB_TOKEN
+    },
+    {
+      matchHost: 'ghcr.io',
+      token: process.env.GITHUB_TOKEN
     }
   ],
   customManagers: [{
