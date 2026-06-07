@@ -10,6 +10,11 @@ module.exports = {
     {
       hostType: 'github',
       token: process.env.GITHUB_TOKEN
+    },
+    {
+      hostType: 'docker',
+      username: process.env.DOCKERHUB_USERNAME,
+      password: process.env.DOCKERHUB_TOKEN
     }
   ],
   customManagers: [{
