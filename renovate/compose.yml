@@ -6,3 +6,4 @@ services:
     environment:
       RENOVATE_CONFIG_FILE: /usr/src/app/config.js
       RENOVATE_TOKEN: ${RENOVATE_TOKEN}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}

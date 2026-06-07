@@ -6,6 +6,12 @@ module.exports = {
   binarySource: 'global',
   onboarding: false,
   requireConfig: 'ignored',
+  hostRules: [
+    {
+      hostType: 'github',
+      token: process.env.GITHUB_TOKEN
+    }
+  ],
   customManagers: [{
     customType: 'regex',
     managerFilePatterns: ['/(^|/)swarm/.*/compose\\.yml$/', ],
