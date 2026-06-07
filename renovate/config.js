@@ -12,7 +12,7 @@ module.exports = {
       token: process.env.GITHUB_TOKEN
     },
     {
-      hostType: 'docker',
+      matchHost: 'docker.io',
       username: process.env.DOCKERHUB_USERNAME,
       password: process.env.DOCKERHUB_TOKEN
     },
