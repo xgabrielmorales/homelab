@@ -2,7 +2,7 @@
 
 services:
   degoog:
-    image: ghcr.io/degoog-org/degoog:0.20.0@sha256:77776b4258a879b8cfdc322791b476aac9839daa84dbaa4099a3be729c6ae182
+    image: ghcr.io/degoog-org/degoog:0.21.0@sha256:a8b2e8181efc180739663a66802a668e3684ae43f693d1a291b9ed5c5e30db3d
     hostname: degoog
     volumes:
       - degoog-data:/app/data
