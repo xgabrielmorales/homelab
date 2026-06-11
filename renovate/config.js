@@ -20,17 +20,5 @@ module.exports = {
       matchHost: 'ghcr.io',
       token: process.env.GITHUB_TOKEN
     }
-  ],
-  customManagers: [{
-    customType: 'regex',
-    managerFilePatterns: ['/(^|/)swarm/.*/compose\\.yml$/', ],
-    matchStrings: ['image:\\s*["\']?(?<depName>[^\\s@:\'"]+):(?<currentValue>[^\\s@:\'"]+)(?:@(?<currentDigest>sha256:[a-f0-9]{64}))?["\']?'],
-    datasourceTemplate: 'docker'
-  }],
-  packageRules: [
-    {
-      matchManagers: ['custom.regex'],
-      minimumReleaseAge: '3 days'
-    }
   ]
 };
