@@ -18,5 +18,11 @@
       ];
     };
   };
+
+  systemd.services.docker = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+  };
+
   users.users.${mainUser}.extraGroups = [ "docker" ];
 }
