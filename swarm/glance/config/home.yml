@@ -39,8 +39,12 @@
               url: https://grafana.xgabrielmorales.com
             - title: Invidious
               url: https://invidious.xgabrielmorales.com/preferences
+            - title: Jellyfin
+              url: https://jellyfin.xgabrielmorales.com
             - title: Myspeed
               url: https://speed.xgabrielmorales.com
+            - title: qBittorrent
+              url: https://qbittorrent.xgabrielmorales.com
             - title: Redlib
               url: https://redlib.xgabrielmorales.com/settings
             - title: Syncthing
@@ -64,6 +68,8 @@
                   url: https://dumb.xgabrielmorales.com/
                 - title: Invidious
                   url: https://invidious.xgabrielmorales.com/
+                - title: Jellyfin
+                  url: https://jellyfin.xgabrielmorales.com/
                 - title: Spotify
                   url: https://open.spotify.com/
             - title: Social
