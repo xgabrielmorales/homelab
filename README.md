@@ -39,35 +39,37 @@ docker network create --driver overlay --scope swarm --attachable reverse-proxy-
 The AGE key file (`keys.txt`) must be in the repository root. From a service directory:
 
 ```bash
-$ SOPS_AGE_KEY_FILE="$(git rev-parse --show-toplevel)/keys.txt"
-$ SOPS_CONFIG="$(git rev-parse --show-toplevel)/.sops.yaml"
+SOPS_AGE_KEY_FILE="$(git rev-parse --show-toplevel)/keys.txt"
+SOPS_CONFIG="$(git rev-parse --show-toplevel)/.sops.yaml"
 ```
 
 ### doco-cd
 
-[doco-cd](https://doco.cd/) manages all subsequent deployments automatically. It requires the AGE secret key as a Swarm secret.
+[doco-cd](https://doco.cd/) manages all subsequent deployments automatically. It requires the AGE secret key as a Swarm
+secret.
 
 Create the secret once on the manager node:
 
 ```bash
-$ cat keys.txt | docker secret create sops_age_key -
+cat keys.txt | docker secret create sops_age_key -
 ```
 
 Then deploy doco-cd:
 
 ```bash
-$ docker stack deploy --compose-file gitops/compose.yml doco-cd
+docker stack deploy --compose-file gitops/compose.yml doco-cd
 ```
 
 From this point, pushing to `trunk` triggers automatic deployment of all stacks within 60 seconds.
 
 ### Renovate
 
-[Renovate](https://docs.renovatebot.com/) scans Docker Compose files under `swarm/` for outdated images and opens pull requests in Forgejo automatically. It runs on demand.
+[Renovate](https://docs.renovatebot.com/) scans Docker Compose files under `swarm/` for outdated images and opens pull
+requests in Forgejo automatically. It runs on demand.
 
 ```bash
-$ cd renovate
-$ sops exec-env .encrypted.env 'docker compose run --rm renovate'
+cd renovate
+sops exec-env .encrypted.env 'docker compose run --rm renovate'
 ```
 
 ## FAQ
@@ -78,6 +80,5 @@ $ sops exec-env .encrypted.env 'docker compose run --rm renovate'
 - Raspberry Pi 4 (4GB RAM)
 - Mini PC (Intel N150, 16GB RAM)
 
-_Last verified: January 11, 2026_
-
+**Last verified: January 11, 2026**
 </details>
