@@ -1,7 +1,7 @@
 services:
   doco-cd:
     hostname: doco-cd
-    image: ghcr.io/kimdre/doco-cd:0.92@sha256:d38be697f3191c257a8ddeb2235bf2dc95f5378f7ba76fa4060d25fdd1dc8320
+    image: ghcr.io/kimdre/doco-cd:0.94@sha256:378fd7d5fcbd9b038640dd14af7ded1686ab26b464bbbe7df880cc0563161e38
     environment:
       TZ: America/Bogota
       SOPS_AGE_KEY_FILE: /run/secrets/sops_age_key
