@@ -23,6 +23,7 @@ Some of the services I am currently self-hosting:
 - [Degoog](https://github.com/degoog-org/degoog): Search engine aggregator.
 - [Forgejo](https://forgejo.org/): Git server.
 - [Invidious](https://invidious.io/): YouTube alternative frontend with no ads and no tracking.
+- [Jellyfin](https://jellyfin.org/): Media server for open source movies and TV shows.
 - [Redlib](https://github.com/redlib-org/redlib): Reddit alternative frontend with no ads and no tracking.
 - [Technitium](https://technitium.com/dns/): Recursive DNS server that also blocks ads.
 - [WireGuard](https://www.wireguard.com/): VPN to access my home network.

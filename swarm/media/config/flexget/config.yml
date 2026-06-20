@@ -1,0 +1,59 @@
+templates:
+  scan_downloads:
+    filesystem:
+      path: /data
+      recursive: yes
+      regexp: '(?i).*\.(mkv|mp4|avi|m4v|mov|wmv)$'
+    seen: local
+
+tasks:
+  organize_series:
+    template: scan_downloads
+    regexp:
+      reject:
+        - 'media[/\\](Movies|Series)':
+            from:
+              - location
+    all_series: yes
+    move:
+      to: "/data/media/Series/{{series_name}}/Season {{series_season|pad(2)}}"
+      rename: "{{series_name}} - S{{series_season|pad(2)}}E{{series_episode|pad(2)}}"
+      # Keep this below a single episode's size. Season packs put every episode
+      # in one folder, and clean_source deletes that folder as soon as its
+      # remaining contents drop under this value -- taking not-yet-moved
+      # episodes with it. 100 (MiB) only clears leftover samples/nfo/subs.
+      clean_source: 100
+      along:
+        extensions:
+          - srt
+          - sub
+          - ass
+
+  organize_movies:
+    template: scan_downloads
+    regexp:
+      reject:
+        - 'media[/\\](Movies|Series)':
+            from:
+              - location
+        - '(?i)s\d{1,2}e\d{1,2}'
+        - '(?i)\b\d{1,2}x\d{2}\b'
+    tmdb_lookup: yes
+    if:
+      - "tmdb_id is defined": accept
+    move:
+      to: "/data/media/Movies/{{tmdb_name}} ({{tmdb_year}})"
+      rename: "{{tmdb_name}} ({{tmdb_year}})"
+      # See note in organize_series: keep below a single file's size so a
+      # multi-file release folder is never deleted while real media remains.
+      clean_source: 100
+      along:
+        extensions:
+          - srt
+          - sub
+          - ass
+
+schedules:
+  - tasks: "*"
+    interval:
+      minutes: 5

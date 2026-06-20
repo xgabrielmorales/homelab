@@ -1,0 +1,121 @@
+# vim: ft=yaml.docker-compose
+
+services:
+  qbittorrent:
+    image: linuxserver/qbittorrent:5.2.2@sha256:bca2cf536c00900f0b8fb62ca3dcbed8ee64293165d41c8240d2cc952d4ef048
+    hostname: qbittorrent
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+    volumes:
+      - qbittorrent-config:/config
+      - media-downloads:/downloads
+    configs:
+      - source: qbittorrent-conf
+        target: /config/qBittorrent/qBittorrent.conf
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Bogota
+    networks:
+      - reverse-proxy-swarm
+      - media
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 1G
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.xgabrielmorales.com`)"
+        - "traefik.http.routers.qbittorrent.entrypoints=websecure"
+        - "traefik.http.routers.qbittorrent.tls.certresolver=cloudflare"
+        - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
+
+  flexget:
+    image: wiserain/flexget:3.19.24@sha256:3036996f5b19299ba8163908578fd04a66fa20b4f3f1ac90cadd4f1dd18198e6
+    hostname: flexget
+    volumes:
+      - flexget-config:/config
+      - media-downloads:/data
+    configs:
+      - source: flexget-conf
+        target: /config/config.yml
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=America/Bogota
+      - TORRENT_PLUGIN=qbittorrent
+      - FG_WEBUI_PASSWD=${FLEXGET_WEBUI_PASSWD}
+    networks:
+      - media
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 512M
+
+  jellyfin:
+    image: linuxserver/jellyfin:10.11.11@sha256:bb8ff21a879498dbdead9efe4d3de2070dbda2b9fb35b9a43501055f6e526384
+    hostname: jellyfin
+    ports:
+      - 8096:8096/tcp
+    volumes:
+      - jellyfin-config:/config
+      - media-downloads:/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Bogota
+    networks:
+      - reverse-proxy-swarm
+      - media
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 4G
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.xgabrielmorales.com`)"
+        - "traefik.http.routers.jellyfin.entrypoints=websecure"
+        - "traefik.http.routers.jellyfin.tls.certresolver=cloudflare"
+        - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+
+volumes:
+  qbittorrent-config:
+  flexget-config:
+  jellyfin-config:
+  media-downloads:
+
+configs:
+  qbittorrent-conf:
+    file: ./config/qbittorrent/config/qBittorrent/qBittorrent.conf
+  flexget-conf:
+    file: ./config/flexget/config.yml
+
+networks:
+  reverse-proxy-swarm:
+    external: true
+  media:

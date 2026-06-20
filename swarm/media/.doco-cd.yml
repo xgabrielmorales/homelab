@@ -1,0 +1,4 @@
+name: media
+working_dir: swarm/media/
+compose_files:
+  - compose.yml
