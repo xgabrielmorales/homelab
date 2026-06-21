@@ -3,7 +3,7 @@
 {
   virtualisation.docker = {
     enable = true;
-    enableOnBoot = false;
+    enableOnBoot = true;
     autoPrune = {
       enable = true;
       flags = [
@@ -22,6 +22,8 @@
   systemd.services.docker = {
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
+    startLimitIntervalSec = 0;
+    serviceConfig.RestartSec = "5s";
   };
 
   users.users.${mainUser}.extraGroups = [ "docker" ];
