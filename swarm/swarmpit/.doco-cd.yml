@@ -1,0 +1,4 @@
+name: swarmpit
+working_dir: swarm/swarmpit/
+compose_files:
+  - compose.yml
