@@ -33,6 +33,8 @@
               url: https://dns.xgabrielmorales.com
             - title: Dumb
               url: https://dumb.xgabrielmorales.com
+            - title: File Manager
+              url: https://filebrowser.xgabrielmorales.com
             - title: Forgejo
               url: https://git.xgabrielmorales.com
             - title: Grafana
@@ -72,6 +74,12 @@
                   url: https://jellyfin.xgabrielmorales.com/
                 - title: Spotify
                   url: https://open.spotify.com/
+            - title: Media
+              links:
+                - title: File Manager
+                  url: https://filebrowser.xgabrielmorales.com/
+                - title: qBittorrent
+                  url: https://qbittorrent.xgabrielmorales.com/
             - title: Social
               links:
                 - title: Discord
