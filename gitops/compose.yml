@@ -6,7 +6,7 @@ services:
       TZ: America/Bogota
       SOPS_AGE_KEY_FILE: /run/secrets/sops_age_key
       POLL_CONFIG: |
-        - url: https://github.com/xgabrielmorales/homelab.git
+        - url: https://git.xgabrielmorales.com/xgabrielmorales/homelab.git
           reference: trunk
           interval: 60
     secrets:
