@@ -8,22 +8,6 @@
         - type: calendar
           first-day-of-week: monday
 
-    - size: full
-      widgets:
-        - type: search
-          search-engine: duckduckgo
-
-        - type: hacker-news
-          comments-url-template: https://www.hckrnws.com/stories/{POST-ID}
-
-        - type: group
-          widgets:
-            - type: reddit
-              subreddit: selfhosted
-              show-thumbnails: false
-
-    - size: small
-      widgets:
         - type: monitor
           cache: 1m
           title: Selfhosted Services
@@ -58,6 +42,22 @@
             - title: Wireguard
               url: https://wg.xgabrielmorales.com
 
+    - size: full
+      widgets:
+        - type: search
+          search-engine: duckduckgo
+
+        - type: hacker-news
+          comments-url-template: https://www.hckrnws.com/stories/{POST-ID}
+
+        - type: group
+          widgets:
+            - type: reddit
+              subreddit: selfhosted
+              show-thumbnails: false
+
+    - size: small
+      widgets:
         - type: bookmarks
           groups:
             - title: Development
