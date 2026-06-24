@@ -104,7 +104,7 @@ services:
         - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
 
   filebrowser:
-    image: filebrowser/filebrowser:v2-s6@sha256:dbac07403040895dfb4a06ff3cef2032719695c69d8f02704614e03d7f76b31f
+    image: filebrowser/filebrowser:v2-s6@sha256:2da376a3999272afc603af22ec46458abd4c72b2ed04fa712743b56ad394df31
     hostname: filebrowser
     volumes:
       - filebrowser-data:/srv
