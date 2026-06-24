@@ -5,9 +5,6 @@
         - type: clock
           hour-format: 24h
 
-        - type: calendar
-          first-day-of-week: monday
-
         - type: monitor
           cache: 1m
           title: Selfhosted Services
@@ -58,6 +55,9 @@
 
     - size: small
       widgets:
+        - type: calendar
+          first-day-of-week: monday
+
         - type: bookmarks
           groups:
             - title: Development
