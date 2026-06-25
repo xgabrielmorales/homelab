@@ -1,0 +1,53 @@
+# vim: ft=yaml.docker-compose
+
+services:
+  ntfy:
+    image: binwiederhier/ntfy:v2.25.0@sha256:cfbbb1bac9196cb711e29ef0ac4adaeb033be6235f1df857705dc39c14384a1d
+    hostname: ntfy
+    command: serve
+    environment:
+      - TZ=America/Bogota
+      - NTFY_BASE_URL=https://ntfy.xgabrielmorales.com
+      - NTFY_LISTEN_HTTP=:8080
+      - NTFY_BEHIND_PROXY=true
+      - NTFY_CACHE_FILE=/var/cache/ntfy/cache.db
+      - NTFY_AUTH_FILE=/var/lib/ntfy/user.db
+    volumes:
+      - ntfy-cache:/var/cache/ntfy
+      - ntfy-data:/var/lib/ntfy
+    cap_drop:
+      - ALL
+    networks:
+      - reverse-proxy-swarm
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -q --tries=1 http://localhost:8080/v1/health -O - | grep -Eo '\"healthy\"\\s*:\\s*true' || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 256M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.ntfy.rule=Host(`ntfy.xgabrielmorales.com`)"
+        - "traefik.http.routers.ntfy.entrypoints=websecure"
+        - "traefik.http.routers.ntfy.tls.certresolver=cloudflare"
+        - "traefik.http.services.ntfy.loadbalancer.server.port=8080"
+
+networks:
+  reverse-proxy-swarm:
+    external: true
+
+volumes:
+  ntfy-cache:
+  ntfy-data:

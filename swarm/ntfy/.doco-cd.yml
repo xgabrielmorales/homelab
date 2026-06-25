@@ -1,0 +1,4 @@
+name: ntfy
+working_dir: swarm/ntfy/
+compose_files:
+  - compose.yml
