@@ -2,9 +2,6 @@
   columns:
     - size: small
       widgets:
-        - type: clock
-          hour-format: 24h
-
         - type: monitor
           cache: 1m
           title: Selfhosted Services
