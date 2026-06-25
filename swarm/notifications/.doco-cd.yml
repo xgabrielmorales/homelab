@@ -1,0 +1,4 @@
+name: notifications
+working_dir: swarm/notifications/
+compose_files:
+  - compose.yml

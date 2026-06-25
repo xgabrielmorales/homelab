@@ -44,6 +44,41 @@ services:
         - "traefik.http.routers.ntfy.tls.certresolver=cloudflare"
         - "traefik.http.services.ntfy.loadbalancer.server.port=8080"
 
+  apprise:
+    image: caronc/apprise:v1.5.0@sha256:43673bf62faa88148298d52664b37b4860189555db0b251b54d79a3ef3a173cf
+    hostname: apprise
+    environment:
+      - TZ=America/Bogota
+      - APPRISE_STATEFUL_MODE=simple
+      - APPRISE_WORKER_COUNT=1
+    configs:
+      - source: apprise_homelab
+        target: /config/homelab.yml
+    networks:
+      - reverse-proxy-swarm
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 256M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.apprise.rule=Host(`apprise.xgabrielmorales.com`)"
+        - "traefik.http.routers.apprise.entrypoints=websecure"
+        - "traefik.http.routers.apprise.tls.certresolver=cloudflare"
+        - "traefik.http.services.apprise.loadbalancer.server.port=8000"
+
+configs:
+  apprise_homelab:
+    file: ./config/apprise/homelab.yml
+
 networks:
   reverse-proxy-swarm:
     external: true
