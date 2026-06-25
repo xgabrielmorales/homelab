@@ -1,0 +1,4 @@
+name: apprise
+working_dir: swarm/apprise/
+compose_files:
+  - compose.yml

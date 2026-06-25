@@ -10,6 +10,8 @@
           title: Selfhosted Services
           style: compact
           sites:
+            - title: Apprise
+              url: https://apprise.xgabrielmorales.com
             - title: DDNS Updater
               url: https://dns.xgabrielmorales.com
             - title: Dumb
