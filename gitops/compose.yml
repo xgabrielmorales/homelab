@@ -5,6 +5,9 @@ services:
     environment:
       TZ: America/Bogota
       SOPS_AGE_KEY_FILE: /run/secrets/sops_age_key
+      APPRISE_API_URL: https://apprise.xgabrielmorales.com/notify
+      APPRISE_NOTIFY_URLS: ntfy://ntfy:8080/homelab
+      APPRISE_NOTIFY_LEVEL: success
       POLL_CONFIG: |
         - url: https://git.xgabrielmorales.com/xgabrielmorales/homelab.git
           reference: trunk
