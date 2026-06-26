@@ -57,7 +57,7 @@ services:
           memory: 256M
 
   influxdb:
-    image: influxdb:1.11.8@sha256:39cb4d79059b6a3644be7cb4b4c7e389cf397b75102114be5f9f44575011f11a
+    image: influxdb:1.12.4@sha256:edbe4351f42238b267a7231c258050b37b462e55930236c1144301a47740582b
     hostname: influxdb
     volumes:
       - swarmpit-influx-data:/var/lib/influxdb
