@@ -23,8 +23,6 @@
               url: https://invidious.xgabrielmorales.com/preferences
             - title: Jellyfin
               url: https://jellyfin.xgabrielmorales.com
-            - title: Myspeed
-              url: https://speed.xgabrielmorales.com
             - title: Ntfy
               url: https://ntfy.xgabrielmorales.com
             - title: qBittorrent
@@ -33,8 +31,6 @@
               url: https://redlib.xgabrielmorales.com/settings
             - title: Swarmpit
               url: https://swarmpit.xgabrielmorales.com
-            - title: Syncthing
-              url: https://syncthing.xgabrielmorales.com
             - title: Technitium
               url: https://technitium.xgabrielmorales.com
             - title: Wireguard

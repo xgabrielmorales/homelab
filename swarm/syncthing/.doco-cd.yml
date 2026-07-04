@@ -1,4 +1,0 @@
-name: syncthing
-working_dir: swarm/syncthing/
-compose_files:
-  - compose.yml
