@@ -39,9 +39,6 @@
             - title: Redlib
               url: https://redlib.xgabrielmorales.com
               check-url: http://redlib_redlib:8080/settings
-            - title: Swarmpit
-              url: https://swarmpit.xgabrielmorales.com
-              check-url: http://swarmpit_app:8080
             - title: Technitium
               url: https://technitium.xgabrielmorales.com
               check-url: http://technitium_dns-server:5380
