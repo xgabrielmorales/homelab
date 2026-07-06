@@ -2,7 +2,7 @@
 
 services:
   clipboard:
-    image: git.xgabrielmorales.com/xgabrielmorales/clipboard:0.0.1@sha256:1f6da79df2cfda8dcd9d03baf84caa93c4f6e3d34de01ac0090d50ff8b7b72ad
+    image: git.xgabrielmorales.com/xgabrielmorales/clipboard:0.0.1@sha256:fecbf6619f2871157903bc53e2792c927bd0ce56bf0d3cf07a9210bfc85656e1
     hostname: clipboard
     read_only: true
     cap_drop:
