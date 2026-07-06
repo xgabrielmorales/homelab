@@ -13,7 +13,7 @@
     };
     daemon.settings = {
       dns = [
-        "10.10.10.2" # My own dns server
+        "10.10.10.3" # My own dns server
         "1.1.1.1" # Cloudflare
       ];
     };
