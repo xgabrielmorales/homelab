@@ -9,32 +9,45 @@
           sites:
             - title: Apprise
               url: https://apprise.xgabrielmorales.com
+              check-url: http://notifications_apprise:8000
             - title: DDNS Updater
               url: https://dns.xgabrielmorales.com
+              check-url: http://dns-updater_ddns-updater:8000
             - title: Dumb
               url: https://dumb.xgabrielmorales.com
+              check-url: http://dumb_dumb:5555
             - title: File Manager
               url: https://filebrowser.xgabrielmorales.com
+              check-url: http://media_filebrowser:80
             - title: Forgejo
               url: https://git.xgabrielmorales.com
             - title: Grafana
               url: https://grafana.xgabrielmorales.com
+              check-url: http://observability_grafana:3000
             - title: Invidious
-              url: https://invidious.xgabrielmorales.com/preferences
+              url: https://invidious.xgabrielmorales.com
+              check-url: http://invidious_invidious:3000/preferences
             - title: Jellyfin
               url: https://jellyfin.xgabrielmorales.com
+              check-url: http://media_jellyfin:8096
             - title: Ntfy
               url: https://ntfy.xgabrielmorales.com
+              check-url: http://notifications_ntfy:8080
             - title: qBittorrent
               url: https://qbittorrent.xgabrielmorales.com
+              check-url: http://media_qbittorrent:8080
             - title: Redlib
-              url: https://redlib.xgabrielmorales.com/settings
+              url: https://redlib.xgabrielmorales.com
+              check-url: http://redlib_redlib:8080/settings
             - title: Swarmpit
               url: https://swarmpit.xgabrielmorales.com
+              check-url: http://swarmpit_app:8080
             - title: Technitium
               url: https://technitium.xgabrielmorales.com
+              check-url: http://technitium_dns-server:5380
             - title: Wireguard
-              url: https://wg.xgabrielmorales.com
+              url: https://wg.xgabrielmorales.com/login
+              check-url: http://wireguard_wireguard:51821/login
 
     - size: full
       widgets:
