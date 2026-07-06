@@ -10,10 +10,12 @@
   environment = {
     defaultPackages = lib.mkForce [ ];
     systemPackages = with pkgs; [
+      age
       git
       htop
-      vim
       just
+      sops
+      vim
     ];
   };
 }
