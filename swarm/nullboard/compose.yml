@@ -1,0 +1,41 @@
+# vim: ft=yaml.docker-compose
+
+services:
+  nullboard:
+    image: git.xgabrielmorales.com/xgabrielmorales/nullboard:0.0.1@sha256:c0342a80dd0b16363460e426f8bf2e95800f20fe864de0218e00bcab4b92a35e
+    hostname: nullboard
+    read_only: true
+    cap_drop:
+      - ALL
+    environment:
+      - TZ=America/Bogota
+      - NB_DB=/data/nullboard.db
+    volumes:
+      - nullboard-data:/data
+    networks:
+      - reverse-proxy-swarm
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 128M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.nullboard.rule=Host(`board.xgabrielmorales.com`)"
+        - "traefik.http.routers.nullboard.entrypoints=websecure"
+        - "traefik.http.routers.nullboard.tls.certresolver=cloudflare"
+        - "traefik.http.services.nullboard.loadbalancer.server.port=8080"
+
+volumes:
+  nullboard-data:
+
+networks:
+  reverse-proxy-swarm:
+    external: true

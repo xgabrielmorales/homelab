@@ -1,0 +1,4 @@
+name: nullboard
+working_dir: swarm/nullboard/
+compose_files:
+  - compose.yml
