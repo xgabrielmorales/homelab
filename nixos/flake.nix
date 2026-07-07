@@ -31,5 +31,23 @@
           sops-nix.nixosModules.sops
         ];
       };
+      nixosConfigurations.xgm-homelab-manager-aarch64 = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          mainUser = "xgm-hm";
+        };
+        modules = [
+          ./hosts/manager-aarch64/default.nix
+          sops-nix.nixosModules.sops
+        ];
+      };
+      nixosConfigurations.xgm-homelab-worker-aarch64 = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          mainUser = "xgm-hw";
+        };
+        modules = [
+          ./hosts/worker-aarch64/default.nix
+          sops-nix.nixosModules.sops
+        ];
+      };
     };
 }

@@ -4,6 +4,12 @@ build-manager:
 build-worker:
   sudo nixos-rebuild switch --impure --flake .#xgm-homelab-worker
 
+build-manager-image-aarch64:
+  nix build .#nixosConfigurations.xgm-homelab-manager-aarch64.config.system.build.sdImage
+
+build-worker-image-aarch64:
+  nix build .#nixosConfigurations.xgm-homelab-worker-aarch64.config.system.build.sdImage
+
 delete-generations:
   sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system 1d
 
