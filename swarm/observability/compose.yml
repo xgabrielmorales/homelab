@@ -60,6 +60,29 @@ services:
       labels:
         - "prometheus.port=9100"
 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.52.0@sha256:505e2c61e74e5d5eae522d01e2e971e91b793bc405270315a64da806ba033640
+    hostname: "{{.Node.Hostname}}"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    networks:
+      - observability-internal
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        delay: 30s
+        window: 120s
+      resources:
+        limits:
+          memory: 256M
+      labels:
+        - "prometheus.port=8080"
+
   prometheus:
     image: prom/prometheus:v3.12.0@sha256:69f5241418838263316593f7274a304b095c40bcf22e57272865da91bd60a8ac
     configs:

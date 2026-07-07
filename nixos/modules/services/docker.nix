@@ -16,6 +16,10 @@
         "10.10.10.3" # My own dns server
         "1.1.1.1" # Cloudflare
       ];
+      # Docker 29 defaults to the containerd image store, whose layer layout
+      # cadvisor can't read (no /var/lib/docker/image/<driver>/layerdb), so
+      # container metrics come out anonymous. Revert to the overlay2 graphdriver.
+      features.containerd-snapshotter = false;
     };
   };
 
