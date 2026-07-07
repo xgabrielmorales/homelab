@@ -1,17 +1,17 @@
-build-manager:
-  sudo nixos-rebuild switch --impure --flake .#xgm-homelab-manager
+deploy-manager host:
+  nixos-rebuild switch --impure --flake .#xgm-homelab-manager --target-host {{host}} --sudo --ask-sudo-password
 
-build-worker:
-  sudo nixos-rebuild switch --impure --flake .#xgm-homelab-worker
+deploy-worker host:
+  nixos-rebuild switch --impure --flake .#xgm-homelab-worker --target-host {{host}} --sudo --ask-sudo-password
+
+deploy-manager-aarch64 host:
+  nixos-rebuild switch --impure --flake .#xgm-homelab-manager-aarch64 --target-host {{host}} --sudo --ask-sudo-password
+
+deploy-worker-aarch64 host:
+  nixos-rebuild switch --impure --flake .#xgm-homelab-worker-aarch64 --target-host {{host}} --sudo --ask-sudo-password
 
 build-manager-image-aarch64:
   nix build .#nixosConfigurations.xgm-homelab-manager-aarch64.config.system.build.sdImage
 
 build-worker-image-aarch64:
   nix build .#nixosConfigurations.xgm-homelab-worker-aarch64.config.system.build.sdImage
-
-delete-generations:
-  sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system 1d
-
-clean:
-  sudo nix-store --gc
