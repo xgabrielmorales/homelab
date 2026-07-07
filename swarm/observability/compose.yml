@@ -125,12 +125,12 @@ services:
     configs:
       - source: config-alloy
         target: /etc/alloy/config.alloy
-    command: run --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
+    command: run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    # Root access is required to read the Docker socket across all Swarm nodes,
-    # where the docker group GID is not consistent.
-    user: "0:0"
+    # NixOS pins the docker group to GID 131 on every host, so the alloy user
+    # (uid 473 in the image) only needs that group to read the socket.
+    user: "473:131"
     cap_drop:
       - ALL
     networks:
