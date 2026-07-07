@@ -109,7 +109,7 @@ services:
         window: 120s
       resources:
         limits:
-          memory: 256M
+          memory: 512M
       labels:
         - "prometheus.port=9090"
 
