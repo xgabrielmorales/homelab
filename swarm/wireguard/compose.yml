@@ -2,6 +2,16 @@ services:
   wireguard:
     image: ghcr.io/wg-easy/wg-easy:15.3.0@sha256:93bbd593e07bab98d02807a28770ac87ab6c48818e319e68c1f66561feb99876
     hostname: wireguard
+    # The image pins iptables to the legacy backend, but the NixOS host kernel
+    # only ships nftables (no iptable_nat module), so wg-quick's nat rules fail.
+    # Repoint iptables to the nft backend, then run the original CMD.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        ln -sf /usr/sbin/iptables-nft /usr/sbin/iptables
+        ln -sf /usr/sbin/ip6tables-nft /usr/sbin/ip6tables
+        exec /usr/bin/dumb-init node server/index.mjs
     ports:
       - target: 51820
         published: 51820
