@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clipboard
+  labels:
+    app: clipboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clipboard
+  template:
+    metadata:
+      labels:
+        app: clipboard
+    spec:
+      containers:
+        - name: clipboard
+          image: git.xgabrielmorales.com/xgabrielmorales/clipboard:0.0.1@sha256:fecbf6619f2871157903bc53e2792c927bd0ce56bf0d3cf07a9210bfc85656e1
+          ports:
+            - containerPort: 3000
+          env:
+            - name: TZ
+              value: America/Bogota
+          resources:
+            limits:
+              memory: 128Mi
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL

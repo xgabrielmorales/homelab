@@ -1,4 +1,0 @@
-name: clipboard
-working_dir: swarm/clipboard/
-compose_files:
-  - compose.yml
