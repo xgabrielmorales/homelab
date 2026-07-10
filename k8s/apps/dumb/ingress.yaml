@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dumb
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: dumb.xgabrielmorales.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dumb
+                port:
+                  number: 5555
