@@ -2,4 +2,5 @@
 !.encrypted.env
 docker/invidious/config/config.yml
 keys.txt
+kubeconfig.yaml
 cache/
