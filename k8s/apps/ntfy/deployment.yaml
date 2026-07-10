@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ntfy
+  labels:
+    app: ntfy
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ntfy
+  template:
+    metadata:
+      labels:
+        app: ntfy
+    spec:
+      containers:
+        - name: ntfy
+          image: binwiederhier/ntfy:v2.25.0@sha256:cfbbb1bac9196cb711e29ef0ac4adaeb033be6235f1df857705dc39c14384a1d
+          args:
+            - serve
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: NTFY_BASE_URL
+              value: https://ntfy.xgabrielmorales.com
+            - name: NTFY_LISTEN_HTTP
+              value: ":8080"
+            - name: NTFY_BEHIND_PROXY
+              value: "true"
+            - name: NTFY_CACHE_FILE
+              value: /var/cache/ntfy/cache.db
+            - name: NTFY_AUTH_FILE
+              value: /var/lib/ntfy/user.db
+          resources:
+            limits:
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          livenessProbe:
+            httpGet:
+              path: /v1/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/ntfy
+            - name: cache
+              mountPath: /var/cache/ntfy
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ntfy-data
+        - name: cache
+          emptyDir: {}
