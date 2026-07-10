@@ -9,9 +9,7 @@ http:
       tls:
         certResolver: cloudflare
         domains:
-          - main: xgabrielmorales.com
-            sans:
-              - "*.xgabrielmorales.com"
+          - main: "*.xgabrielmorales.com"
   services:
     k3s-traefik:
       loadBalancer:
