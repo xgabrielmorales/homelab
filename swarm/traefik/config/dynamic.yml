@@ -1,0 +1,20 @@
+http:
+  routers:
+    k3s-catchall:
+      rule: 'HostRegexp(`^.+\.xgabrielmorales\.com$`)'
+      entryPoints:
+        - websecure
+      priority: 1
+      service: k3s-traefik
+      tls:
+        certResolver: cloudflare
+        domains:
+          - main: xgabrielmorales.com
+            sans:
+              - "*.xgabrielmorales.com"
+  services:
+    k3s-traefik:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: "http://10.10.10.3:8000"

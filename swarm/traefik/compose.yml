@@ -9,6 +9,9 @@ services:
       - "443:443"
     volumes:
       - traefik-certs:/certs
+    configs:
+      - source: traefik-dynamic
+        target: /dynamic/dynamic.yml
     environment:
       - CF_DNS_API_TOKEN=${TFK_CF_DNS_API_TOKEN}
     command:
@@ -25,6 +28,9 @@ services:
       - "--providers.swarm.endpoint=tcp://docker-socket-proxy:2375"
       - "--providers.swarm.exposedbydefault=false"
       - "--providers.swarm.network=reverse-proxy-swarm"
+      # File provider: catch-all hacia el Traefik de k3s (ver config/dynamic.yml)
+      - "--providers.file.directory=/dynamic"
+      - "--providers.file.watch=true"
       # Certificates ACME with Cloudflare
       - "--certificatesresolvers.cloudflare.acme.storage=/certs/acme.json"
       - "--certificatesresolvers.cloudflare.acme.dnschallenge=true"
@@ -88,6 +94,10 @@ services:
 
 volumes:
   traefik-certs:
+
+configs:
+  traefik-dynamic:
+    file: ./config/dynamic.yml
 
 networks:
   reverse-proxy-swarm:

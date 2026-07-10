@@ -5,7 +5,6 @@
     enable = true;
     role = "server";
     extraFlags = [
-      "--disable=traefik"
       "--write-kubeconfig-mode=0644"
     ];
   };
