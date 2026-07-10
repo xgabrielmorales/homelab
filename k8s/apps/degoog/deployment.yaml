@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: degoog
+  labels:
+    app: degoog
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: degoog
+  template:
+    metadata:
+      labels:
+        app: degoog
+    spec:
+      containers:
+        - name: degoog
+          image: ghcr.io/degoog-org/degoog:0.22.0@sha256:b410c5160f8483f6f687f7e8e8d86ed868501fd1eba307205febbb28cf9845fd
+          ports:
+            - containerPort: 4444
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          resources:
+            limits:
+              memory: 256Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - SETUID
+                - SETGID
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: degoog-data

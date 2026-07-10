@@ -1,4 +1,0 @@
-name: degoog
-working_dir: swarm/degoog/
-compose_files:
-  - compose.yml
