@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: glance
+  labels:
+    app: glance
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: glance
+  template:
+    metadata:
+      labels:
+        app: glance
+    spec:
+      containers:
+        - name: glance
+          image: glanceapp/glance:v0.8.5@sha256:32ab73d80f2b8b5fb0735b0431deb36b93fbb6b2fb43592449b0178c8b83e350
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TZ
+              value: America/Bogota
+          resources:
+            limits:
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /app/config/glance.yml
+              subPath: glance.yml
+            - name: config
+              mountPath: /app/config/home.yml
+              subPath: home.yml
+            - name: config
+              mountPath: /app/assets/user.css
+              subPath: user.css
+      volumes:
+        - name: config
+          configMap:
+            name: glance-config

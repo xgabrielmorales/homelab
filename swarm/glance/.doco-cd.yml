@@ -1,4 +1,0 @@
-name: glance
-working_dir: swarm/glance/
-compose_files:
-  - compose.yml
