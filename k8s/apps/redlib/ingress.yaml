@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: redlib
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: redlib.xgabrielmorales.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: redlib
+                port:
+                  number: 8080

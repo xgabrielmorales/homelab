@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redlib
+  labels:
+    app: redlib
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redlib
+  template:
+    metadata:
+      labels:
+        app: redlib
+    spec:
+      containers:
+        - name: redlib
+          image: ghcr.io/silvenga/redlib:0.36@sha256:5b7b92744ca153c75bef1f5b6b5ffb6985a230c91019d722a88ec758b15f502d
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TZ
+              value: America/Bogota
+          envFrom:
+            - secretRef:
+                name: redlib
+          resources:
+            limits:
+              memory: 512Mi
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL

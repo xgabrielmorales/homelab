@@ -6,3 +6,4 @@ resources:
   - glance
   - degoog
   - nullboard
+  - redlib
