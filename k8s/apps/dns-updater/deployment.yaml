@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dns-updater
+  labels:
+    app: dns-updater
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dns-updater
+  template:
+    metadata:
+      labels:
+        app: dns-updater
+    spec:
+      containers:
+        - name: dns-updater
+          image: qmcgaw/ddns-updater:v2.10@sha256:3e2aa558946b5a293def4d73008fa4651c072b2c12932cecd02126fb23979831
+          ports:
+            - containerPort: 8000
+          env:
+            - name: TZ
+              value: America/Bogota
+          envFrom:
+            - secretRef:
+                name: dns-updater
+          resources:
+            limits:
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL

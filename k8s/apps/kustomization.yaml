@@ -7,3 +7,4 @@ resources:
   - degoog
   - nullboard
   - redlib
+  - dns-updater

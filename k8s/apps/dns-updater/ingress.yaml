@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dns-updater
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: dns.xgabrielmorales.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dns-updater
+                port:
+                  number: 8000
