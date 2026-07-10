@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invidious
+  labels:
+    app: invidious
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invidious
+  template:
+    metadata:
+      labels:
+        app: invidious
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: invidious
+          image: quay.io/invidious/invidious:2026.06.30-9c62c8b@sha256:5fafe57cffbc57342ec098de12261155cb730cc6edc63eab1a447d6fc01a8742
+          ports:
+            - containerPort: 3000
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: INVIDIOUS_CONFIG
+              valueFrom:
+                secretKeyRef:
+                  name: invidious
+                  key: INVIDIOUS_CONFIG
+          resources:
+            limits:
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invidious
+spec:
+  selector:
+    app: invidious
+  ports:
+    - port: 3000
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: invidious
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: invidious.xgabrielmorales.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: invidious
+                port:
+                  number: 3000

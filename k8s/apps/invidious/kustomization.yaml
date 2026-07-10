@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - secret.sops.yaml
+  - pvc.yaml
+  - db.yaml
+  - companion.yaml
+  - invidious.yaml
+configMapGenerator:
+  - name: invidious-initdb
+    files:
+      - files/init-invidious-db.sh
+  - name: invidious-sql
+    files:
+      - files/sql/channels.sql
+      - files/sql/videos.sql
+      - files/sql/channel_videos.sql
+      - files/sql/users.sql
+      - files/sql/session_ids.sql
+      - files/sql/nonces.sql
+      - files/sql/annotations.sql
+      - files/sql/playlists.sql
+      - files/sql/playlist_videos.sql

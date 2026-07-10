@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invidious-companion
+  labels:
+    app: invidious-companion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invidious-companion
+  template:
+    metadata:
+      labels:
+        app: invidious-companion
+    spec:
+      containers:
+        - name: companion
+          image: quay.io/invidious/invidious-companion:master-0813f00@sha256:afae8094100c8f16db7dc649f9ad992346fffee63d9e7c9ef27effb8b3e75cb3
+          ports:
+            - containerPort: 8282
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: SERVER_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: invidious
+                  key: INVIDIOUS_INVIDIOUS_COMPANION_KEY
+          resources:
+            limits:
+              memory: 2Gi
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: cache
+              mountPath: /var/tmp/youtubei.js
+      volumes:
+        - name: cache
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invidious-companion
+spec:
+  selector:
+    app: invidious-companion
+  ports:
+    - port: 8282
+      targetPort: 8282
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: invidious-companion
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: companion.xgabrielmorales.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: invidious-companion
+                port:
+                  number: 8282

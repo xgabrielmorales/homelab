@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invidious-db
+  labels:
+    app: invidious-db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: invidious-db
+  template:
+    metadata:
+      labels:
+        app: invidious-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:17@sha256:0af65001d05296a2ead57ac4a6412433d8913d1bb5d0c88435a7d1e1ee5cb04b
+          ports:
+            - containerPort: 5432
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: invidious
+                  key: INVIDIOUS_DB_DBNAME
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: invidious
+                  key: INVIDIOUS_DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: invidious
+                  key: INVIDIOUS_DB_PASSWORD
+          resources:
+            limits:
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - SETUID
+                - SETGID
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d
+            - name: sql
+              mountPath: /config/sql
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: invidious-db-data
+        - name: initdb
+          configMap:
+            name: invidious-initdb
+            defaultMode: 0755
+        - name: sql
+          configMap:
+            name: invidious-sql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invidious-db
+spec:
+  selector:
+    app: invidious-db
+  ports:
+    - port: 5432
+      targetPort: 5432

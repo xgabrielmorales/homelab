@@ -9,3 +9,4 @@ resources:
   - redlib
   - dns-updater
   - ntfy
+  - invidious
