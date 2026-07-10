@@ -24,6 +24,7 @@
     # Services
     ../../modules/services/docker.nix
     ../../modules/services/ssh.nix
+    ./k3s.nix
   ];
 
   system.stateVersion = "25.11";

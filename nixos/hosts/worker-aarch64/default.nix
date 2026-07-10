@@ -15,6 +15,7 @@
     ../../modules/system/packages.nix
     ../../modules/services/docker.nix
     ../../modules/services/ssh.nix
+    ../worker/k3s.nix
   ];
 
   nixpkgs.hostPlatform = "aarch64-linux";

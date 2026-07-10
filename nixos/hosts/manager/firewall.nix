@@ -13,6 +13,7 @@
       7946 # Docker Swarm
       6443 # k3s API (kubectl)
       8000 # k3s Traefik catch-all entrypoint
+      10250 # k3s kubelet
     ];
     allowedUDPPorts = [
       53 # DNS
