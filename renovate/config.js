@@ -3,7 +3,7 @@ module.exports = {
   endpoint: 'https://git.xgabrielmorales.com/api/v1/',
   token: process.env.RENOVATE_TOKEN,
   repositories: ['xgabrielmorales/homelab'],
-  binarySource: 'global',
+  binarySource: 'install',
   onboarding: false,
   requireConfig: 'ignored',
   hostRules: [
