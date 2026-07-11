@@ -14,6 +14,13 @@ spec:
       labels:
         app: dumb
     spec:
+      tolerations:
+        - key: worker
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+      nodeSelector:
+        kubernetes.io/arch: arm64
       containers:
         - name: dumb
           image: ghcr.io/rramiachraf/dumb:188d5f7@sha256:91bfd6b8a036a8f0c954ce5e488f9cc94ecd065b6e0992e7cfc57912778e78da

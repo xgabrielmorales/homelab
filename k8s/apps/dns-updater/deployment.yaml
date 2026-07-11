@@ -14,6 +14,13 @@ spec:
       labels:
         app: dns-updater
     spec:
+      tolerations:
+        - key: worker
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+      nodeSelector:
+        kubernetes.io/arch: arm64
       containers:
         - name: dns-updater
           image: qmcgaw/ddns-updater:v2.10@sha256:3e2aa558946b5a293def4d73008fa4651c072b2c12932cecd02126fb23979831
