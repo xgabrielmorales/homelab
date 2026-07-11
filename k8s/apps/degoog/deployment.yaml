@@ -28,6 +28,9 @@ spec:
               value: "1000"
             - name: PGID
               value: "1000"
+          envFrom:
+            - secretRef:
+                name: degoog
           resources:
             limits:
               memory: 256Mi
