@@ -15,6 +15,7 @@
       8000 # k3s Traefik catch-all entrypoint
       10250 # k3s kubelet
       6881 # qBittorrent peers (hostPort)
+      2222 # forgejo git SSH (hostPort)
     ];
     allowedUDPPorts = [
       53 # DNS

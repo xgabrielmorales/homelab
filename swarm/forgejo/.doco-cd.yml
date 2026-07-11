@@ -1,6 +1,0 @@
-name: forgejo
-working_dir: swarm/forgejo/
-compose_files:
-  - compose.yml
-env_files:
-  - .encrypted.env
