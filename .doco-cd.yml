@@ -1,4 +1,0 @@
-working_dir: swarm/
-auto_discovery:
-  enabled: true
-  depth: 1
