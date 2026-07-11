@@ -4,17 +4,17 @@
 
 Servers run [NixOS](https://nixos.org/). NixOS secrets managed with [sops-nix](https://github.com/Mic92/sops-nix).
 
-| Component          | Technology                                                                                                                                                           |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| OS                 | [NixOS](https://nixos.org/)                                                                                                                                          |
-| Orchestration      | [Docker Swarm](https://docs.docker.com/engine/swarm/)                                                                                                                |
-| Reverse Proxy      | [Traefik](https://traefik.io/) ([auto-discovery](https://doc.traefik.io/traefik-hub/api-gateway/reference/install/providers/ref-provider-overview) via Swarm labels) |
-| Secrets            | [Sops](https://github.com/getsops/sops) + [sops-nix](https://github.com/Mic92/sops-nix) + [age](https://github.com/FiloSottile/age)                                  |
-| Certificates       | [Let's Encrypt](https://letsencrypt.org/) (ACME)                                                                                                                     |
-| DNS Challenge      | [Cloudflare](https://www.cloudflare.com/)                                                                                                                            |
-| Observability      | [Prometheus](https://prometheus.io/) + [Grafana](https://grafana.com/) + [Loki](https://grafana.com/oss/loki/) + [Alloy](https://grafana.com/oss/alloy/)             |
-| GitOps             | [doco-cd](https://doco.cd/)                                                                                                                                          |
-| Dependency Updates | [Renovate](https://docs.renovatebot.com/)                                                                                                                            |
+| Component          | Technology                                                                                                                                                     |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OS                 | [NixOS](https://nixos.org/)                                                                                                                                    |
+| Orchestration      | [Kubernetes](https://kubernetes.io/) ([k3s](https://k3s.io/))                                                                                                  |
+| Reverse Proxy      | [Traefik](https://traefik.io/) (bundled with k3s, auto-discovery via `Ingress`)                                                                                |
+| Secrets            | [Sops](https://github.com/getsops/sops) + [sops-nix](https://github.com/Mic92/sops-nix) + [age](https://github.com/FiloSottile/age)                            |
+| Certificates       | [Let's Encrypt](https://letsencrypt.org/) (ACME)                                                                                                               |
+| DNS Challenge      | [Cloudflare](https://www.cloudflare.com/)                                                                                                                      |
+| Observability      | [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts) + [Loki](https://grafana.com/oss/loki/) + [Alloy](https://grafana.com/oss/alloy/) |
+| GitOps             | [Flux](https://fluxcd.io/)                                                                                                                                     |
+| Dependency Updates | [Renovate](https://docs.renovatebot.com/)                                                                                                                      |
 
 ## Services
 
@@ -30,42 +30,15 @@ Some of the services I am currently self-hosting:
 
 ## Deploy
 
-Create the overlay network first:
-
-```bash
-docker network create --driver overlay --scope swarm --attachable reverse-proxy-swarm
-```
-
-The AGE key file (`keys.txt`) must be in the repository root. From a service directory:
-
-```bash
-SOPS_AGE_KEY_FILE="$(git rev-parse --show-toplevel)/keys.txt"
-SOPS_CONFIG="$(git rev-parse --show-toplevel)/.sops.yaml"
-```
-
-### doco-cd
-
-[doco-cd](https://doco.cd/) manages all subsequent deployments automatically. It requires the AGE secret key as a Swarm
-secret.
-
-Create the secret once on the manager node:
-
-```bash
-cat keys.txt | docker secret create sops_age_key -
-```
-
-Then deploy doco-cd:
-
-```bash
-docker stack deploy --compose-file gitops/compose.yml doco-cd
-```
-
-From this point, pushing to `trunk` triggers automatic deployment of all stacks within 60 seconds.
+The cluster is [k3s](https://k3s.io/), enabled declaratively using NixOS modules under `nixos/`. Everything under `k8s/`
+is reconciled by [Flux](https://fluxcd.io/), which watches this repo's `trunk` branch. Flux decrypts SOPS secrets using
+the age key.
 
 ### Renovate
 
-[Renovate](https://docs.renovatebot.com/) scans Docker Compose files under `swarm/` for outdated images and opens pull
-requests in Forgejo automatically. It runs on demand.
+[Renovate](https://docs.renovatebot.com/) scans the Kubernetes manifests and Flux `HelmRelease`s under
+`k8s/` for outdated images and chart versions, and opens pull requests in Forgejo automatically. It runs
+on demand.
 
 ```bash
 cd renovate
