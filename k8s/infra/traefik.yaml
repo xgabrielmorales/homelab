@@ -24,11 +24,6 @@ spec:
             - 192.168.0.0/16
         tls:
           enabled: true
-          certResolver: cloudflare
-          domains:
-            - main: "xgabrielmorales.com"
-              sans:
-                - "*.xgabrielmorales.com"
     certificatesResolvers:
       cloudflare:
         acme:
@@ -38,6 +33,14 @@ spec:
             resolvers:
               - "1.1.1.1:53"
               - "1.0.0.1:53"
+    tlsStore:
+      default:
+        defaultGeneratedCert:
+          resolver: cloudflare
+          domain:
+            main: "xgabrielmorales.com"
+            sans:
+              - "*.xgabrielmorales.com"
     env:
       - name: CF_DNS_API_TOKEN
         valueFrom:
