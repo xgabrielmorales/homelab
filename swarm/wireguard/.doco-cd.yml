@@ -1,4 +1,0 @@
-name: wireguard
-working_dir: swarm/wireguard/
-compose_files:
-  - compose.yml

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wireguard
+  labels:
+    app: wireguard
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wireguard
+  template:
+    metadata:
+      labels:
+        app: wireguard
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      containers:
+        - name: wireguard
+          image: ghcr.io/wg-easy/wg-easy:15.3.0@sha256:93bbd593e07bab98d02807a28770ac87ab6c48818e319e68c1f66561feb99876
+          # NixOS kernel only ships nftables; repoint iptables to the nft backend
+          # before running wg-easy (same workaround as the Swarm compose).
+          command:
+            - /bin/sh
+            - -c
+            - |
+              ln -sf /usr/sbin/iptables-nft /usr/sbin/iptables
+              ln -sf /usr/sbin/ip6tables-nft /usr/sbin/ip6tables
+              exec /usr/bin/dumb-init node server/index.mjs
+          ports:
+            - name: wg
+              containerPort: 51820
+              hostPort: 51820
+              protocol: UDP
+            - name: ui
+              containerPort: 51821
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+                - NET_RAW
+          resources:
+            limits:
+              memory: 128Mi
+          volumeMounts:
+            - name: etc
+              mountPath: /etc/wireguard
+            - name: lib-modules
+              mountPath: /lib/modules
+              readOnly: true
+      volumes:
+        - name: etc
+          persistentVolumeClaim:
+            claimName: wireguard-etc
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules

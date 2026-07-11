@@ -11,3 +11,4 @@ resources:
   - ntfy
   - invidious
   - media
+  - wireguard
