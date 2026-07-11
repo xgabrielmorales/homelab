@@ -30,9 +30,6 @@
             - title: Jellyfin
               url: https://jellyfin.xgabrielmorales.com
               check-url: http://media_jellyfin:8096
-            - title: Ntfy
-              url: https://ntfy.xgabrielmorales.com
-              check-url: http://notifications_ntfy:8080
             - title: qBittorrent
               url: https://qbittorrent.xgabrielmorales.com
               check-url: http://media_qbittorrent:8080

@@ -8,7 +8,6 @@ resources:
   - nullboard
   - redlib
   - dns-updater
-  - ntfy
   - invidious
   - media
   - wireguard

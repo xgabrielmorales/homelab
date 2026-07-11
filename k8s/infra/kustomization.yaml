@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
   - traefik.yaml
   - traefik-cloudflare.sops.yaml
-  - flux-notify.yaml
