@@ -78,3 +78,8 @@ spec:
         ingressClassName: traefik
         hosts:
           - grafana.xgabrielmorales.com
+      additionalDataSources:
+        - name: Loki
+          type: loki
+          access: proxy
+          url: http://loki.monitoring.svc.cluster.local:3100

@@ -5,3 +5,5 @@ resources:
   - grafana-admin.sops.yaml
   - helmrepositories.yaml
   - kube-prometheus-stack.yaml
+  - loki.yaml
+  - alloy.yaml
