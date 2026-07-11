@@ -7,12 +7,45 @@ spec:
   valuesContent: |-
     ports:
       web:
-        exposedPort: 8000
+        exposedPort: 80
+        redirectTo:
+          port: websecure
         forwardedHeaders:
           trustedIPs:
             - 10.0.0.0/8
             - 172.16.0.0/12
             - 192.168.0.0/16
       websecure:
-        expose:
-          default: false
+        exposedPort: 443
+        forwardedHeaders:
+          trustedIPs:
+            - 10.0.0.0/8
+            - 172.16.0.0/12
+            - 192.168.0.0/16
+        tls:
+          enabled: true
+          certResolver: cloudflare
+          domains:
+            - main: "xgabrielmorales.com"
+              sans:
+                - "*.xgabrielmorales.com"
+    certificatesResolvers:
+      cloudflare:
+        acme:
+          storage: /data/acme.json
+          dnsChallenge:
+            provider: cloudflare
+            resolvers:
+              - "1.1.1.1:53"
+              - "1.0.0.1:53"
+    env:
+      - name: CF_DNS_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: traefik-cloudflare
+            key: token
+    persistence:
+      enabled: true
+      storageClass: local-path
+      size: 128Mi
+      path: /data

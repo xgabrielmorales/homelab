@@ -1,6 +1,0 @@
-name: traefik
-working_dir: swarm/traefik/
-compose_files:
-  - compose.yml
-env_files:
-  - .encrypted.env
