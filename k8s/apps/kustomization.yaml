@@ -10,3 +10,4 @@ resources:
   - dns-updater
   - ntfy
   - invidious
+  - media

@@ -1,7 +1,0 @@
-# Ignore everything in this directory...
-*
-# ...except the FlexGet config, custom init scripts, and this file
-!.gitignore
-!config.yml
-!custom-cont-init.d/
-!custom-cont-init.d/**

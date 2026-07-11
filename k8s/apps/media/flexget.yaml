@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flexget
+  labels:
+    app: flexget
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: flexget
+  template:
+    metadata:
+      labels:
+        app: flexget
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      containers:
+        - name: flexget
+          image: wiserain/flexget:3.19.25@sha256:b5692bf162ab4eb83dac5f566a17709746cd14bc95fb045ee0ccbee6f1f21aee
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: America/Bogota
+            - name: TORRENT_PLUGIN
+              value: qbittorrent
+            - name: FG_WEBUI_PASSWD
+              value: ""
+          resources:
+            limits:
+              memory: 512Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: data
+              mountPath: /data
+            - name: conf
+              mountPath: /config/config.yml
+              subPath: config.yml
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: flexget-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: media-downloads
+        - name: conf
+          configMap:
+            name: flexget-conf

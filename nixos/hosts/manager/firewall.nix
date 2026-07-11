@@ -14,6 +14,7 @@
       6443 # k3s API (kubectl)
       8000 # k3s Traefik catch-all entrypoint
       10250 # k3s kubelet
+      6881 # qBittorrent peers (hostPort)
     ];
     allowedUDPPorts = [
       53 # DNS
@@ -21,6 +22,7 @@
       7946 # Docker Swarm
       51820 # Wireguard
       8472 # k3s flannel VXLAN
+      6881 # qBittorrent peers (hostPort)
     ];
   };
 }
