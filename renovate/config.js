@@ -6,6 +6,12 @@ module.exports = {
   binarySource: 'install',
   onboarding: false,
   requireConfig: 'ignored',
+  kubernetes: {
+    managerFilePatterns: ['/^k8s/(apps|infra|monitoring)/.+\\.ya?ml$/']
+  },
+  flux: {
+    managerFilePatterns: ['/^k8s/.+\\.ya?ml$/']
+  },
   hostRules: [
     {
       hostType: 'github',
