@@ -20,7 +20,7 @@ spec:
         kubernetes.io/hostname: xgm-hm
       containers:
         - name: jellyfin
-          image: linuxserver/jellyfin:10.11.11@sha256:a569ae0bfbd67ca404ae51f54cead7a2522d270179f57b3d12cf80ebff5d683b
+          image: linuxserver/jellyfin:10.11.11@sha256:32aa0d4565c633db95af29a58e8a5dc9becdfa58564a3aea68436623fd45f5a1
           env:
             - name: PUID
               value: "1000"
