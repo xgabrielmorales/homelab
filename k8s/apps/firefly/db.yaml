@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: firefly-db
+  namespace: default
+  labels:
+    app: firefly-db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: firefly-db
+  template:
+    metadata:
+      labels:
+        app: firefly-db
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      containers:
+        - name: postgres
+          image: postgres:17@sha256:0af65001d05296a2ead57ac4a6412433d8913d1bb5d0c88435a7d1e1ee5cb04b
+          ports:
+            - containerPort: 5432
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: firefly-secret
+                  key: FIREFLY_DB_DBNAME
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: firefly-secret
+                  key: FIREFLY_DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: firefly-secret
+                  key: FIREFLY_DB_PASSWORD
+          resources:
+            limits:
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - SETUID
+                - SETGID
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: firefly-db-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: firefly-db
+spec:
+  selector:
+    app: firefly-db
+  ports:
+    - port: 5432
+      targetPort: 5432

@@ -13,3 +13,4 @@ resources:
   - wireguard
   - technitium
   - forgejo
+  - firefly
