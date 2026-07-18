@@ -20,7 +20,7 @@ spec:
         kubernetes.io/hostname: xgm-hm
       containers:
         - name: flexget
-          image: wiserain/flexget:3.19.25@sha256:b5692bf162ab4eb83dac5f566a17709746cd14bc95fb045ee0ccbee6f1f21aee
+          image: wiserain/flexget:3.19.28@sha256:00eb21598d3c50024a465502a9c1e9c8126e5a706e20283d7f200bf8da13f06c
           env:
             - name: PUID
               value: "1000"
