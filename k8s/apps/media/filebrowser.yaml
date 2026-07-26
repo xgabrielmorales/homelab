@@ -20,7 +20,7 @@ spec:
         kubernetes.io/hostname: xgm-hm
       containers:
         - name: filebrowser
-          image: filebrowser/filebrowser:v2-s6@sha256:6b41f1f8f12bc5359d825bf4096c17ef53d2c962a076361ea1b9b1923db7b422
+          image: filebrowser/filebrowser:v2-s6@sha256:facdfb1f11cb62a9908aca669fdcf94c74e255b1a3dfeaa037cf4bec65e16f3b
           env:
             - name: PUID
               value: "1000"
