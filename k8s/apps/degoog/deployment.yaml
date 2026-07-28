@@ -32,8 +32,10 @@ spec:
             - secretRef:
                 name: degoog
           resources:
+            requests:
+              memory: 64Mi
             limits:
-              memory: 256Mi
+              memory: 128Mi
           securityContext:
             capabilities:
               drop:

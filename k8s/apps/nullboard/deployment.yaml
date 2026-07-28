@@ -27,6 +27,8 @@ spec:
             - name: NB_DB
               value: /data/nullboard.db
           resources:
+            requests:
+              memory: 48Mi
             limits:
               memory: 128Mi
           securityContext:

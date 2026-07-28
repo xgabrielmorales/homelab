@@ -29,8 +29,10 @@ spec:
                   name: invidious
                   key: INVIDIOUS_CONFIG
           resources:
+            requests:
+              memory: 128Mi
             limits:
-              memory: 512Mi
+              memory: 256Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

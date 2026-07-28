@@ -28,8 +28,10 @@ spec:
                   name: invidious
                   key: INVIDIOUS_INVIDIOUS_COMPANION_KEY
           resources:
+            requests:
+              memory: 192Mi
             limits:
-              memory: 2Gi
+              memory: 640Mi
           securityContext:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false

@@ -51,5 +51,7 @@ spec:
       hosts:
         - firefly.xgabrielmorales.com
     resources:
+      requests:
+        memory: 160Mi
       limits:
-        memory: 512Mi
+        memory: 320Mi

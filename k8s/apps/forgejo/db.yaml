@@ -42,6 +42,8 @@ spec:
                   name: forgejo
                   key: POSTGRES_DATABASE
           resources:
+            requests:
+              memory: 96Mi
             limits:
               memory: 256Mi
           securityContext:

@@ -46,8 +46,10 @@ spec:
                 - SYS_MODULE
                 - NET_RAW
           resources:
+            requests:
+              memory: 96Mi
             limits:
-              memory: 128Mi
+              memory: 160Mi
           volumeMounts:
             - name: etc
               mountPath: /etc/wireguard

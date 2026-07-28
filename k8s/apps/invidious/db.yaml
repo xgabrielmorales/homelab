@@ -40,8 +40,10 @@ spec:
                   name: invidious
                   key: INVIDIOUS_DB_PASSWORD
           resources:
+            requests:
+              memory: 96Mi
             limits:
-              memory: 512Mi
+              memory: 256Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

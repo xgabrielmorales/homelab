@@ -26,6 +26,8 @@ spec:
             - secretRef:
                 name: dns-updater
           resources:
+            requests:
+              memory: 32Mi
             limits:
               memory: 64Mi
           securityContext:

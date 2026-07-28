@@ -26,8 +26,10 @@ spec:
             - secretRef:
                 name: redlib
           resources:
+            requests:
+              memory: 256Mi
             limits:
-              memory: 512Mi
+              memory: 384Mi
           securityContext:
             runAsUser: 65534
             runAsGroup: 65534

@@ -23,6 +23,8 @@ spec:
             - name: TZ
               value: America/Bogota
           resources:
+            requests:
+              memory: 32Mi
             limits:
               memory: 64Mi
           securityContext:

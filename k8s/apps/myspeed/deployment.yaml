@@ -27,8 +27,10 @@ spec:
             - name: TZ
               value: America/Bogota
           resources:
+            requests:
+              memory: 96Mi
             limits:
-              memory: 256Mi
+              memory: 192Mi
           volumeMounts:
             - name: data
               mountPath: /myspeed/data

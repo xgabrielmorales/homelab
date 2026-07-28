@@ -59,8 +59,10 @@ spec:
               containerPort: 2222
               hostPort: 2222
           resources:
+            requests:
+              memory: 192Mi
             limits:
-              memory: 256Mi
+              memory: 320Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

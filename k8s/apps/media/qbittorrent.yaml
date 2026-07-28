@@ -40,8 +40,10 @@ spec:
               hostPort: 6881
               protocol: UDP
           resources:
+            requests:
+              memory: 64Mi
             limits:
-              memory: 1Gi
+              memory: 256Mi
           volumeMounts:
             - name: config
               mountPath: /config

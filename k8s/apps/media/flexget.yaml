@@ -33,8 +33,10 @@ spec:
             - name: FG_WEBUI_PASSWD
               value: ""
           resources:
+            requests:
+              memory: 224Mi
             limits:
-              memory: 512Mi
+              memory: 384Mi
           volumeMounts:
             - name: config
               mountPath: /config
