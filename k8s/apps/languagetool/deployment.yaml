@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: languagetool
+  labels:
+    app: languagetool
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: languagetool
+  template:
+    metadata:
+      labels:
+        app: languagetool
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      containers:
+        - name: languagetool
+          image: meyay/languagetool:latest@sha256:d92bc015f3de452872e8b36965f1b164dfd4cf378359500558298b0fff6b8b1e
+          ports:
+            - containerPort: 8081
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: download_ngrams_for_langs
+              value: en,es
+            - name: JAVA_XMX
+              value: 1536m
+          resources:
+            requests:
+              memory: 1Gi
+            limits:
+              memory: 4Gi
+          volumeMounts:
+            - name: ngrams
+              mountPath: /ngrams
+      volumes:
+        - name: ngrams
+          persistentVolumeClaim:
+            claimName: languagetool-ngrams
