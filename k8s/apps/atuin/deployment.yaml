@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atuin
+  labels:
+    app: atuin
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: atuin
+  template:
+    metadata:
+      labels:
+        app: atuin
+    spec:
+      containers:
+        - name: atuin
+          image: ghcr.io/atuinsh/atuin:18.9.0@sha256:86ab9638b278486ccb4e75645272f332b4d5ff590bacb3ae1c4194c0d7233424
+          args: ["server", "start"]
+          ports:
+            - containerPort: 8888
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: ATUIN_HOST
+              value: "0.0.0.0"
+            - name: ATUIN_PORT
+              value: "8888"
+            - name: ATUIN_OPEN_REGISTRATION
+              value: "true"
+            - name: ATUIN_DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: atuin
+                  key: ATUIN_DB_URI
+          resources:
+            requests:
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          emptyDir: {}

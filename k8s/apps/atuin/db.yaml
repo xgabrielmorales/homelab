@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atuin-db
+  labels:
+    app: atuin-db
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: atuin-db
+  template:
+    metadata:
+      labels:
+        app: atuin-db
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      containers:
+        - name: postgres
+          image: postgres:17@sha256:a426e44bac0b759c95894d68e1a0ac03ecc20b619f498a91aae373bf06d8508d
+          ports:
+            - containerPort: 5432
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: POSTGRES_DB
+              value: atuin
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: atuin
+                  key: ATUIN_DB_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: atuin
+                  key: ATUIN_DB_PASSWORD
+          resources:
+            requests:
+              memory: 96Mi
+            limits:
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - SETUID
+                - SETGID
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: atuin-db-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: atuin-db
+spec:
+  selector:
+    app: atuin-db
+  ports:
+    - port: 5432
+      targetPort: 5432

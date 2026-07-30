@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: atuin
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: atuin.xgabrielmorales.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: atuin
+                port:
+                  number: 8888
