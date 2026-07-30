@@ -11,6 +11,8 @@
               url: https://dns.xgabrielmorales.com
             - title: Dumb
               url: https://dumb.xgabrielmorales.com
+            - title: Excalidraw
+              url: https://draw.xgabrielmorales.com
             - title: File Manager
               url: https://filebrowser.xgabrielmorales.com
             - title: Forgejo
@@ -53,6 +55,8 @@
           groups:
             - title: Development
               links:
+                - title: Excalidraw
+                  url: https://draw.xgabrielmorales.com
                 - title: Forgejo
                   url: https://git.xgabrielmorales.com
                 - title: Github
