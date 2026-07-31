@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: atuin
-          image: ghcr.io/atuinsh/atuin:18.9.0@sha256:86ab9638b278486ccb4e75645272f332b4d5ff590bacb3ae1c4194c0d7233424
+          image: ghcr.io/atuinsh/atuin:18.18.1@sha256:8573bcd8343325e3de6f8322787881faeb9e82bee703b5969a55005b69d62e24
           args: ["server", "start"]
           ports:
             - containerPort: 8888
