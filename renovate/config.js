@@ -6,6 +6,9 @@ module.exports = {
   binarySource: 'install',
   onboarding: false,
   requireConfig: 'ignored',
+  dependencyDashboard: true,
+  prHourlyLimit: 0,
+  prConcurrentLimit: 0,
   kubernetes: {
     managerFilePatterns: ['/^k8s/(apps|infra|monitoring)/.+\\.ya?ml$/']
   },
