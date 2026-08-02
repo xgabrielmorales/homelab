@@ -7,3 +7,13 @@ resources:
   - kube-prometheus-stack.yaml
   - loki.yaml
   - alloy.yaml
+
+configMapGenerator:
+  - name: grafana-dashboard-pods
+    namespace: monitoring
+    files:
+      - dashboards/pods.json
+    options:
+      labels:
+        grafana_dashboard: "1"
+
