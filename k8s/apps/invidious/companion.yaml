@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: companion
-          image: quay.io/invidious/invidious-companion:2026.08.07-02f9443@sha256:cd5c3dae67bdb025eb5c849963418bbcb3c77d94fd13b8c6a017111a329f6865
+          image: quay.io/invidious/invidious-companion:2026.08.07-02f9443@sha256:74b41510f0bee320a038452ba5a489fe795f635015a62fe727a02357cf219463
           ports:
             - containerPort: 8282
           env:
