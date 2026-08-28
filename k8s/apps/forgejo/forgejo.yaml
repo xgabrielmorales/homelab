@@ -17,7 +17,6 @@ spec:
         app: forgejo
     spec:
       nodeSelector:
-        kubernetes.io/hostname: xgm-hm
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000

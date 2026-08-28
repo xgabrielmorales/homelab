@@ -17,7 +17,6 @@ spec:
         app: technitium
     spec:
       nodeSelector:
-        kubernetes.io/hostname: xgm-hm
       securityContext:
         sysctls:
           - name: net.ipv4.ip_local_port_range
