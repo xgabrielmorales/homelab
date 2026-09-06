@@ -13,6 +13,7 @@ resources:
   - wireguard
   - technitium
   - forgejo
+  - cloudflared
   - firefly
   - myspeed
   - languagetool

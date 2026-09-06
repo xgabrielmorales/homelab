@@ -27,7 +27,7 @@ spec:
             - name: TUNNEL_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: forgejo
+                  name: cloudflared
                   key: TUNNEL_TOKEN
           resources:
             requests:

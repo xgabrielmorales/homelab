@@ -3,6 +3,4 @@ kind: Kustomization
 namespace: default
 resources:
   - secret.sops.yaml
-  - pvcs.yaml
-  - db.yaml
-  - forgejo.yaml
+  - deployment.yaml
