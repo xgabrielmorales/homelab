@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft
+  labels:
+    app: minecraft
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: minecraft
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server:java25@sha256:59feb0a1ef286f20a20560c56adf5b927155bfa842951f5db8b8bbc5a1a3ebde
+          ports:
+            - name: minecraft
+              containerPort: 25565
+              hostPort: 25565
+              protocol: TCP
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: EULA
+              value: "TRUE"
+            - name: ONLINE_MODE
+              value: "TRUE"
+            - name: TYPE
+              value: PAPER
+            - name: VERSION
+              value: "26.2"
+            - name: MEMORY
+              value: 3G
+            - name: USE_AIKAR_FLAGS
+              value: "true"
+            - name: MOTD
+              value: xgabrielmorales.com
+            - name: DIFFICULTY
+              value: hard
+            - name: MAX_PLAYERS
+              value: "5"
+            - name: VIEW_DISTANCE
+              value: "10"
+            - name: OPS
+              value: xDOCTYPE
+            - name: WHITELIST
+              value: xDOCTYPE
+            - name: EXISTING_WHITELIST_FILE
+              value: SYNCHRONIZE
+            - name: ENABLE_AUTOPAUSE
+              value: "true"
+            - name: AUTOPAUSE_TIMEOUT_EST
+              value: "600"
+          resources:
+            requests:
+              memory: 1Gi
+            limits:
+              memory: 4Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - SETUID
+                - SETGID
+          startupProbe:
+            exec:
+              command: ["mc-health"]
+            periodSeconds: 15
+            failureThreshold: 40
+          livenessProbe:
+            exec:
+              command: ["mc-health"]
+            periodSeconds: 30
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: minecraft-data

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playit
+  labels:
+    app: playit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playit
+  template:
+    metadata:
+      labels:
+        app: playit
+    spec:
+      containers:
+        - name: playit
+          image: ghcr.io/playit-cloud/playit-agent:1.0.8@sha256:2c69d171b12ea907a1bf1f3fcf06d75de4458c3a3792022fe95375ed922e0bf1
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: playit
+                  key: SECRET_KEY
+          resources:
+            requests:
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
