@@ -50,8 +50,7 @@ sops exec-env .encrypted.env 'docker compose run --rm renovate'
 <details>
 <summary>What hardware do you use?</summary>
 
-- Raspberry Pi 4 (4GB RAM)
 - Mini PC (Intel N150, 16GB RAM)
 
-**Last verified: January 11, 2026**
+**Last verified: September 05, 2026**
 </details>
