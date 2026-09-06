@@ -7,6 +7,10 @@
     role = "agent";
     serverAddr = "https://10.10.10.3:6443";
     tokenFile = config.sops.secrets.k3s_token.path;
-    extraFlags = [ "--node-taint=worker=true:NoSchedule" ];
+    extraFlags = [
+      "--node-taint=worker=true:NoSchedule"
+      "--kubelet-arg=image-gc-high-threshold=80"
+      "--kubelet-arg=image-gc-low-threshold=70"
+    ];
   };
 }
