@@ -14,3 +14,6 @@ configMapGenerator:
   - name: flexget-conf
     files:
       - files/config.yml
+  - name: filebrowser-conf
+    files:
+      - files/filebrowser.yaml

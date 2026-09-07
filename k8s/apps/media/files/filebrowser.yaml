@@ -1,0 +1,11 @@
+server:
+  port: 80
+  database: /database/database.db
+  sources:
+    - path: /srv
+      config:
+        defaultEnabled: true
+auth:
+  methods:
+    password:
+      enabled: true

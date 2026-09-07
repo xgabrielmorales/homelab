@@ -19,12 +19,10 @@ spec:
       nodeSelector:
       containers:
         - name: filebrowser
-          image: filebrowser/filebrowser:v2-s6@sha256:ee4ac79e52966a5f6247f99c7d667c1debfb277a3a61ab829f505aa8f4c74b21
+          image: gtstef/filebrowser:1.5.6-stable@sha256:7c5d7ac8ffda31294d278063cf9d2e04303b39e6dce1f4c691342240ca7703b8
           env:
-            - name: PUID
-              value: "1000"
-            - name: PGID
-              value: "1000"
+            - name: FILEBROWSER_CONFIG
+              value: /config/filebrowser.yaml
             - name: TZ
               value: America/Bogota
           ports:
@@ -52,8 +50,8 @@ spec:
           persistentVolumeClaim:
             claimName: filebrowser-database
         - name: config
-          persistentVolumeClaim:
-            claimName: filebrowser-config
+          configMap:
+            name: filebrowser-conf
         - name: downloads
           persistentVolumeClaim:
             claimName: media-downloads
