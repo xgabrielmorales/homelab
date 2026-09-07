@@ -52,7 +52,7 @@ spec:
             - name: OPS
               value: xDOCTYPE
             - name: WHITELIST
-              value: xDOCTYPE
+              value: xDOCTYPE,Martyo_
             - name: EXISTING_WHITELIST_FILE
               value: SYNCHRONIZE
             - name: ENABLE_AUTOPAUSE
