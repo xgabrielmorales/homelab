@@ -10,7 +10,6 @@
     ../../modules/core/boot.nix
     ../../modules/core/locale.nix
     ../../modules/core/networking.nix
-    ../../modules/core/journald.nix
     ../../modules/core/nix.nix
     ../../modules/core/security.nix
 

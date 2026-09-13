@@ -1,5 +1,5 @@
 deploy-manager host:
-  nixos-rebuild switch --impure --flake .#xgm-homelab-manager --target-host {{host}} --sudo --ask-sudo-password
+  nixos-rebuild switch --flake .#xgm-homelab-manager --target-host {{host}} --sudo --ask-sudo-password
 
 deploy-worker host:
-  nixos-rebuild switch --impure --flake .#xgm-homelab-worker --target-host {{host}} --sudo --ask-sudo-password
+  nixos-rebuild switch --flake .#xgm-homelab-worker --target-host {{host}} --sudo --ask-sudo-password
