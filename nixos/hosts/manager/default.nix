@@ -26,5 +26,6 @@
     ../../modules/services/ssh.nix
   ];
 
+  boot.kernelModules = [ "wireguard" ];
   system.stateVersion = "25.11";
 }
