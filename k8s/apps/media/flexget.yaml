@@ -29,8 +29,6 @@ spec:
               value: America/Bogota
             - name: TORRENT_PLUGIN
               value: qbittorrent
-            - name: FG_WEBUI_PASSWD
-              value: ""
           resources:
             requests:
               memory: 224Mi
