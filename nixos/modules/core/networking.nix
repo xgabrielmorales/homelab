@@ -13,6 +13,7 @@
       "1.1.1.1"
       "8.8.8.8"
     ];
+    hosts."10.10.10.3" = [ "git.xgabrielmorales.com" ];
   };
   services.resolved = {
     enable = true;

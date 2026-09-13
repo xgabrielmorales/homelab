@@ -4,5 +4,6 @@ namespace: default
 resources:
   - db.yaml
   - forgejo.yaml
+  - ingress.yaml
   - pvcs.yaml
   - secret.sops.yaml
