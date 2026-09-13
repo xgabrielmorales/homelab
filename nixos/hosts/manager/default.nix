@@ -22,7 +22,6 @@
     ../../modules/system/packages.nix
 
     # Services
-    ../../modules/services/docker.nix
     ../../modules/services/k3s.nix
     ../../modules/services/ssh.nix
   ];
