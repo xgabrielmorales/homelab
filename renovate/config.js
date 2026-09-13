@@ -7,6 +7,7 @@ module.exports = {
   onboarding: false,
   requireConfig: 'ignored',
   dependencyDashboard: true,
+  minimumReleaseAge: '7 days',
   prHourlyLimit: 0,
   prConcurrentLimit: 0,
   kubernetes: {
