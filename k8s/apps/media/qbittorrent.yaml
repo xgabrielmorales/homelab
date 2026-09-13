@@ -59,8 +59,8 @@ spec:
           persistentVolumeClaim:
             claimName: media-downloads
         - name: conf
-          configMap:
-            name: qbittorrent-conf
+          secret:
+            secretName: qbittorrent-conf
 ---
 apiVersion: v1
 kind: Service

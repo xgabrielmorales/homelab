@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: qbittorrent-conf
+    namespace: default
+type: Opaque
+stringData:
+    qBittorrent.conf: ENC[AES256_GCM,data:3djRgQtNlJkCApaRX7u7kJAf8GyX+bHPeRG7+znL9vAkypOfODV5Dyma0j7/NBmIzfFFzIH3drfdqBsIYQ+PDk2Jt1wD7hP7NF3aF6EZCSIE4DjNzZqDtgYoUHpLpYVd5tN11KeexI/7pLRYEJ51iEDPAF3MmCuAq2/muYCl9N4gHurcOmKUMIGvjwLwTwF1UHZa80HmAYTJVm1+XrQyQxQmJMBawvT8g1yjj/cP2plGYLVuurM4Hj0d20G8ro4BZVoX06cRuCZdcY3EnpNoTUySf0slmPDv+FTg6QZVjswQmhTQNR4M1J25u+wRvziAT5KPwKa0OvPHPUbY08XjknG4QiOCVOru+XmS2hdgpTMQXtXx4dMdiSD1KKSKq5B3/3jK7/yDWOGXocOVJJjDMlWUl2eL2JtH7Nc5/tvtD/TD/M1yQSXF40GObkkCMa43wwbFUF5RNZ7x/DdE07x/jHNIt0Y/XEUF63a9Yd1Sucd8Z87+mJSM0Y1q51EirRURY2hXIgTh0tyTncuI9bD8tX9CkDV435Jjc+L89hjPM8UWVEzqy5oeS03nZO8sxmzeV4wq1mgOKRDHTdEt8iB6qq8/3tKx/GAvHbSIzqLphecaLT+ggKwJLitGSaDEDwwXQHeBTcoHmbU1plxyHohVtO+WBJ33zKodyEREdCCpVRbrU73gW53L9S5GQBqZllARPItzuBxwHHe2opPqOA5T5GS58MXYE/m/caQ5H5lQ+mjq/xQen9jgNEEyuM7l09bGCk4NxbVYBjj/qraa7Hz6YGdNhxQFTQ8CnG/CTgHkceCqu3BkLf9bZe/qF8zefPFrfSX/UvGoHB5YDZ+/y/CK29z5eKq6R7lqWpt2PsvxazJE46xxBVrz1zoDfgBbyyjSlk5SXGtdpXpDSC0ZqO2nqGAo7oFK0GnVp+3llYdLdqOX/8NA2HODQDwtLsqIwogBtdF1bfMZAiEZuFLBaPGJPVBE95pzhgsoMCWAGYx2HzR7Bq8ajZgaeiWBu+KcMy7NzR0SqT1Zb/Jgk3SwClQ4d36V2kPhtBCu6l2kGRMcnRkp/F/B1915hxhIhL9QR4Oj2JiELXVFkrKC5x5VuV1JlmoX1N57ITqIxAlEYjz9pBnOVqkXfYJePnHG5u5TFS5Ztul329kjseyZ/+sQuCxtOW9a4O9LoCmmweC+Gkw16nmhrE7ZZfB3PvivQzSGJTgtfLSfLAYrIAgycobC+amdKgt0ppgsXadnBm8mw4byf8wIhoQS8Pnd3UgXy2cSe84ktcfx3qdEc6GTeWV8cRJqXTKzO3JsQClSEPQN8KpRLmVAF1DayAahetQELt2Zl3WjdGZOB+N7zwlcVcA2F8xJOnhQCPvGoPHz4WH5gfm3Uw/32SvRKDf0oiGMGC1loRlscpDebLzhKab7Uvl3gyojDzxFZ1wgp0B1NnyfCRHUjSCjrZ/uJEbCzgAUvfaL4F1lXfW1X5VLqQKTOIJU+KK6lxOeTf520pHECYSZKlIAgno2wU9JTnvkVnH9gkw0/Q8SfHf92R57JfeXd/j0RdtOyMluhmrULTyj+TQ6LndfTu4EjB4JkWhVME4mYsSsOg5/2TuAz5qgBLVFW4xwoe5D++iev3HF9x4l0BDWcihovfHUDKDm01TvuyCkQbrlA1w8YCB9gesJzIXAX5YniWfK6v92XetvE57OBWYR8/yqFhVuf8x7M026uH2ZK6OgspjuhoPEjyHNF4bgUayN6RjSNYz+uFusknnZws6t5y4Ntk8IxxIVVtDYjUxiupovZD92kWB2o5kTfex4U1AlZem48fzxtNYufqBgqmuHlweD7Bi03Kp4JLIWsw98FVyaTPW4L5cRu3xyEpzGGC3Hk0qsQ7X+y1PewiBPKIXX,iv:R4tMzvEMfDfSBH8e7r5P7qVKmBRLj5HWKQcPf1MWDvg=,tag:WWmz/ss0ufcB3bUN+TgKeA==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA0RDg2Nk9TYnNYcXBQTWRl
+            em54emxscEtYZ0xrZTBRQVo4aEhWZ2RJVFZnClMzdkVsaFpzUWNrd1h3dENqY0Fv
+            Zmh2aThGSWNYWm1kR2UxSm5GWENtM1UKLS0tIDRzUzFDZ3ZodjZlamFEV1VDQ1FO
+            UzcvSHhYN0tQUCtCNDlNa3puNFVpWDgKhlg+4ipuI4k9ja/FgQYcxZgWSpa5LrN3
+            4ygSktQUOqWOSWQjEl04A48Zj722fki2dsyCeWGjU6VLThO9U3yMzw==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age1ruzv8k3s30akc8tesmkg5mm92rppddq6cps2xtxvg74lt23x64uqq05d7w
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-09-13T20:52:33Z"
+    mac: ENC[AES256_GCM,data:iUgqimQMh137lVcXsjEal0dHNbQviCHCI0GAjnNPT97Lf3nEGjQP/OWURfQCL4kOnCuYI6In2aIGLpsYoJbgTT7TZy20nQo1hawKJBbUqxwsZEebk3TTKk1KC7o/Pt5WoD3CtxIr3UF1Ruj16m46NpZHuL8j+UYsHH6UlDXj55g=,iv:beoJloml2BuI69TecqZywdLlk7LczwUin6SIVBO0EQM=,tag:x/rBDecZjPA/YrWCUVxcfA==,type:str]
+    version: 3.13.3

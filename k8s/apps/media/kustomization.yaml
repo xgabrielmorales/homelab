@@ -7,10 +7,8 @@ resources:
   - jellyfin.yaml
   - pvcs.yaml
   - qbittorrent.yaml
+  - qbittorrent-conf.sops.yaml
 configMapGenerator:
-  - name: qbittorrent-conf
-    files:
-      - files/qBittorrent.conf
   - name: flexget-conf
     files:
       - files/config.yml
