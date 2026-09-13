@@ -36,6 +36,20 @@ spec:
               memory: 224Mi
             limits:
               memory: 384Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - SETUID
+                - SETGID
+                - KILL
           volumeMounts:
             - name: config
               mountPath: /config
