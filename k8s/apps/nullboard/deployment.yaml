@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: nullboard
-          image: git.xgabrielmorales.com/xgabrielmorales/nullboard:0.0.2@sha256:fddfeb665e2b55fa9b7e8c41607c96849ae1a14de01b3ff54934fb798e0f1470
+          image: git.xgabrielmorales.com/xgabrielmorales/nullboard:0.0.3@sha256:d82d916460263252921897ff6561026752decc4e5547237e5e17cac6c1ad009a
           ports:
             - containerPort: 8080
           env:
