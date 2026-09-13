@@ -15,6 +15,20 @@ module.exports = {
   flux: {
     managerFilePatterns: ['/^k8s/.+\\.ya?ml$/']
   },
+  nix: {
+    managerFilePatterns: ['/^nixos/flake\\.nix$/']
+  },
+  packageRules: [
+    {
+      matchManagers: ['nix'],
+      matchUpdateTypes: ['lockFileMaintenance'],
+      lockFileMaintenance: {
+        enabled: true,
+        schedule: ['at any time'],
+        commitMessageTopic: 'flake.lock'
+      }
+    }
+  ],
   hostRules: [
     {
       hostType: 'github',
