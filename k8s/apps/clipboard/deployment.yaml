@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: clipboard
-          image: git.xgabrielmorales.com/xgabrielmorales/clipboard:0.0.1@sha256:fecbf6619f2871157903bc53e2792c927bd0ce56bf0d3cf07a9210bfc85656e1
+          image: git.xgabrielmorales.com/xgabrielmorales/clipboard:0.0.2@sha256:c035a29f4ba8ae65ff9faeb4e78995d2e16016ed83ec886945bdcef0862baa9f
           ports:
             - containerPort: 3000
           env:
