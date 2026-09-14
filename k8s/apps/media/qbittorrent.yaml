@@ -17,6 +17,22 @@ spec:
         app: qbittorrent
     spec:
       nodeSelector:
+      initContainers:
+        - name: seed-conf
+          image: busybox:1.37@sha256:9db7b59979c38555a39def84a31fb98b5296952f9e3afd4f6f11f05b07adfab0
+          command:
+            - sh
+            - -c
+            - >-
+              mkdir -p /config/qBittorrent &&
+              rm -f /config/qBittorrent/qBittorrent_new.conf &&
+              cp /conf/qBittorrent.conf /config/qBittorrent/qBittorrent.conf &&
+              chown 1000:1000 /config/qBittorrent/qBittorrent.conf
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: conf
+              mountPath: /conf
       containers:
         - name: qbittorrent
           image: linuxserver/qbittorrent:5.2.3@sha256:2be038f3421f60f62e8e4bf201f66f385b68e4fbc9ed3ab79051069ea22e2650
@@ -62,9 +78,6 @@ spec:
               mountPath: /config
             - name: downloads
               mountPath: /downloads
-            - name: conf
-              mountPath: /config/qBittorrent/qBittorrent.conf
-              subPath: qBittorrent.conf
       volumes:
         - name: config
           persistentVolumeClaim:
