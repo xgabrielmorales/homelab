@@ -1,0 +1,5 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="SenalColombia.co" group-title="Colombia",Señal Colombia
+https://streaming.rtvc.gov.co/TV_Senal_Colombia_live/smil:live.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="BloombergTV.us" tvg-logo="https://pbs.twimg.com/profile_images/991792042094354432/DG1Ruupb_200x200.jpg" group-title="Noticias",Bloomberg TV
+https://www.bloomberg.com/media-manifest/streams/us.m3u8

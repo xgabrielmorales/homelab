@@ -56,10 +56,16 @@ spec:
               mountPath: /config
             - name: data
               mountPath: /data
+            - name: channels
+              mountPath: /channels
+              readOnly: true
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: jellyfin-config
+        - name: channels
+          configMap:
+            name: jellyfin-channels
         - name: data
           persistentVolumeClaim:
             claimName: media-downloads

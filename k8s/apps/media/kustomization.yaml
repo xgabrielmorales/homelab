@@ -15,3 +15,6 @@ configMapGenerator:
   - name: filebrowser-conf
     files:
       - files/filebrowser.yaml
+  - name: jellyfin-channels
+    files:
+      - files/channels.m3u
