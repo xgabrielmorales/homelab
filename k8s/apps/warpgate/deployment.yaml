@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: warpgate
+  labels:
+    app: warpgate
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: warpgate
+  template:
+    metadata:
+      labels:
+        app: warpgate
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+        # warpgate has no env-var config: the config file, sqlite db, admin user,
+        # self-signed cert and SSH host keys are all generated once by `unattended-setup`.
+        - name: setup
+          image: ghcr.io/warp-tech/warpgate:0.29.0@sha256:18069aa69b61eda90e4fa5a783ba7b9d54481496d3f20cf65bf9705b32faf975
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              [ -f /data/warpgate.yaml ] && exit 0
+              warpgate unattended-setup \
+                --data-path /data \
+                --http-port 8888 \
+                --ssh-port 2223 \
+                --external-host warpgate.xgabrielmorales.com
+              # Traefik terminates TLS on 443 and proxies to 8888; without these
+              # the UI hands out links to :8888 and logs Traefik's pod IP.
+              sed -i \
+                -e '/^http:/,/^kubernetes:/s/external_port: null/external_port: 443/' \
+                -e 's/trust_x_forwarded_headers: false/trust_x_forwarded_headers: true/' \
+                /data/warpgate.yaml
+          envFrom:
+            - secretRef:
+                name: warpgate
+          resources:
+            requests:
+              memory: 64Mi
+            limits:
+              memory: 192Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      containers:
+        - name: warpgate
+          image: ghcr.io/warp-tech/warpgate:0.29.0@sha256:18069aa69b61eda90e4fa5a783ba7b9d54481496d3f20cf65bf9705b32faf975
+          ports:
+            - name: http
+              containerPort: 8888
+            - name: ssh
+              containerPort: 2223
+              hostPort: 2223
+          env:
+            - name: TZ
+              value: America/Bogota
+          resources:
+            requests:
+              memory: 96Mi
+            limits:
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          readinessProbe:
+            exec:
+              command: ["warpgate", "healthcheck"]
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: warpgate-data

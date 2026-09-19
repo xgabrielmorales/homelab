@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: warpgate
+  annotations:
+    # warpgate always serves HTTPS with its own self-signed cert; Traefik reads
+    # these `service.*` annotations off the Service, not off the Ingress.
+    traefik.ingress.kubernetes.io/service.serversscheme: https
+    traefik.ingress.kubernetes.io/service.serverstransport: default-warpgate@kubernetescrd
+spec:
+  selector:
+    app: warpgate
+  ports:
+    - port: 8888
+      targetPort: 8888

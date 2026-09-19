@@ -13,6 +13,7 @@
       10250 # k3s kubelet
       6881 # qBittorrent peers (hostPort)
       2222 # forgejo git SSH (hostPort)
+      2223 # warpgate SSH bastion (hostPort)
       25565 # minecraft (hostPort)
     ];
     allowedUDPPorts = [

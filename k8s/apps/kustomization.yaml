@@ -17,4 +17,5 @@ resources:
   - nullboard
   - redlib
   - technitium
+  - warpgate
   - wireguard
