@@ -59,6 +59,8 @@ spec:
               value: "true"
             - name: AUTOPAUSE_TIMEOUT_EST
               value: "600"
+            - name: PATCH_DEFINITIONS
+              value: /patches
           resources:
             requests:
               memory: 1Gi
@@ -87,7 +89,13 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
+            - name: patches
+              mountPath: /patches
+              readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: minecraft-data
+        - name: patches
+          configMap:
+            name: minecraft-patches

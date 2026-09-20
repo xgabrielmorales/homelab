@@ -1,0 +1,11 @@
+{
+  "file": "/data/config/paper-global.yml",
+  "ops": [
+    {
+      "$set": {
+        "path": "$.unsupported-settings.allow-permanent-block-break-exploits",
+        "value": true
+      }
+    }
+  ]
+}
