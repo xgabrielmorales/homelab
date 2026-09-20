@@ -42,7 +42,8 @@ on demand.
 
 ```bash
 cd renovate
-sops exec-env .encrypted.env 'docker compose run --rm renovate'
+direnv allow
+sudo -E docker compose run --rm renovate
 ```
 
 ## FAQ
