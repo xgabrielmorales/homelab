@@ -17,6 +17,7 @@ module.exports = {
     managerFilePatterns: ['/^k8s/.+\\.ya?ml$/']
   },
   nix: {
+    enabled: true,
     managerFilePatterns: ['/^nixos/flake\\.nix$/']
   },
   packageRules: [
