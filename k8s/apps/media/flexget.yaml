@@ -19,7 +19,7 @@ spec:
       nodeSelector:
       containers:
         - name: flexget
-          image: wiserain/flexget:3.20.13@sha256:54ad3e63df8548d61d9444ef72a6ab2d292b858a22283bfa029d39ae54d464af
+          image: wiserain/flexget:3.21.0@sha256:cdbf7be182a7477a6b50afde82b2eac044b73b7bb7fe8a0b3b2e68f1f3cf580d
           env:
             - name: PUID
               value: "1000"
