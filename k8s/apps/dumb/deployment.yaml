@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: dumb
-          image: ghcr.io/rramiachraf/dumb:latest@sha256:91bfd6b8a036a8f0c954ce5e488f9cc94ecd065b6e0992e7cfc57912778e78da
+          image: ghcr.io/rramiachraf/dumb:latest@sha256:de231df0313999b834b5ccc7cf0b5d426fc6b42bfdd984f7f7c322b3d9db3907
           ports:
             - containerPort: 5555
           env:
