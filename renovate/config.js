@@ -28,6 +28,12 @@ module.exports = {
       versioning: 'regex:^(?<major>\\d{4})\\.(?<minor>\\d{2})\\.(?<patch>\\d{2})-[0-9a-f]+$'
     },
     {
+      // 12.1ubu2604-ls51
+      matchPackageNames: ['linuxserver/jellyfin'],
+      versioning:
+        'regex:^(?<major>\\d+)\\.(?<minor>\\d+)(\\.(?<patch>\\d+))?(?<compatibility>ubu\\d+)-ls(?<build>\\d+)$'
+    },
+    {
       matchManagers: ['nix'],
       matchUpdateTypes: ['lockFileMaintenance'],
       lockFileMaintenance: {
