@@ -8,6 +8,7 @@ module.exports = {
   requireConfig: 'ignored',
   dependencyDashboard: true,
   minimumReleaseAge: '7 days',
+  minimumReleaseAgeBehaviour: 'timestamp-optional',
   prHourlyLimit: 0,
   prConcurrentLimit: 0,
   kubernetes: {
