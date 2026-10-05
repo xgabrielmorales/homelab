@@ -34,6 +34,10 @@ module.exports = {
         'regex:^(?<major>\\d+)\\.(?<minor>\\d+)(\\.(?<patch>\\d+))?(?<compatibility>ubu\\d+)-ls(?<build>\\d+)$'
     },
     {
+      matchPackageNames: ['linuxserver/qbittorrent'],
+      allowedVersions: '<10'
+    },
+    {
       matchManagers: ['nix'],
       matchUpdateTypes: ['lockFileMaintenance'],
       lockFileMaintenance: {
