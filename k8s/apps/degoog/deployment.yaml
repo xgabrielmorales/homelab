@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: degoog
-          image: ghcr.io/degoog-org/degoog:0.26.0@sha256:20874795da56014a8cdbea9cfae02286b33ab38dd83d772d348dd6fb2fd5f421
+          image: ghcr.io/degoog-org/degoog:1.0.0@sha256:a3ad42b66cdbf4432aa22c1c8c0520e01070596aa10367b0e419a1413f4d15f1
           ports:
             - containerPort: 4444
           env:
