@@ -20,7 +20,7 @@ spec:
         kubernetes.io/hostname: xgm-hm
       containers:
         - name: minecraft
-          image: itzg/minecraft-server:java25@sha256:769a826c340586e9d483a0eb6437b8e2c3611aea6a115ff072a2fe372d43e2be
+          image: itzg/minecraft-server:java25@sha256:951c21928ffcca5b5b6efc996c994d43e292f7bd86345b2cc28535a1e3a3efb7
           ports:
             - name: minecraft
               containerPort: 25565
