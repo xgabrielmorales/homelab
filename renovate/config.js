@@ -23,6 +23,11 @@ module.exports = {
   },
   packageRules: [
     {
+      // 2026.09.30-1454ead: the commit suffix would otherwise be treated as a fixed variant
+      matchPackageNames: ['quay.io/invidious/**'],
+      versioning: 'regex:^(?<major>\\d{4})\\.(?<minor>\\d{2})\\.(?<patch>\\d{2})-[0-9a-f]+$'
+    },
+    {
       matchManagers: ['nix'],
       matchUpdateTypes: ['lockFileMaintenance'],
       lockFileMaintenance: {
