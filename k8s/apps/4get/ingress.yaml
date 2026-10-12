@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fourget
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: 4get.xgabrielmorales.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fourget
+                port:
+                  number: 80
