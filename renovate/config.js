@@ -7,6 +7,8 @@ module.exports = {
   onboarding: false,
   requireConfig: 'ignored',
   dependencyDashboard: true,
+  extends: ['group:all'],
+  separateMajorMinor: true,
   minimumReleaseAge: '7 days',
   minimumReleaseAgeBehaviour: 'timestamp-optional',
   prHourlyLimit: 0,
