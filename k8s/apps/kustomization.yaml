@@ -7,7 +7,6 @@ resources:
   - cloudflared
   - dns-updater
   - dumb
-  - excalidraw
   - forgejo
   - glance
   - invidious
