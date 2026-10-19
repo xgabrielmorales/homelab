@@ -1,6 +1,6 @@
 server:
-  port: 80
-  database: /database/database.db
+  database:
+    path: /database/filebrowser.sqlite
   sources:
     - path: /srv
       config:
