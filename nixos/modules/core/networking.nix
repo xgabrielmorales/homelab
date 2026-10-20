@@ -6,7 +6,10 @@
     networkmanager.enable = false;
     useDHCP = true;
     dhcpcd = {
-      extraConfig = "noipv4ll";
+      extraConfig = ''
+        noipv4ll
+        nohook resolv.conf
+      '';
       wait = "ipv4";
     };
     nameservers = [
