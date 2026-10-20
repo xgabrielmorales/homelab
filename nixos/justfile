@@ -1,3 +1,6 @@
+update:
+  nix flake update
+
 deploy-manager host:
   nixos-rebuild switch --flake .#xgm-homelab-manager --target-host {{host}} --sudo --ask-sudo-password
 
