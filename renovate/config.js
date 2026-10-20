@@ -19,10 +19,6 @@ module.exports = {
   flux: {
     managerFilePatterns: ['/^k8s/.+\\.ya?ml$/']
   },
-  nix: {
-    enabled: true,
-    managerFilePatterns: ['/^nixos/flake\\.nix$/']
-  },
   packageRules: [
     {
       // 2026.09.30-1454ead: the commit suffix would otherwise be treated as a fixed variant
@@ -38,15 +34,6 @@ module.exports = {
     {
       matchPackageNames: ['linuxserver/qbittorrent'],
       allowedVersions: '<10'
-    },
-    {
-      matchManagers: ['nix'],
-      matchUpdateTypes: ['lockFileMaintenance'],
-      lockFileMaintenance: {
-        enabled: true,
-        schedule: ['at any time'],
-        commitMessageTopic: 'flake.lock'
-      }
     }
   ],
   hostRules: [
