@@ -28,6 +28,9 @@ spec:
               ln -sf /usr/sbin/iptables-nft /usr/sbin/iptables
               ln -sf /usr/sbin/ip6tables-nft /usr/sbin/ip6tables
               exec /usr/bin/dumb-init node server/index.mjs
+          envFrom:
+            - secretRef:
+                name: wireguard
           ports:
             - name: wg
               containerPort: 51820
@@ -53,4 +56,4 @@ spec:
       volumes:
         - name: etc
           persistentVolumeClaim:
-            claimName: wireguard-etc
+            claimName: wireguard-data
