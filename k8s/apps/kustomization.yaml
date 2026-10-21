@@ -9,6 +9,7 @@ resources:
   - dumb
   - forgejo
   - glance
+  - homeassistant
   - invidious
   - media
   - minecraft
