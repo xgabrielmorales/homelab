@@ -41,7 +41,7 @@
 flux install --export > k8s/flux-system/gotk-components.yaml
 
 flux create source git flux-system \
-  --url=https://git.xgabrielmorales.com/xgabrielmorales/homelab.git \
+  --url=https://github.com/xgabrielmorales/homelab.git \
   --branch=trunk --interval=1m \
   --export > k8s/flux-system/gotk-sync.yaml
 
