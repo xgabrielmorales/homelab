@@ -15,10 +15,15 @@ spec:
         app: intel-gpu-plugin
     spec:
       nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
       containers:
         - name: intel-gpu-plugin
           image: intel/intel-gpu-plugin:0.37.1@sha256:004641b2547d58f1eadce58473fa160ad71377de1eb588cf1f82832387bf3e33
           args: ["-shared-dev-num", "2"]
+          env:
+            - name: TZ
+              value: America/Bogota
           securityContext:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
