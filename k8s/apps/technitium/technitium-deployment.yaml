@@ -43,11 +43,14 @@ spec:
             - name: webui
               containerPort: 5380
           securityContext:
+            allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - ALL
               add:
                 - NET_BIND_SERVICE
+            seccompProfile:
+              type: RuntimeDefault
           resources:
             requests:
               memory: 320Mi

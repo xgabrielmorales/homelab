@@ -39,12 +39,15 @@ spec:
             - name: ui
               containerPort: 51821
           securityContext:
+            allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - ALL
               add:
                 - NET_ADMIN
                 - NET_RAW
+            seccompProfile:
+              type: RuntimeDefault
           resources:
             requests:
               memory: 96Mi

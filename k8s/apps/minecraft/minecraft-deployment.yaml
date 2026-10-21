@@ -77,6 +77,8 @@ spec:
                 - FOWNER
                 - SETUID
                 - SETGID
+            seccompProfile:
+              type: RuntimeDefault
           startupProbe:
             exec:
               command: ["mc-health"]
