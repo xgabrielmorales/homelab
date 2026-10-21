@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - intel-gpu-plugin.yaml
-  - traefik-cloudflare.sops.yaml
-  - traefik.yaml
+  - intel-gpu-plugin-daemonset.yaml
+  - traefik-cloudflare-secret.sops.yaml
+  - traefik-helmchartconfig.yaml
