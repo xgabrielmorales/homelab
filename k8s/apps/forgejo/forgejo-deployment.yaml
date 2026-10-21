@@ -29,6 +29,8 @@ spec:
             - secretRef:
                 name: forgejo
           env:
+            - name: TZ
+              value: America/Bogota
             - name: USER_UID
               value: "1000"
             - name: USER_GID

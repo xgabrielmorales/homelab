@@ -28,6 +28,9 @@ spec:
               ln -sf /usr/sbin/iptables-nft /usr/sbin/iptables
               ln -sf /usr/sbin/ip6tables-nft /usr/sbin/ip6tables
               exec /usr/bin/dumb-init node server/index.mjs
+          env:
+            - name: TZ
+              value: America/Bogota
           envFrom:
             - secretRef:
                 name: wireguard
