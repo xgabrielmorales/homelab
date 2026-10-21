@@ -16,11 +16,6 @@ spec:
   values:
     controller:
       type: daemonset
-      tolerations:
-        - key: worker
-          operator: Equal
-          value: "true"
-          effect: NoSchedule
     alloy:
       mounts:
         varlog: true

@@ -27,13 +27,6 @@ spec:
     kubeProxy:
       enabled: false
 
-    prometheus-node-exporter:
-      tolerations:
-        - key: worker
-          operator: Equal
-          value: "true"
-          effect: NoSchedule
-
     prometheus:
       prometheusSpec:
         retention: 15d
