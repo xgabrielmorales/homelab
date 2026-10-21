@@ -18,6 +18,7 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
       containers:
         - name: flexget
           image: wiserain/flexget:3.22.2@sha256:1b30de73617732279cc33c897984249ef4fd60f1524f09a5b4a0637e953faeed

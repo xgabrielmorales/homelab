@@ -18,6 +18,7 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
       containers:
         - name: atuin
           image: ghcr.io/atuinsh/atuin:18.24.1@sha256:b9a8369b4016dddcd90d23906f1d63dd883f459c6aaecec3be87cf481e8ac88d

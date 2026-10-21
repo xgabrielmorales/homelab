@@ -16,6 +16,7 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
       containers:
         - name: clipboard
           image: git.xgabrielmorales.com/xgabrielmorales/clipboard:0.0.2@sha256:c035a29f4ba8ae65ff9faeb4e78995d2e16016ed83ec886945bdcef0862baa9f

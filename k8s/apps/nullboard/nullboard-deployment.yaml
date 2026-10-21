@@ -18,6 +18,7 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
       containers:
         - name: nullboard
           image: git.xgabrielmorales.com/xgabrielmorales/nullboard:0.0.3@sha256:d82d916460263252921897ff6561026752decc4e5547237e5e17cac6c1ad009a

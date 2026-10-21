@@ -18,6 +18,7 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
       containers:
         - name: minecraft
           image: itzg/minecraft-server:java25@sha256:0f3d1571b7d7bf237c08cbe5ee33cfd67e16bd66f454259ed0a2e35f1e2a2e70
