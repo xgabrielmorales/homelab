@@ -2,12 +2,23 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-  - filebrowser.yaml
-  - flexget.yaml
-  - jellyfin.yaml
-  - pvcs.yaml
-  - qbittorrent.yaml
-  - qbittorrent-conf.sops.yaml
+  - filebrowser-data-pvc.yaml
+  - filebrowser-database-pvc.yaml
+  - filebrowser-deployment.yaml
+  - filebrowser-ingress.yaml
+  - filebrowser-service.yaml
+  - flexget-deployment.yaml
+  - flexget-pvc.yaml
+  - jellyfin-deployment.yaml
+  - jellyfin-ingress.yaml
+  - jellyfin-pvc.yaml
+  - jellyfin-service.yaml
+  - media-downloads-pvc.yaml
+  - qbittorrent-deployment.yaml
+  - qbittorrent-ingress.yaml
+  - qbittorrent-pvc.yaml
+  - qbittorrent-secret.sops.yaml
+  - qbittorrent-service.yaml
 configMapGenerator:
   - name: flexget-conf
     files:

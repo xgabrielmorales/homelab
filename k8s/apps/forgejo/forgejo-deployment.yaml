@@ -74,15 +74,3 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: forgejo-data
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: forgejo
-spec:
-  selector:
-    app: forgejo
-  ports:
-    - name: web
-      port: 3000
-      targetPort: 3000

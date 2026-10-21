@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: technitium
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: technitium.xgabrielmorales.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: technitium
+                port:
+                  number: 5380

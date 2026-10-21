@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: invidious-db
+  name: atuin-db
   labels:
-    app: invidious-db
+    app: atuin-db
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: invidious-db
+      app: atuin-db
   template:
     metadata:
       labels:
-        app: invidious-db
+        app: atuin-db
     spec:
+      nodeSelector:
       containers:
         - name: postgres
           image: postgres:18@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336
@@ -25,25 +26,22 @@ spec:
             - name: TZ
               value: America/Bogota
             - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: invidious
-                  key: INVIDIOUS_DB_DBNAME
+              value: atuin
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: invidious
-                  key: INVIDIOUS_DB_USER
+                  name: atuin
+                  key: ATUIN_DB_USERNAME
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: invidious
-                  key: INVIDIOUS_DB_PASSWORD
+                  name: atuin
+                  key: ATUIN_DB_PASSWORD
           resources:
             requests:
-              memory: 96Mi
+              memory: 64Mi
             limits:
-              memory: 256Mi
+              memory: 128Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -63,29 +61,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql
-            - name: initdb
-              mountPath: /docker-entrypoint-initdb.d
-            - name: sql
-              mountPath: /config/sql
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: invidious-db-data-pg18
-        - name: initdb
-          configMap:
-            name: invidious-initdb
-            defaultMode: 0755
-        - name: sql
-          configMap:
-            name: invidious-sql
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: invidious-db
-spec:
-  selector:
-    app: invidious-db
-  ports:
-    - port: 5432
-      targetPort: 5432
+            claimName: atuin-db-data-pg18

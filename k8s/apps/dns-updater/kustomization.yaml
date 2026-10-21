@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-  - deployment.yaml
-  - ingress.yaml
-  - secret.sops.yaml
-  - service.yaml
+  - dns-updater-deployment.yaml
+  - dns-updater-ingress.yaml
+  - dns-updater-secret.sops.yaml
+  - dns-updater-service.yaml
