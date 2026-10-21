@@ -14,6 +14,8 @@ spec:
       labels:
         app: dumb
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
       containers:
         - name: dumb
           image: ghcr.io/rramiachraf/dumb:latest@sha256:de231df0313999b834b5ccc7cf0b5d426fc6b42bfdd984f7f7c322b3d9db3907

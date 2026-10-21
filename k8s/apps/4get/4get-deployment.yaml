@@ -14,6 +14,8 @@ spec:
       labels:
         app: fourget
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
       containers:
         - name: fourget
           image: luuul/4get:1.0.61@sha256:a42c215ffed9fb9884c55f864f40a50a1651bc27b9d1213be2d090977c881612

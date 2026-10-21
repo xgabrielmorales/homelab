@@ -14,6 +14,8 @@ spec:
       labels:
         app: invidious-companion
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
       containers:
         - name: companion
           image: quay.io/invidious/invidious-companion:2026.10.18-fcb0456@sha256:5642790b67c2ce655a630dbff1342051bd98674abc8e469551117a3d4b6bedcc

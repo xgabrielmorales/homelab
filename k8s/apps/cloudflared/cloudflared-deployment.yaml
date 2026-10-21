@@ -14,6 +14,8 @@ spec:
       labels:
         app: cloudflared
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
       containers:
         - name: cloudflared
           image: cloudflare/cloudflared:2026.10.2@sha256:0e56c13c7058fcef9c4f0e7d83372f82330548dbf8f8b366f3d8b506526d93b2
