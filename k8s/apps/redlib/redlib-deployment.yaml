@@ -19,7 +19,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: redlib
-          image: ghcr.io/silvenga/redlib:0.36@sha256:5b7b92744ca153c75bef1f5b6b5ffb6985a230c91019d722a88ec758b15f502d
+          image: quay.io/redlib/redlib:latest@sha256:686ab6a39f871b8596dd89469ff196a1fc7332bdb78be4e671c4b86e684e9a80
           ports:
             - containerPort: 8080
           env:
