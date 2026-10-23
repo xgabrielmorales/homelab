@@ -19,7 +19,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: dumb
-          image: ghcr.io/rramiachraf/dumb:latest@sha256:de231df0313999b834b5ccc7cf0b5d426fc6b42bfdd984f7f7c322b3d9db3907
+          image: ghcr.io/rramiachraf/dumb:latest@sha256:46dd926700f7922ac603d4973f4461cddadb1a79ae8a324ad54326a6b2c9be98
           ports:
             - containerPort: 5555
           env:
