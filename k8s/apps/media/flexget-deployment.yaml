@@ -21,7 +21,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: flexget
-          image: wiserain/flexget:3.22.2@sha256:1b30de73617732279cc33c897984249ef4fd60f1524f09a5b4a0637e953faeed
+          image: wiserain/flexget:3.22.4@sha256:04d069cfeb237e024782c7c6a00d9eadb10f6c7c47004286199bd8fe6abd9c1e
           env:
             - name: PUID
               value: "1000"
