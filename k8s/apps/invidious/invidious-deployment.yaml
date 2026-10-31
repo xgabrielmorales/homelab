@@ -19,7 +19,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: invidious
-          image: quay.io/invidious/invidious:2026.10.26-1c4b41f@sha256:318829041f3f334e13bfe72f650960a5fcd0a675932ebfa1da93cb4a4ceb9452
+          image: quay.io/invidious/invidious:2026.10.31-9f0b4c8@sha256:31013a8f3a6fa269e03493734fb6982181b020fda51808c6c2f4d39293cf6534
           ports:
             - containerPort: 3000
           env:
