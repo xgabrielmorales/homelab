@@ -19,7 +19,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: redlib
-          image: quay.io/redlib/redlib:latest@sha256:37f624d87ce6cdd90d945af3688fdf0c195a0251d3b5ba62047792e8be2390df
+          image: ghcr.io/nachtalb/redlib:latest@sha256:374e4effb9d66d8d7909277dbc2cbafd621f4ba301838fef3474d3d46b36c8c9
           ports:
             - containerPort: 8080
           env:
