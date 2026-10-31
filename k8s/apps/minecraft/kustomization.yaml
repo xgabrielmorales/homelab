@@ -5,8 +5,6 @@ resources:
   - minecraft-deployment.yaml
   - minecraft-pvc.yaml
   - minecraft-service.yaml
-  - playit-deployment.yaml
-  - playit-secret.sops.yaml
 configMapGenerator:
   - name: minecraft-patches
     files:
