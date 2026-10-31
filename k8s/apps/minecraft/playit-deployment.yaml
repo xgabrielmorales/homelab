@@ -19,7 +19,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: playit
-          image: ghcr.io/playit-cloud/playit-agent:1.1.0@sha256:fa2a6c58815582371fe046f0bd8bea6a39a8684711594a9d2dbe03e44df1fa2c
+          image: ghcr.io/playit-cloud/playit-agent:1.2.0@sha256:602c70efcb0ded80aa7e92209974304cf9d1d7d435d968cf9b34f34696052ec7
           env:
             - name: TZ
               value: America/Bogota
