@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dufs
+  labels:
+    app: dufs
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dufs
+  template:
+    metadata:
+      labels:
+        app: dufs
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
+      containers:
+        - name: dufs
+          image: sigoden/dufs:v0.47.0@sha256:e5152c04e41d5a9d785546278b632bf035c8a08c52d7e8d35f4b59681f5ff35a
+          args:
+            - /data
+            - --allow-all
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: DUFS_AUTH
+              valueFrom:
+                secretKeyRef:
+                  name: dufs
+                  key: DUFS_AUTH
+          ports:
+            - name: http
+              containerPort: 5000
+          resources:
+            requests:
+              memory: 16Mi
+            limits:
+              memory: 64Mi
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: downloads
+              mountPath: /data
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: media-downloads

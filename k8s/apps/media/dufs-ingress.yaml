@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: filebrowser
+  name: dufs
 spec:
   ingressClassName: traefik
   rules:
-    - host: filebrowser.xgabrielmorales.com
+    - host: files.xgabrielmorales.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: filebrowser
+                name: dufs
                 port:
                   number: 80

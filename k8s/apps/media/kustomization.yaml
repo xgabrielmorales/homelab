@@ -2,11 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-  - filebrowser-data-pvc.yaml
-  - filebrowser-database-pvc.yaml
-  - filebrowser-deployment.yaml
-  - filebrowser-ingress.yaml
-  - filebrowser-service.yaml
+  - dufs-deployment.yaml
+  - dufs-ingress.yaml
+  - dufs-secret.sops.yaml
+  - dufs-service.yaml
   - flexget-deployment.yaml
   - flexget-pvc.yaml
   - jellyfin-deployment.yaml
@@ -23,6 +22,3 @@ configMapGenerator:
   - name: flexget-conf
     files:
       - files/config.yml
-  - name: filebrowser-conf
-    files:
-      - files/filebrowser.yaml

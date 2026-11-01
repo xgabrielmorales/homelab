@@ -12,7 +12,7 @@
             - title: Dumb
               url: https://dumb.xgabrielmorales.com
             - title: File Manager
-              url: https://filebrowser.xgabrielmorales.com
+              url: https://files.xgabrielmorales.com
             - title: Forgejo
               url: https://git.xgabrielmorales.com
             - title: Grafana
@@ -70,7 +70,7 @@
             - title: Media
               links:
                 - title: File Manager
-                  url: https://filebrowser.xgabrielmorales.com/
+                  url: https://files.xgabrielmorales.com/
                 - title: qBittorrent
                   url: https://qbittorrent.xgabrielmorales.com/
             - title: Social
