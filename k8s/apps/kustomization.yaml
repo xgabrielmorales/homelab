@@ -6,7 +6,6 @@ resources:
   - clipboard
   - cloudflared
   - dns-updater
-  - dumb
   - forgejo
   - glance
   - homeassistant

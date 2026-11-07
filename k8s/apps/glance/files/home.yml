@@ -9,8 +9,6 @@
           sites:
             - title: DDNS Updater
               url: https://dns.xgabrielmorales.com
-            - title: Dumb
-              url: https://dumb.xgabrielmorales.com
             - title: File Manager
               url: https://files.xgabrielmorales.com
             - title: Forgejo
@@ -59,8 +57,6 @@
                   url: https://github.com/xgabrielmorales
             - title: Entertainment
               links:
-                - title: Dumb
-                  url: https://dumb.xgabrielmorales.com/
                 - title: Invidious
                   url: https://invidious.xgabrielmorales.com/
                 - title: Jellyfin
