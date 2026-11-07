@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fusion
+  labels:
+    app: fusion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fusion
+  template:
+    metadata:
+      labels:
+        app: fusion
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
+      containers:
+        - name: fusion
+          image: ghcr.io/0x2e/fusion:latest@sha256:67e39cd0023f1ff638be2ec5f601571fde63177d98cb55a9969cd7ed6704c686
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TZ
+              value: America/Bogota
+          envFrom:
+            - secretRef:
+                name: fusion
+          resources:
+            requests:
+              memory: 96Mi
+            limits:
+              memory: 160Mi
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: fusion-data
