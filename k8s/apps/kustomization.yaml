@@ -8,7 +8,6 @@ resources:
   - dns-updater
   - forgejo
   - fusion
-  - glance
   - homeassistant
   - invidious
   - media
