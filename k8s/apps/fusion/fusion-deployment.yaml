@@ -25,9 +25,8 @@ spec:
           env:
             - name: TZ
               value: America/Bogota
-          envFrom:
-            - secretRef:
-                name: fusion
+            - name: FUSION_ALLOW_EMPTY_PASSWORD
+              value: "true"
           resources:
             requests:
               memory: 96Mi

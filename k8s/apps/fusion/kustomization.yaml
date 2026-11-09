@@ -5,5 +5,4 @@ resources:
   - fusion-deployment.yaml
   - fusion-ingress.yaml
   - fusion-pvc.yaml
-  - fusion-secret.sops.yaml
   - fusion-service.yaml
