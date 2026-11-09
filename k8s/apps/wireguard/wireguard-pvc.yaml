@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: wireguard-data
 spec:
+  volumeName: pvc-4294c9bc-ef25-45bd-98b1-f6f171c69a5c
   accessModes:
     - ReadWriteOnce
   resources:
