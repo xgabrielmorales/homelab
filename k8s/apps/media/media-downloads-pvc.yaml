@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: media-downloads
 spec:
-  volumeName: pvc-b6e7c98e-4787-4262-afd6-d0cdd032e291
   accessModes:
     - ReadWriteOnce
   resources:

@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: flexget-config
 spec:
-  volumeName: pvc-120da620-dfb2-4999-8d00-be6d5188c548
   accessModes:
     - ReadWriteOnce
   resources:
