@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: myspeed-data
 spec:
+  volumeName: pvc-71de0424-1b42-457a-a749-e6033321cdf4
   accessModes:
     - ReadWriteOnce
   resources:
