@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: technitium-config
 spec:
+  volumeName: pvc-53ab41cb-a05b-4037-80cb-4bc606d7dade
   accessModes:
     - ReadWriteOnce
   resources:
