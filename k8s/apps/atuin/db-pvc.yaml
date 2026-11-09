@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: atuin-db-data-pg18
 spec:
-  volumeName: pvc-1b750197-c0cb-4876-80e9-fde774a16db0
   accessModes:
     - ReadWriteOnce
   resources:
