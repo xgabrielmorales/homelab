@@ -5,3 +5,4 @@ resources:
   - flux-system
   - infra
   - monitoring
+  - namespaces
