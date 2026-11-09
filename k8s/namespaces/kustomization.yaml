@@ -2,8 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - 4get/4get-namespace.yaml
+  - atuin/atuin-namespace.yaml
   - clipboard/clipboard-namespace.yaml
+  - cloudflared/cloudflared-namespace.yaml
   - dns-updater/dns-updater-namespace.yaml
   - fusion/fusion-namespace.yaml
+  - invidious/invidious-namespace.yaml
+  - minecraft/minecraft-namespace.yaml
   - myspeed/myspeed-namespace.yaml
   - nullboard/nullboard-namespace.yaml

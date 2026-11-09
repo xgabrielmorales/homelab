@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: minecraft-data
 spec:
+  volumeName: pvc-00f11f40-5352-4bd6-aadb-91250723856f
   accessModes:
     - ReadWriteOnce
   resources:

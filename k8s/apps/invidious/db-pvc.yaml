@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: invidious-db-data-pg18
 spec:
+  volumeName: pvc-39b3a9a5-dbef-498a-8b80-cf836c91e5ba
   accessModes:
     - ReadWriteOnce
   resources:
