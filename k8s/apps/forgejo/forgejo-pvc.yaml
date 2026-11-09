@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: forgejo-data
 spec:
+  volumeName: pvc-a5938980-50fb-432c-99ce-0a8291811832
   accessModes:
     - ReadWriteOnce
   resources:

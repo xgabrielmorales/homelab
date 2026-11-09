@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: default
+namespace: forgejo
 resources:
   - db-deployment.yaml
   - db-pvc.yaml

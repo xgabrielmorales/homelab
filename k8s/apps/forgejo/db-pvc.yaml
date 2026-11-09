@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: forgejo-db-data-pg18
 spec:
+  volumeName: pvc-cf500bfa-910c-4088-9dcc-86d4e32dc233
   accessModes:
     - ReadWriteOnce
   resources:

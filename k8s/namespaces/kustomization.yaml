@@ -6,6 +6,7 @@ resources:
   - clipboard
   - cloudflared
   - dns-updater
+  - forgejo
   - fusion
   - homeassistant
   - invidious
