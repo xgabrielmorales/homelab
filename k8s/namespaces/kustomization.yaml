@@ -6,3 +6,4 @@ resources:
   - dns-updater/dns-updater-namespace.yaml
   - fusion/fusion-namespace.yaml
   - myspeed/myspeed-namespace.yaml
+  - nullboard/nullboard-namespace.yaml

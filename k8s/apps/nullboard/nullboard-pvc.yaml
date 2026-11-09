@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: nullboard-data
 spec:
+  volumeName: pvc-46fe8e88-4de2-485b-a39a-2150be4ff9f3
   accessModes:
     - ReadWriteOnce
   resources:
