@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: fusion-data
 spec:
+  volumeName: pvc-1f023bb2-d8ce-4408-8de0-719f72b428e6
   accessModes:
     - ReadWriteOnce
   resources:

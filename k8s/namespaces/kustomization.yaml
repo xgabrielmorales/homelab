@@ -4,3 +4,4 @@ resources:
   - 4get/4get-namespace.yaml
   - clipboard/clipboard-namespace.yaml
   - dns-updater/dns-updater-namespace.yaml
+  - fusion/fusion-namespace.yaml
