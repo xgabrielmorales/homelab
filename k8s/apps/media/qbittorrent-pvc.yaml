@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: qbittorrent-config
 spec:
+  volumeName: pvc-ca99e470-172b-4b0f-a32b-74f7dbcbef08
   accessModes:
     - ReadWriteOnce
   resources:

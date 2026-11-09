@@ -10,6 +10,7 @@ resources:
   - fusion
   - homeassistant
   - invidious
+  - media
   - minecraft
   - myspeed
   - nullboard

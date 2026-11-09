@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: jellyfin-config
 spec:
+  volumeName: pvc-d970d536-c401-4981-98af-ca3f59c28672
   accessModes:
     - ReadWriteOnce
   resources:
