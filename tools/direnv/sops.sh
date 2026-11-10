@@ -12,7 +12,12 @@ use_sops() {
     secrets_file="$1"
 
     if [[ -f $secrets_file ]]; then
-        eval "$(sops --decrypt "$secrets_file" | direnv dotenv bash /dev/stdin)"
+        # Only single-line string values become env vars; multiline ones (e.g. kubeconfig) are read by their own helper.
+        local exports
+        exports="$(sops --decrypt --output-type json "$secrets_file" | jq -r '
+            to_entries[] | select(.value | type == "string" and (contains("\n") | not))
+            | "export \(.key)=\(.value | @sh)"')" || return 1
+        eval "$exports"
         watch_file "$secrets_file"
     else
         log_status "Error: Secrets file '$secrets_file' not found." >&2
