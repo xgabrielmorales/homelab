@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speedtest
+  labels:
+    app: speedtest
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: speedtest
+  template:
+    metadata:
+      labels:
+        app: speedtest
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
+      containers:
+        - name: speedtest
+          image: ghcr.io/henrywhitaker3/speedtest-tracker:v2.8.2@sha256:258dc06d5f4d13a8104e8fb4ccb9c14a93fb01e9c25df544cfcfc5df6325d066
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: ACCEPT_EULA
+              value: "true"
+            - name: APP_URL
+              value: https://speedtest.xgabrielmorales.com
+            - name: DB_DRIVER
+              value: sqlite
+            - name: DB_URL
+              value: /data/speedtest-tracker.db
+            - name: RUNTIME_PSK
+              valueFrom:
+                secretKeyRef:
+                  name: speedtest
+                  key: RUNTIME_PSK
+          resources:
+            requests:
+              memory: 128Mi
+            limits:
+              memory: 192Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: speedtest-data
