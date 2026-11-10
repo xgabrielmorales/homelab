@@ -1,6 +1,6 @@
 services:
   renovate:
-    image: renovate/renovate:44.221.6@sha256:52454eae0bdcb51ddfecc39035e0fc2d97172751124049144e89d44343f6ae81
+    image: renovate/renovate:44.225.1@sha256:eec896cbc3a745b5144c1547360e8197efcd0f949a688a8a63605ee4db8590d0
     volumes:
       - ./config.js:/usr/src/app/config.js
     environment:
