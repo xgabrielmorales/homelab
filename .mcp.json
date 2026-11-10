@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "grafana": {
+      "type": "stdio",
+      "command": "nix",
+      "args": [
+        "shell",
+        "nixpkgs#uv",
+        "-c",
+        "uvx",
+        "mcp-grafana"
+      ],
+      "env": {
+        "GRAFANA_URL": "https://grafana.xgabrielmorales.com",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "${GRAFANA_SERVICE_ACCOUNT_TOKEN}"
+      }
+    }
+  }
+}
