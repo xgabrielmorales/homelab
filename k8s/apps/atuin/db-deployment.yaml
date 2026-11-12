@@ -41,9 +41,9 @@ spec:
                   key: ATUIN_DB_PASSWORD
           resources:
             requests:
-              memory: 64Mi
+              memory: 256Mi
             limits:
-              memory: 128Mi
+              memory: 512Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
