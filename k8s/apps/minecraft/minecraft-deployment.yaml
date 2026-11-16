@@ -21,7 +21,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: minecraft
-          image: itzg/minecraft-server:java25@sha256:44452104394fdd1b65ed905f3724fe2234a919ef18cdb8acec279856b889d296
+          image: itzg/minecraft-server:java25@sha256:e528e38848e1456d683a60c624ce2b1a5ae15d1b221d368108fa05853388285a
           ports:
             - name: minecraft
               containerPort: 25565
