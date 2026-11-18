@@ -19,7 +19,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: fourget
-          image: luuul/4get:1.0.64@sha256:c850fe1d48e19e45414a1bb419446f4ca7612fa44d35e03d0479f3723e1ef260
+          image: luuul/4get:1.0.64@sha256:7326b2736e7208a7a1eea8328a0393465bc8c83558566b9fe41957e526ace695
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
