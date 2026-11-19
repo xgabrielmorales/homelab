@@ -7,7 +7,6 @@ resources:
   - cloudflared
   - dns-updater
   - forgejo
-  - fusion
   - homeassistant
   - invidious
   - media
