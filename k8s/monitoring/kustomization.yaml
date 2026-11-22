@@ -3,11 +3,13 @@ kind: Kustomization
 resources:
   - alloy-helmrelease.yaml
   - grafana-admin-secret.sops.yaml
+  - grafana-community-helmrepository.yaml
   - grafana-helmrepository.yaml
   - kube-prometheus-stack-helmrelease.yaml
   - loki-helmrelease.yaml
   - monitoring-namespace.yaml
   - prometheus-community-helmrepository.yaml
+  - tempo-helmrelease.yaml
 
 configMapGenerator:
   - name: grafana-dashboard-pods
