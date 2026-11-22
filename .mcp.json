@@ -8,7 +8,9 @@
         "nixpkgs#uv",
         "-c",
         "uvx",
-        "mcp-grafana"
+        "mcp-grafana",
+        "--enabled-tools",
+        "search,datasource,prometheus,loki,tempo,alerting,dashboard,folder,annotations,navigation,api,config,docs"
       ],
       "env": {
         "GRAFANA_URL": "https://grafana.xgabrielmorales.com",
