@@ -8,11 +8,11 @@ resources:
   - homelab-agent-secret.sops.yaml
   - homelab-agent-service.yaml
   - homelab-agent-serviceaccount.yaml
-  - ntfy-deployment.yaml
-  - ntfy-ingress.yaml
-  - ntfy-pvc.yaml
-  - ntfy-secret.sops.yaml
-  - ntfy-service.yaml
+  - gotify-deployment.yaml
+  - gotify-ingress.yaml
+  - gotify-pvc.yaml
+  - gotify-secret.sops.yaml
+  - gotify-service.yaml
 configMapGenerator:
   - name: kubernetes-mcp-server
     files:

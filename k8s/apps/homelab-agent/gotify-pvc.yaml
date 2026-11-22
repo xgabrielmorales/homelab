@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ntfy-data
+  name: gotify-data
 spec:
   accessModes:
     - ReadWriteOnce

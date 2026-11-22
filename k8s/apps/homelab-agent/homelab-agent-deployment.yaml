@@ -100,8 +100,8 @@ spec:
               value: America/Bogota
             - name: FORGEJO_URL
               value: https://git.xgabrielmorales.com
-            - name: NTFY_URL
-              value: http://ntfy:8080
+            - name: GOTIFY_URL
+              value: http://gotify:8080
             - name: ALLOWED_HOSTS
               value: '["agent.xgabrielmorales.com"]'
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
@@ -118,11 +118,11 @@ spec:
                 secretKeyRef:
                   name: homelab-agent
                   key: FORGEJO_TOKEN
-            - name: NTFY_TOKEN
+            - name: GOTIFY_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: homelab-agent
-                  key: NTFY_TOKEN
+                  key: GOTIFY_TOKEN
           readinessProbe:
             exec:
               command:

@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ntfy
+  name: gotify
 spec:
   ingressClassName: traefik
   rules:
-    - host: ntfy.xgabrielmorales.com
+    - host: gotify.xgabrielmorales.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: ntfy
+                name: gotify
                 port:
                   number: 8080
