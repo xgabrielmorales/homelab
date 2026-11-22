@@ -17,8 +17,14 @@ spec:
     controller:
       type: daemonset
     alloy:
+      stabilityLevel: experimental
       mounts:
         varlog: true
+      extraPorts:
+        - name: otlp-http
+          port: 4318
+          targetPort: 4318
+          protocol: TCP
       configMap:
         content: |-
           logging {
@@ -69,5 +75,41 @@ spec:
           loki.write "default" {
             endpoint {
               url = "http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push"
+            }
+          }
+
+          otelcol.receiver.otlp "default" {
+            http {
+              endpoint = "0.0.0.0:4318"
+            }
+
+            output {
+              metrics = [otelcol.processor.deltatocumulative.default.input]
+              traces  = [otelcol.exporter.otlp.tempo.input]
+            }
+          }
+
+          otelcol.processor.deltatocumulative "default" {
+            output {
+              metrics = [otelcol.exporter.prometheus.default.input]
+            }
+          }
+
+          otelcol.exporter.prometheus "default" {
+            forward_to = [prometheus.remote_write.default.receiver]
+          }
+
+          prometheus.remote_write "default" {
+            endpoint {
+              url = "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/write"
+            }
+          }
+
+          otelcol.exporter.otlp "tempo" {
+            client {
+              endpoint = "tempo.monitoring.svc.cluster.local:4317"
+              tls {
+                insecure = true
+              }
             }
           }
