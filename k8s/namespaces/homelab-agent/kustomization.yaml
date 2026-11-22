@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: homelab-agent
+resources:
+  - homelab-agent-namespace.yaml
+  - homelab-agent-apiserver-networkpolicy.yaml
+  - homelab-agent-grafana-networkpolicy.yaml
+  - homelab-agent-internet-networkpolicy.yaml
+  - homelab-agent-otlp-networkpolicy.yaml
+components:
+  - ../components/baseline
+  - ../components/allow-traefik
