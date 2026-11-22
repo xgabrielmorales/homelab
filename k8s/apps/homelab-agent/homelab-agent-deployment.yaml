@@ -92,7 +92,7 @@ spec:
               type: RuntimeDefault
       containers:
         - name: homelab-agent
-          image: git.xgabrielmorales.com/xgabrielmorales/homelab-agent:a9bda9a23ec982b800af848214dd5d27323da9ab@sha256:0fd9cbce5a31daea5c702a7491be70e82ee26da604ccb85d7322313ce1f9bd51
+          image: git.xgabrielmorales.com/xgabrielmorales/homelab-agent:74504466a8ca43aae1187ae598b93eea0441b109@sha256:3771f78ec4409ca35bdfe15f34ce7c47eea5782e3ba7604b222b509a2f3c3823
           ports:
             - containerPort: 8000
           env:
