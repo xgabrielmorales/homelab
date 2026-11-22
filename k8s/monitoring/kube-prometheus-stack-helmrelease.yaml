@@ -30,6 +30,7 @@ spec:
     prometheus:
       prometheusSpec:
         retention: 15d
+        enableRemoteWriteReceiver: true
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
@@ -73,6 +74,25 @@ spec:
           - grafana.xgabrielmorales.com
       additionalDataSources:
         - name: Loki
+          uid: loki
           type: loki
           access: proxy
           url: http://loki.monitoring.svc.cluster.local:3100
+        - name: Tempo
+          uid: tempo
+          type: tempo
+          access: proxy
+          url: http://tempo.monitoring.svc.cluster.local:3200
+          jsonData:
+            tracesToLogsV2:
+              datasourceUid: loki
+              spanStartTimeShift: "-5m"
+              spanEndTimeShift: "5m"
+              tags:
+                - key: k8s.namespace.name
+                  value: namespace
+              filterByTraceID: false
+            lokiSearch:
+              datasourceUid: loki
+            nodeGraph:
+              enabled: true
