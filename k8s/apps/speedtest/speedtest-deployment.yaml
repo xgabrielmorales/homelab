@@ -21,7 +21,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: speedtest
-          image: ghcr.io/henrywhitaker3/speedtest-tracker:v2.8.3@sha256:70f7cb639718d30b96a425a901cfd67d298d88b4478e6715f7c12116762eaf20
+          image: ghcr.io/henrywhitaker3/speedtest-tracker:v2.9.1@sha256:d70e9cc9d72adbf7711ada741a4b67890ae8f6854f4fcf6fec372a3cd0163fb1
           ports:
             - containerPort: 8080
           env:
