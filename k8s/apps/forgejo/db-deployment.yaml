@@ -21,7 +21,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: postgres
-          image: postgres:18@sha256:2ea8630df176ad090ec92136dee850397c5af8781e4bcf2e4162593691c61bbc
+          image: postgres:19@sha256:bb6e70add742cd868fb62cb3b2f67d1dd2bdd2b65a521e778420748753687c60
           ports:
             - containerPort: 5432
           env:
@@ -71,4 +71,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: forgejo-db-data-pg18
+            claimName: forgejo-db-data-pg19

@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: forgejo
 resources:
   - db-deployment.yaml
+  - db-pvc-pg18.yaml
   - db-pvc.yaml
   - db-service.yaml
   - forgejo-deployment.yaml
