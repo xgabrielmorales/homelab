@@ -7,6 +7,5 @@ resources:
   - atuin-secret.sops.yaml
   - atuin-service.yaml
   - db-deployment.yaml
-  - db-pvc-pg18.yaml
   - db-pvc.yaml
   - db-service.yaml

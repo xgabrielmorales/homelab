@@ -6,7 +6,6 @@ resources:
   - companion-ingress.yaml
   - companion-service.yaml
   - db-deployment.yaml
-  - db-pvc-pg18.yaml
   - db-pvc.yaml
   - db-service.yaml
   - invidious-deployment.yaml
