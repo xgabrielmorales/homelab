@@ -32,9 +32,9 @@ spec:
                   key: INVIDIOUS_INVIDIOUS_COMPANION_KEY
           resources:
             requests:
-              memory: 192Mi
+              memory: 512Mi
             limits:
-              memory: 640Mi
+              memory: 1536Mi
           securityContext:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
