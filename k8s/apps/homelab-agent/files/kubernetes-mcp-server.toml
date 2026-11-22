@@ -1,0 +1,4 @@
+port = "8002"
+bind_address = "127.0.0.1"
+read_only = true
+toolsets = ["core"]

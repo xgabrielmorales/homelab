@@ -1,0 +1,157 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homelab-agent
+  labels:
+    app: homelab-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homelab-agent
+  template:
+    metadata:
+      labels:
+        app: homelab-agent
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: xgm-hm
+      enableServiceLinks: false
+      serviceAccountName: homelab-agent
+      automountServiceAccountToken: true
+      securityContext:
+        runAsNonRoot: true
+      initContainers:
+        - name: mcp-grafana
+          image: grafana/mcp-grafana:2.3.0@sha256:c27248b5919d09d64ea273ca1b128b32902c6796f6e2dfcd11849d4f1363f9ed
+          restartPolicy: Always
+          command:
+            - /app/mcp-grafana
+          args:
+            - --transport
+            - streamable-http
+            - --address
+            - 127.0.0.1:8001
+            - --disable-write
+            - --enabled-tools
+            - search,datasource,prometheus,loki,alerting,dashboard
+            - --usage-stats
+            - disabled
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: GRAFANA_URL
+              value: http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local
+            - name: GRAFANA_SERVICE_ACCOUNT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: homelab-agent
+                  key: GRAFANA_SERVICE_ACCOUNT_TOKEN
+          resources:
+            requests:
+              memory: 32Mi
+            limits:
+              memory: 96Mi
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 999
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+        - name: mcp-kubernetes
+          image: quay.io/containers/kubernetes_mcp_server:v0.1.3@sha256:6347155616c49c78512114500688b50d275ddde7597b6a38cefe6f40a8c42c16
+          restartPolicy: Always
+          args:
+            - --config
+            - /etc/kubernetes-mcp-server/kubernetes-mcp-server.toml
+          env:
+            - name: TZ
+              value: America/Bogota
+          volumeMounts:
+            - name: kubernetes-mcp-server
+              mountPath: /etc/kubernetes-mcp-server
+              readOnly: true
+          resources:
+            requests:
+              memory: 32Mi
+            limits:
+              memory: 96Mi
+          securityContext:
+            runAsUser: 65532
+            runAsGroup: 65532
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+      containers:
+        - name: homelab-agent
+          image: git.xgabrielmorales.com/xgabrielmorales/homelab-agent:a9bda9a23ec982b800af848214dd5d27323da9ab@sha256:0fd9cbce5a31daea5c702a7491be70e82ee26da604ccb85d7322313ce1f9bd51
+          ports:
+            - containerPort: 8000
+          env:
+            - name: TZ
+              value: America/Bogota
+            - name: FORGEJO_URL
+              value: https://git.xgabrielmorales.com
+            - name: NTFY_URL
+              value: http://ntfy:8080
+            - name: ALLOWED_HOSTS
+              value: '["agent.xgabrielmorales.com"]'
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://alloy.monitoring.svc.cluster.local:4318
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: k8s.namespace.name=homelab-agent
+            - name: OPENROUTER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homelab-agent
+                  key: OPENROUTER_API_KEY
+            - name: FORGEJO_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: homelab-agent
+                  key: FORGEJO_TOKEN
+            - name: NTFY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: homelab-agent
+                  key: NTFY_TOKEN
+          readinessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - import urllib.request as u; u.urlopen('http://127.0.0.1:8000/healthcheck', timeout=2)
+          livenessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - import urllib.request as u; u.urlopen('http://127.0.0.1:8000/healthcheck', timeout=2)
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: 192Mi
+            limits:
+              memory: 384Mi
+          securityContext:
+            runAsUser: 65532
+            runAsGroup: 65532
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+      volumes:
+        - name: kubernetes-mcp-server
+          configMap:
+            name: kubernetes-mcp-server
